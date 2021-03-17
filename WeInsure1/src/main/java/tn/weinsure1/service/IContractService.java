@@ -6,10 +6,10 @@ import tn.weinsure1.entities.Contract;
 
 public interface IContractService {
 
-	List<Contract> retrieveAllContracts(); 
-	 Contract addContract(Contract c);
-	 void deleteContract(String id);
-	 Contract updateContract(Contract c);
-	 Contract retrieveContract(String id);
+	List<Contract> RetrieveAllContracts(); 
+	 Contract AddContract(Contract c);
+	 void DeleteContract(String id);
+	 Contract UpdateContract(Contract c);
+	 Contract RetrieveContract(String id);
 	
 }

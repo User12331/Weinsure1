@@ -13,48 +13,35 @@ import tn.weinsure1.repository.ContractRepository;
 
 @Service
 public class ContractServiceImpl implements IContractService {
-
-	@Autowired     
-	ContractRepository ContractRepository ;
-	private static final Logger L = LogManager.getLogger(ContractServiceImpl.class);
-
+	@Autowired
+	ContractRepository ContractRepository;
+	private static final Logger L= LogManager.getLogger(ContractServiceImpl.class);
 	@Override
-	public Contract addContract (Contract C) {
-		Contract ContractSaved = null;
-		ContractSaved = ContractRepository.save(C);
-		
-		return ContractSaved;
-	
-	}
-	@Override
-	public void deleteContract(String id) {
-		ContractRepository.deleteById(Long.parseLong(id));
-		
-	}
-	@Override
-	public Contract updateContract(Contract C) {
-		Contract ContractAdded = ContractRepository.save(C);
-		return ContractAdded;
-	}
-	
-	@Override
-	public Contract retrieveContract(String id) {
-		L.info("in retrieveContract id = " + id);
-		Contract C = ContractRepository.findById(Long.parseLong(id)).get();
-		L.info("Contract returned = : " + C);
-		return C;
-			}
-	
-	
-	@Override
-	public List<Contract> retrieveAllContracts() {
-		List<Contract> Contracts = (List<Contract>) ContractRepository.findAll(); 
-		for(Contract cnt : Contracts)
-		{
-			L.info("Contract +++ :" + cnt);
+	public List<Contract> RetrieveAllContracts(){
+		List<Contract> users = (List<Contract>) ContractRepository.findAll();
+		for (Contract user : users){
+			L.info("user +++ :" + user);
 		}
-					
-		return Contracts;
-	}	
-	
+		return users;
+	}
+	@Override
+	public Contract AddContract(Contract c) {
+		// TODO Auto-generated method stub
+		Contract cnt = ContractRepository.save(c);
+		return cnt;
+	}
+	@Override
+	public void DeleteContract(String id) {
+		ContractRepository.deleteById(Long.parseLong(id));
+	}
+	@Override
+	public Contract UpdateContract(Contract c) {
+		Contract ContractUpdated = ContractRepository.save(c);
+		return ContractUpdated;
+	}
+	@Override
+	public Contract RetrieveContract(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

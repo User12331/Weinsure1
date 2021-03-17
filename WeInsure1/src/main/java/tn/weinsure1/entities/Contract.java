@@ -6,11 +6,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="Contract")
 public class Contract implements Serializable {
@@ -18,19 +23,22 @@ public class Contract implements Serializable {
 	@GeneratedValue (strategy = GenerationType.IDENTITY )
 	@Column(name="IDContract")
 	private Long idcontract;
+	@Temporal(TemporalType.DATE)
 	@Column(name="Creation_Date")
 	private Date Creation_date;
+	@Temporal(TemporalType.DATE)
 	@Column(name="Expiration_Date")
 	private Date Expiration_date;
 	@Column(name="Duration")
 	private int Duration;
 	@Column(name="Price")
 	private float Price;
+	@Enumerated(EnumType.STRING)
 	@Column (name="Type")
-	private String Type;
+	ContractType Type;
 	@Column(name="Document")
 	private File Document;
-	public long getIdcontract() {
+	public Long getIdcontract() {
 		return idcontract;
 	}
 	public void setIdcontract(Long idcontract) {
@@ -60,10 +68,10 @@ public class Contract implements Serializable {
 	public void setPrice(float price) {
 		Price = price;
 	}
-	public String getType() {
+	public ContractType getType() {
 		return Type;
 	}
-	public void setType(String type) {
+	public void setType(ContractType type) {
 		Type = type;
 	}
 	public File getDocument() {
@@ -72,21 +80,40 @@ public class Contract implements Serializable {
 	public void setDocument(File document) {
 		Document = document;
 	}
-	public Contract(Long idcontract, Date creation_date, Date expiration_date, int duration, float price, String type,
-			File document) {
-		super();
-		this.idcontract = idcontract;
-		this.Creation_date = creation_date;
-		this.Expiration_date = expiration_date;
-		this.Duration = duration;
-		this.Price = price;
-		this.Type = type;
-		this.Document = document;
+	
+	@Override
+	public String toString() {
+		return "Contract [idcontract=" + idcontract + ", Creation_date=" + Creation_date + ", Expiration_date="
+				+ Expiration_date + ", Duration=" + Duration + ", Price=" + Price + ", Type=" + Type + ", Document="
+				+ Document + "]";
 	}
 	
+	
 	public Contract() {
-		super();		
+		super();
+		// TODO Auto-generated constructor stub
 	}
+	public Contract(Long idcontract, Date creation_date, Date expiration_date, int duration, float price,
+			ContractType type, File document) {
+		this.idcontract = idcontract;
+		Creation_date = creation_date;
+		Expiration_date = expiration_date;
+		Duration = duration;
+		Price = price;
+		Type = type;
+		Document = document;
+	}
+	
+	public Contract(Date creation_date, Date expiration_date, int duration, float price, ContractType type,
+			File document) {
+		Creation_date = creation_date;
+		Expiration_date = expiration_date;
+		Duration = duration;
+		Price = price;
+		Type = type;
+		Document = document;
+	}
+
 	
 	
 }
