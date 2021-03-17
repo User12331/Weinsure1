@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 import org.junit.Test; 
 import org.junit.runner.RunWith;
@@ -13,12 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import tn.weinsure1.entities.Contract;
-import tn.weinsure1.entities.ContractType;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.entities.typeSinister;
-import tn.weinsure1.service.IContractService;
 import tn.weinsure1.service.IsinisterService;
 
 import org.junit.Assert;
