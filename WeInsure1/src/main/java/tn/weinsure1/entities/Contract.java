@@ -113,7 +113,5 @@ public class Contract implements Serializable {
 		Type = type;
 		Document = document;
 	}
-
-	
-	
+		
 }

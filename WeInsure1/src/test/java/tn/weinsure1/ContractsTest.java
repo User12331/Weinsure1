@@ -3,6 +3,7 @@ package tn.weinsure1;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import org.junit.Assert;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
+import tn.weinsure1.entities.sinister;
 import tn.weinsure1.service.IContractService;
 
 @RunWith(SpringRunner.class)
@@ -48,4 +50,6 @@ public class ContractsTest {
 		Long i = scanner.nextLong();
 		ic.DeleteContract(Long.toString(i)); 
 		}
+
+	
 }
