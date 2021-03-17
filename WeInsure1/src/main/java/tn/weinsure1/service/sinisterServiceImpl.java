@@ -38,14 +38,14 @@ public class sinisterServiceImpl implements IsinisterService {
 		sinister sinistreAdded = sinistreRepository.save(s);
 		return sinistreAdded;
 	}
-	/*
+	
 	@Override
 	public sinister retrieveSinistre(String id) {
 		L.info("in retrieveSinistre id = " + id);
 		sinister s = sinistreRepository.findById(Long.parseLong(id)).get();
 		L.info("sinistre returned = : " + s);
 		return s;
-			}*/
+			}
 	
 	
 	@Override
@@ -57,11 +57,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		}
 					
 		return sinistres;
-	}
-	@Override
-	public sinister retrieveSinistre(String id) {
-		// TODO Auto-generated method stub
-		return null;
 	}		
 	
 	
