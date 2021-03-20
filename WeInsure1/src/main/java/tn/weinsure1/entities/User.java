@@ -161,6 +161,7 @@ public class User implements Serializable{
 		this.phonenumber = phonenumber;
 		this.cin = cin;
 		this.salary = salary;
+		
 		this.role = role;
 	}
 	
