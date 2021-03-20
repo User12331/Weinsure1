@@ -22,6 +22,7 @@ public class User implements Serializable{
 	@Column(name="IdUser")
 	private Long idUser ;
 	
+	
 	@Column(name="Lastname")
 	private String lastname ;
 	

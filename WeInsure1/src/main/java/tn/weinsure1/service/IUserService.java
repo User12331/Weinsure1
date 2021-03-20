@@ -11,6 +11,7 @@ public interface IUserService {
 	 User AddUser(User u);
 	 void DeleteUser(String id);
 	 User UpdateUser(User u);
+	 
 	 User RetrieveUser(String id);
 	
 }
