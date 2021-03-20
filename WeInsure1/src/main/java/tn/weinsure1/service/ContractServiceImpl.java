@@ -1,6 +1,7 @@
 package tn.weinsure1.service;
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,6 @@ public class ContractServiceImpl implements IContractService {
 	}
 	@Override
 	public Contract AddContract(Contract c) {
-		// TODO Auto-generated method stub
 		Contract cnt = ContractRepository.save(c);
 		return cnt;
 	}
@@ -39,9 +39,12 @@ public class ContractServiceImpl implements IContractService {
 		Contract ContractUpdated = ContractRepository.save(c);
 		return ContractUpdated;
 	}
+	
 	@Override
 	public Contract RetrieveContract(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		L.info("in RetrieveContract id = " + id);
+		Contract c = ContractRepository.findById(Long.parseLong(id)).get();
+		L.info("Contract returned = : " + c);
+		return c;	
 	}
 }

@@ -15,8 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
-import tn.weinsure1.entities.sinister;
 import tn.weinsure1.service.IContractService;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,5 +51,18 @@ public class ContractsTest {
 		ic.DeleteContract(Long.toString(i)); 
 		}
 
+	@Test		//Show all contracts
+	public void TestRetriveAllContracts() {
+		List<Contract> contracts = ic.RetrieveAllContracts() ;
+		System.out.println(contracts);
+	}
 	
+	@Test		//Show contract from keyboard
+	public void TestRetriveContract() {
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		Long i = scanner.nextLong();
+		Contract contract = ic.RetrieveContract(Long.toString(i));
+		System.out.println(contract);
+	}
 }
