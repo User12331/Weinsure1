@@ -7,6 +7,7 @@ import tn.weinsure1.entities.User;
 public interface IUserService {
 
 	List<User> RetrieveAllUsers(); 
+	
 	 User AddUser(User u);
 	 void DeleteUser(String id);
 	 User UpdateUser(User u);

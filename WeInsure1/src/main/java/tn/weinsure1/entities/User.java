@@ -164,6 +164,7 @@ public class User implements Serializable{
 		this.role = role;
 	}
 	
+	
 	public User( String lastname, String firstname, Date birthdate, String login, String paswword,
 			long i, long j, float k, UserRole role) {
 
