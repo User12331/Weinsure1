@@ -35,7 +35,7 @@ public class sinister implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
     @Column(name="Status")
-	sinisterstatus status;
+	private sinisterstatus status;
 	
 	@Column(name="Documents")
 	private File documents ;

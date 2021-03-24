@@ -1,6 +1,6 @@
 package tn.weinsure1.restController;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import tn.weinsure1.entities.sinister;
+import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.service.IsinisterService;
 
 @RestController
@@ -23,6 +23,13 @@ public class sinisterrestController {
 		 @ResponseBody
 		 public List<sinister> getSinister() {
 		 List<sinister> s = sr.retrieveAllSinistres();
+		 return s;
+		 } 
+			// http://localhost:8000/SpringMVC/servlet/getSinisterBystatus/
+		 @GetMapping("/getSinisterBystatus/{status}")
+		 @ResponseBody
+		 public List<sinister> getsinisterbystat(@PathVariable(value = "status") sinisterstatus status) {
+		 List<sinister> s = sr.findByStatus(status);
 		 return s;
 		 } 
 		 /*

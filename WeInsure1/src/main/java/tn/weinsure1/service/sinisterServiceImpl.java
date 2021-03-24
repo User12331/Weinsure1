@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.weinsure1.entities.sinister;
+import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.repository.sinisterRepository;
 
 
@@ -57,7 +58,13 @@ public class sinisterServiceImpl implements IsinisterService {
 		}
 					
 		return sinistres;
-	}		
+	}	
+	
+	@Override 
+	public List<sinister> findByStatus(sinisterstatus sins) {
+		return sinistreRepository.findSinisterByStatus(sins);
+		
+	}
 	
 	
 	
