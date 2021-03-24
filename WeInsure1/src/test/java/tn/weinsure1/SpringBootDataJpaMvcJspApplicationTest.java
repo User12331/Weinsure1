@@ -64,6 +64,27 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 
 		is.deleteSinistre("1");
 	}
+	@Test
+	public void testfindByDescription() {
+
+		List<sinister> sinistres = is.findByDescription("my") ;
+
+	} 
+
+	@Test
+	public void testfindByYear() {
+
+		List<sinister> sinistres = is.findByYear("2018") ;
+
+	} 
+
+	@Test
+	public void testfindByAny() {
+
+		List<sinister> sinistres = is.findByAny("2018") ;
+
+	} 
+
 	
 	
 }

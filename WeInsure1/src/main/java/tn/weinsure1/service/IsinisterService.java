@@ -13,4 +13,11 @@ public interface IsinisterService {
 	 sinister updateSinistre(sinister s);
 	 sinister retrieveSinistre(String id);
 	 List<sinister> findByStatus(sinisterstatus sins);
+	  List<sinister> findByDescription(String name);
+	  List<sinister> findByYear(String year) ;
+	  List<sinister> findByAny(String any);
+	  List<sinister> findSinisterByStatusRejected()  ;
+	  void CheckStatus() ; 
+	  float calcul(float capital , int ageClient, int AgeMax, double taux) ; 
+	  void SendMail() ;
 }

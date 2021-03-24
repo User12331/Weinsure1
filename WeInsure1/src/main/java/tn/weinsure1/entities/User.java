@@ -1,18 +1,25 @@
 package tn.weinsure1.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="User")
@@ -55,6 +62,10 @@ public class User implements Serializable{
     @Column(name="Role")
 	UserRole role;
 	
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("user")
+	private List<sinister> sinisterList = new ArrayList<>();
+	
 	public enum UserRole{
 		Insurer,Insured,Administrator}
 
@@ -64,6 +75,14 @@ public class User implements Serializable{
 
 	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
+	}
+
+	public List<sinister> getSinisterList() {
+		return sinisterList;
+	}
+
+	public void setSinisterList(List<sinister> sinisterList) {
+		this.sinisterList = sinisterList;
 	}
 
 	public String getLastname() {
@@ -167,6 +186,22 @@ public class User implements Serializable{
 	}
 	
 	
+	
+	public User(String lastname, String firstname, Date birthdate, String login, String paswword, Long phonenumber,
+			Long cin, Float salary, UserRole role, List<sinister> sinisterList) {
+		super();
+		this.lastname = lastname;
+		this.firstname = firstname;
+		this.birthdate = birthdate;
+		this.login = login;
+		this.paswword = paswword;
+		this.phonenumber = phonenumber;
+		this.cin = cin;
+		this.salary = salary;
+		this.role = role;
+		this.sinisterList = sinisterList;
+	}
+
 	public User( String lastname, String firstname, Date birthdate, String login, String paswword,
 			long i, long j, float k, UserRole role) {
 

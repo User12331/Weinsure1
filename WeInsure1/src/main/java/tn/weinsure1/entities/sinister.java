@@ -4,16 +4,22 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -39,6 +45,15 @@ public class sinister implements Serializable{
 	
 	@Column(name="Documents")
 	private File documents ;
+	
+	@Enumerated(EnumType.STRING)
+    @Column(name="Motif")
+	SinisterMotif motifStatus;
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "idUser",referencedColumnName="IdUser")
+	@JsonIgnoreProperties("sinisterList")
+	private User user;
 
 
 
@@ -91,10 +106,51 @@ public class sinister implements Serializable{
 		this.documents = documents;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+
+	public SinisterMotif getMotifStatus() {
+		return motifStatus;
+	}
+
+	public void setMotifStatus(SinisterMotif motifStatus) {
+		this.motifStatus = motifStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "Sinistre [idSinistre=" + idSinistre + ", typeSinistre=" + typeSinistre + ", description=" + description
 				+ ", dateOccurence=" + dateOccurence + ", status=" + status + ", documents=" + documents + "]";
+	}
+	
+
+	public sinister(typeSinister typeSinistre, String description, Date dateOccurence, sinisterstatus status,
+			File documents, SinisterMotif motifStatus, User user) {
+		super();
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.documents = documents;
+		this.motifStatus = motifStatus;
+		this.user = user;
+	}
+
+	public sinister(typeSinister typeSinistre, String description, Date dateOccurence, sinisterstatus status,
+			File documents, User user) {
+		super();
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.documents = documents;
+		this.user = user;
 	}
 
 	public sinister(Long idSinistre, tn.weinsure1.entities.typeSinister typeSinistre, String description,
