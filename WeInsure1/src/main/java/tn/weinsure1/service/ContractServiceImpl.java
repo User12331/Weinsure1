@@ -9,13 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.weinsure1.entities.Contract;
+import tn.weinsure1.entities.User;
+import tn.weinsure1.entities.sinister;
 import tn.weinsure1.repository.ContractRepository;
+import tn.weinsure1.repository.UserRepository;
 
 
 @Service
 public class ContractServiceImpl implements IContractService {
 	@Autowired
 	ContractRepository ContractRepository;
+	@Autowired
+	UserRepository UserRepository;
+	
 	private static final Logger L= LogManager.getLogger(ContractServiceImpl.class);
 	@Override
 	public List<Contract> RetrieveAllContracts(){
@@ -47,4 +53,12 @@ public class ContractServiceImpl implements IContractService {
 		L.info("Contract returned = : " + c);
 		return c;	
 	}
+	
+	@Override
+	public List<Contract> findByYearGreater(String year) {
+		List<Contract> cnt = ContractRepository.findByYearGreater(year);
+		L.info("Contract +++ :" + cnt) ;
+		return cnt;
+	}
+	 
 }

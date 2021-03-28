@@ -2,7 +2,9 @@ package tn.weinsure1.entities;
 
 import java.io.File;
 import java.io.Serializable;
+
 import java.util.Date;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +13,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+
 
 @SuppressWarnings("serial")
 @Entity
@@ -38,6 +44,8 @@ public class Contract implements Serializable {
 	ContractType Type;
 	@Column(name="Document")
 	private File Document;
+	
+
 	public Long getIdcontract() {
 		return idcontract;
 	}
@@ -81,6 +89,18 @@ public class Contract implements Serializable {
 		Document = document;
 	}
 	
+	 @ManyToOne
+	 @JoinColumn(name="IdUser")
+	 private User user;
+	
+	 
+
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	@Override
 	public String toString() {
 		return "Contract [idcontract=" + idcontract + ", Creation_date=" + Creation_date + ", Expiration_date="
@@ -91,27 +111,18 @@ public class Contract implements Serializable {
 	
 	public Contract() {
 		super();
-		// TODO Auto-generated constructor stub
+		// 
 	}
-	public Contract(Long idcontract, Date creation_date, Date expiration_date, int duration, float price,
-			ContractType type, File document) {
-		this.idcontract = idcontract;
-		Creation_date = creation_date;
-		Expiration_date = expiration_date;
-		Duration = duration;
-		Price = price;
-		Type = type;
-		Document = document;
-	}
-	
+
+		
 	public Contract(Date creation_date, Date expiration_date, int duration, float price, ContractType type,
 			File document) {
-		Creation_date = creation_date;
-		Expiration_date = expiration_date;
-		Duration = duration;
-		Price = price;
-		Type = type;
-		Document = document;
+		this.Creation_date = creation_date;
+		this.Expiration_date = expiration_date;
+		this.Duration = duration;
+		this.Price = price;
+		this.Type = type;
+		this.Document = document;
 	}
 		
 }

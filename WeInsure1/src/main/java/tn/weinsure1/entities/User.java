@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +15,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -65,7 +69,20 @@ public class User implements Serializable{
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("user")
 	private List<sinister> sinisterList = new ArrayList<>();
+
+	@OneToMany(mappedBy="user")
+    private Set<Contract> contracts;
 	
+	
+
+	public Set<Contract> getContracts() {
+		return contracts;
+	}
+
+	public void setContracts(Set<Contract> contracts) {
+		this.contracts = contracts;
+	}
+
 	public enum UserRole{
 		Insurer,Insured,Administrator}
 
@@ -157,18 +174,7 @@ public class User implements Serializable{
 		this.role = role;
 	}
 
-	/**
-	 * @param idUser
-	 * @param lastname
-	 * @param firstname
-	 * @param birthdate
-	 * @param login
-	 * @param paswword
-	 * @param phonenumber
-	 * @param cin
-	 * @param salary
-	 * @param role
-	 */
+	
 	public User(Long idUser, String lastname, String firstname, Date birthdate, String login, String paswword,
 			Long phonenumber, Long cin, Float salary, UserRole role) {
 		super();
@@ -222,27 +228,7 @@ public class User implements Serializable{
 				+ birthdate + ", login=" + login + ", paswword=" + paswword + ", phonenumber=" + phonenumber + ", cin="
 				+ cin + ", salary=" + salary + ", role=" + role + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 
-
-
-
-
-
+	
 }

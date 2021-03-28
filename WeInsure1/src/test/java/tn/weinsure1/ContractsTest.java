@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -29,26 +28,24 @@ public class ContractsTest {
 	public void TestAddContract() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date d = dateFormat.parse("2020-01-01");
-		Contract c = new Contract (d,d,5,250,ContractType.Personne,null);
+		Date d2 = new Date(); 
+		Contract c = new Contract (d2,d,5,230,ContractType.Personne,null);
 		Contract ContractAdded = ic.AddContract(c);
 		Assert.assertEquals(c.getIdcontract(), ContractAdded.getIdcontract());
 	} 
 	
 	@Test		//Update Contract
 	public void TestUpdateContract() throws ParseException    {
-		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-		Date d = dateFormat.parse("2018-02-02");
-		Contract c = new Contract (d,d,25,235,ContractType.Domamges,null);
+				SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date d = dateFormat.parse("2018-02-02");		
+		Contract c = new Contract (d,d,25,235,ContractType.Dommages,null);
 		Contract ContractUpdated = ic.UpdateContract(c);
 		Assert.assertEquals(c.getType(), ContractUpdated.getType());
 	}
 	
-	@Test		//Delete Contract from keyboard
+	@Test		//Delete Contract 
 	public void TestDeleteContract() {
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
-		Long i = scanner.nextLong();
-		ic.DeleteContract(Long.toString(i)); 
+				ic.DeleteContract("7"); 
 		}
 
 	@Test		//Show all contracts
@@ -57,12 +54,10 @@ public class ContractsTest {
 		System.out.println(contracts);
 	}
 	
-	@Test		//Show contract from keyboard
+	@Test		//Show contract 
 	public void TestRetriveContract() {
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
-		Long i = scanner.nextLong();
-		Contract contract = ic.RetrieveContract(Long.toString(i));
+		Contract contract = ic.RetrieveContract("1");
 		System.out.println(contract);
 	}
+	
 }
