@@ -15,9 +15,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -71,14 +68,23 @@ public class User implements Serializable{
 
 	@OneToMany(mappedBy="user")
     private Set<Contract> contracts;
-	@OneToMany(cascade = CascadeType.ALL)
+	
+	@OneToMany(mappedBy="user")
 	private  Set<Offer> offers ;
 	
 	
 
-	/**
-	 * @param offers
-	 */
+
+	public Set<Offer> getOffers() {
+		return offers;
+	}
+
+
+	public void setOffers(Set<Offer> offers) {
+		this.offers = offers;
+	}
+
+
 	public User(Set<Offer> offers) {
 		super();
 		this.offers = offers;

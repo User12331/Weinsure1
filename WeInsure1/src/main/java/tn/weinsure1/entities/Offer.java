@@ -63,13 +63,14 @@ public class Offer implements Serializable {
 	 private User user;
 	
 	 
-	/**
-	 * @param idOffer
-	 * @param type
-	 * @param expiration_date
-	 * @param description
-	 * @param document
-	 */
+
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public Offer(Long idOffer, String type, Date expiration_date, String description, File document) {
 		super();
 		IdOffer = idOffer;

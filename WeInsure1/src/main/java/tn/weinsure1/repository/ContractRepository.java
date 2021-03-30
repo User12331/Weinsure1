@@ -10,9 +10,9 @@ import tn.weinsure1.entities.Contract;
 
 @Repository
 public interface ContractRepository extends CrudRepository<Contract,Long> {
-
+/*
 	@Query("select c from contract c where cast (c.Date_Creation as string) < %:date%")
     List<Contract> findByYearGreater(@Param("date") String date);
 
-	
+	*/
 }

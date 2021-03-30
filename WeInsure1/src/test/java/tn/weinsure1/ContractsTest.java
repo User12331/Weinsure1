@@ -59,5 +59,11 @@ public class ContractsTest {
 		Contract contract = ic.RetrieveContract("1");
 		System.out.println(contract);
 	}
+	/*
+	@Test
+	public void testfindByYear() {
+
+		List<Contract> cnt = ic.findByYearGreater("2021") ;
+	} */
 	
 }
