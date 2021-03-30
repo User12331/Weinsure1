@@ -64,7 +64,7 @@ public class User implements Serializable{
 	
 	@Enumerated(EnumType.STRING)
     @Column(name="Role")
-	UserRole role;
+	Role role;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("user")
@@ -72,9 +72,20 @@ public class User implements Serializable{
 
 	@OneToMany(mappedBy="user")
     private Set<Contract> contracts;
+	@OneToMany(cascade = CascadeType.ALL)
+	private  Set<Offer> offers ;
 	
 	
 
+	/**
+	 * @param offers
+	 */
+	public User(Set<Offer> offers) {
+		super();
+		this.offers = offers;
+	}
+
+	
 	public Set<Contract> getContracts() {
 		return contracts;
 	}
@@ -82,9 +93,6 @@ public class User implements Serializable{
 	public void setContracts(Set<Contract> contracts) {
 		this.contracts = contracts;
 	}
-
-	public enum UserRole{
-		Insurer,Insured,Administrator}
 
 	public Long getIdUser() {
 		return idUser;
@@ -166,17 +174,17 @@ public class User implements Serializable{
 		this.salary = salary;
 	}
 
-	public UserRole getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(UserRole role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
 	
 	public User(Long idUser, String lastname, String firstname, Date birthdate, String login, String paswword,
-			Long phonenumber, Long cin, Float salary, UserRole role) {
+			Long phonenumber, Long cin, Float salary, Role role) {
 		super();
 		this.idUser = idUser;
 		this.lastname = lastname;
@@ -194,7 +202,7 @@ public class User implements Serializable{
 	
 	
 	public User(String lastname, String firstname, Date birthdate, String login, String paswword, Long phonenumber,
-			Long cin, Float salary, UserRole role, List<sinister> sinisterList) {
+			Long cin, Float salary, Role role, List<sinister> sinisterList) {
 		super();
 		this.lastname = lastname;
 		this.firstname = firstname;
@@ -209,7 +217,7 @@ public class User implements Serializable{
 	}
 
 	public User( String lastname, String firstname, Date birthdate, String login, String paswword,
-			long i, long j, float k, UserRole role) {
+			long i, long j, float k, Role administrator) {
 
 		this.lastname = lastname;
 		this.firstname = firstname;
@@ -219,7 +227,7 @@ public class User implements Serializable{
 		this.phonenumber = i;
 		this.cin = j;
 		this.salary = k;
-		this.role = role;
+		this.role = administrator;
 	}
 
 	@Override

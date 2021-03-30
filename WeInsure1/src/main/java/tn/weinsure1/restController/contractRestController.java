@@ -1,4 +1,5 @@
 package tn.weinsure1.restController;
+/*
 
 import java.util.List;
 
@@ -23,5 +24,5 @@ public class contractRestController {
 		 List<Contract> c = ic.RetrieveAllContracts();
 		 return c;
 		 }
-	 
-}
+	 */
+
