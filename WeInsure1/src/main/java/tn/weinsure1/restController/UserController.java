@@ -17,7 +17,7 @@ import tn.weinsure1.service.IUserService;
 @RestController
 
 public class UserController {
-	@Autowired
+	/*@Autowired
 	IUserService userService;
 
 	// http://localhost:8081/SpringMVC/servlet/retrieve-all-users
@@ -53,7 +53,7 @@ public class UserController {
 	@ResponseBody
 	public User modifyUser(@RequestBody User user) {
 	return userService.UpdateUser(user);
-	}
+	}*/
 	}
 	
 	

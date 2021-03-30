@@ -13,7 +13,7 @@ import tn.weinsure1.entities.User;
 
 public interface UserRepository  extends CrudRepository <User, Long >
 {
-	@Query( "Select u from User u where u.firstname is not null")
+/*	@Query( "Select u from User u where u.firstname is not null")
 	List<User>findByFirstnameNotNull();
 	
 	//recherche par role
