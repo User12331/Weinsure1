@@ -60,8 +60,7 @@ public class User implements Serializable{
 	
 	@Column(name="Salary")
 	private Float salary ;
-	
-	
+
 	@Enumerated(EnumType.STRING)
     @Column(name="Role")
 	Role role;

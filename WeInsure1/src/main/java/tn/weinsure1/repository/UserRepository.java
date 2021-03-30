@@ -13,7 +13,6 @@ import tn.weinsure1.entities.User;
 
 public interface UserRepository  extends CrudRepository <User, Long >
 {
-/*
 	@Query( "Select u from User u where u.firstname is not null")
 	List<User>findByFirstnameNotNull();
 	
@@ -47,6 +46,5 @@ public interface UserRepository  extends CrudRepository <User, Long >
     List<User> findByYear(@Param("date") String date);
 		
 	/*@Query("SELECT u From User u WHERE u.status =:Insured")
-	List<User> findSinisterByRoleInsured();
-*/
+	List<User> findSinisterByRoleInsured();*/
 }
