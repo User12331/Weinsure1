@@ -188,24 +188,37 @@ public class User implements Serializable{
 	}
 
 	
+public User(){
+	super();
+}
+	
+	/**
+	 * @param idUser
+	 * @param lastname
+	 * @param firstname
+	 * @param birthdate
+	 * @param login
+	 * @param paswword
+	 * @param i
+	 * @param j
+	 * @param k
+	 * @param role
+	 */
 	public User(Long idUser, String lastname, String firstname, Date birthdate, String login, String paswword,
-			Long phonenumber, Long cin, Float salary, Role role) {
-		super();
+			long i, long j, float  k, Role role) {
 		this.idUser = idUser;
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.birthdate = birthdate;
 		this.login = login;
 		this.paswword = paswword;
-		this.phonenumber = phonenumber;
-		this.cin = cin;
-		this.salary = salary;
-		
+		this.phonenumber = i;
+		this.cin = j;
+		this.salary = k;
 		this.role = role;
 	}
-	
-	
-	
+
+
 	public User(String lastname, String firstname, Date birthdate, String login, String paswword, Long phonenumber,
 			Long cin, Float salary, Role role, List<sinister> sinisterList) {
 		super();
