@@ -14,6 +14,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
+import tn.weinsure1.entities.sinister;
+import tn.weinsure1.entities.sinisterstatus;
+import tn.weinsure1.entities.typeSinister;
 import tn.weinsure1.service.IContractService;
 
 
@@ -23,7 +26,7 @@ public class ContractsTest {
 
 	@Autowired 
 	IContractService ic;
-	
+	/*
 	@Test		//Add Contract
 	public void TestAddContract() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
@@ -36,11 +39,11 @@ public class ContractsTest {
 	
 	@Test		//Update Contract
 	public void TestUpdateContract() throws ParseException    {
-				SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-		Date d = dateFormat.parse("2018-02-02");		
-		Contract c = new Contract (d,d,25,235,ContractType.Dommages,null);
-		Contract ContractUpdated = ic.UpdateContract(c);
-		Assert.assertEquals(c.getType(), ContractUpdated.getType());
+		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+		Date d = new Date();
+		Contract cnt = new Contract (2L, d,d,3,125,ContractType.Dommages, null );
+		Contract ContractUpdated = ic.UpdateContract(cnt);
+		Assert.assertEquals(cnt.getIdcontract(), ContractUpdated.getIdcontract());
 	}
 	
 	@Test		//Delete Contract 
@@ -59,11 +62,12 @@ public class ContractsTest {
 		Contract contract = ic.RetrieveContract("1");
 		System.out.println(contract);
 	}
-	/*
+	*/
 	@Test
 	public void testfindByYear() {
 
-		List<Contract> cnt = ic.findByYearGreater("2021") ;
-	} */
+		List<Contract> cnt = ic.findByDurationGreater(2) ;
+		System.out.println(cnt);
+	} 
 	
 }

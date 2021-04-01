@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.repository.ContractRepository;
+import tn.weinsure1.repository.TableMortalitéRepository;
 import tn.weinsure1.repository.UserRepository;
 
 
@@ -18,7 +19,9 @@ public class ContractServiceImpl implements IContractService {
 	ContractRepository ContractRepository;
 	@Autowired
 	UserRepository UserRepository;
-	
+	@Autowired
+	TableMortalitéRepository tr ;
+
 	private static final Logger L= LogManager.getLogger(ContractServiceImpl.class);
 	@Override
 	public List<Contract> RetrieveAllContracts(){
@@ -50,12 +53,20 @@ public class ContractServiceImpl implements IContractService {
 		L.info("Contract returned = : " + c);
 		return c;	
 	}
-	/*
+	
 	@Override
-	public List<Contract> findByYearGreater(String year) {
-		List<Contract> cnt = ContractRepository.findByYearGreater(year);
+	public List<Contract> findByDurationGreater(int year) {
+		List<Contract> cnt = ContractRepository.findByDurationGreater(year);
 		L.info("Contract +++ :" + cnt) ;
 		return cnt;
 	}
-	 */
+	 
+	/*
+	@Override
+	public float CapitalVieunique (long id){
+		float prime;
+		float C;
+		float lx = tr.findBySurvivantsLx(ageClient);
+		return prime;
+	}*/
 }

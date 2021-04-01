@@ -11,5 +11,7 @@ public interface IContractService {
 	void DeleteContract(String id);
 	Contract UpdateContract(Contract c);
 	Contract RetrieveContract(String id);
-	//List<Contract> findByYearGreater(String year);
+	List<Contract> findByDurationGreater(int year);
+//	float CapitalVieunique(long id);
+
 }

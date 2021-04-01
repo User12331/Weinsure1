@@ -111,10 +111,20 @@ public class Contract implements Serializable {
 	
 	public Contract() {
 		super();
-		// 
+		
 	}
 
 		
+	public Contract(Long idcontract, Date creation_date, Date expiration_date, int duration, float price,
+			ContractType type, File document) {
+		this.idcontract = idcontract;
+		Creation_date = creation_date;
+		Expiration_date = expiration_date;
+		Duration = duration;
+		Price = price;
+		Type = type;
+		Document = document;
+	}
 	public Contract(Date creation_date, Date expiration_date, int duration, float price, ContractType type,
 			File document) {
 		this.Creation_date = creation_date;
