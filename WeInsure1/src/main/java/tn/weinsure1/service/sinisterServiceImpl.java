@@ -1,24 +1,18 @@
 package tn.weinsure1.service;
-
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List; 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import tn.weinsure1.entities.SendEmailService;
 import tn.weinsure1.entities.SinisterMotif;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.repository.TableMortalitéRepository;
 import tn.weinsure1.repository.sinisterRepository;
-
-
-
 
 @Service
 public class sinisterServiceImpl implements IsinisterService {
@@ -120,7 +114,7 @@ public class sinisterServiceImpl implements IsinisterService {
 			String motif =sinstreRej.get(i).getMotifStatus().toString(); 
 			String date =sinstreRej.get(i).getDateOccurence().toString(); 
 			
-			sendEmailService.sendEmail("yahiabourguiba1997@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
+			sendEmailService.sendEmail("bourguibaahmed06@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
 					+ "de sinistre, envoyée à la date "+date+ " , a été rejetée car cette demande " + motif + ". Merci pour votre compréhension. ", file);	
 		} 
 		} 
@@ -150,8 +144,8 @@ public class sinisterServiceImpl implements IsinisterService {
 			{
 				 L.info("BOUCLE 1:");
 				 SinisterMotif motif=SinisterMotif.depasse5jours;
-				sinsenattente.get(i).setStatus(status);
-				sinsenattente.get(i).setMotifStatus(motif);
+				 sinsenattente.get(i).setStatus(status);
+				 sinsenattente.get(i).setMotifStatus(motif);
 				 sinistreRepository.save(sinsenattente.get(i));
 				 L.info("new sin +++ :" + sinsenattente.get(i)) ;
 
@@ -183,21 +177,13 @@ public class sinisterServiceImpl implements IsinisterService {
 			float dxk= tr.findByDecesDx(ageClient+k); 	
 			L.info("DX " + dxk) ;
 			float lx = tr.findBySurvivantsLx(ageClient);
-			 double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
-			 
-			prime = (float) (capital * v) *  ( dxk / lx) ;
-			
+			 double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );			 
+			prime = (float) (capital * v) *  ( dxk / lx) ;	
 	}
 
 		L.info("PRIME+++++++++ =" + prime) ;
 		return prime;
 	}
-	
-	
-	
-	
-		 
-
 	}
 	
 	

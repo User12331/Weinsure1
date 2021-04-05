@@ -17,7 +17,7 @@ import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
 import tn.weinsure1.service.IContractService;
 
-
+/*
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ContractsTest {
@@ -65,4 +65,4 @@ public class ContractsTest {
 		Contract contract = ic.RetrieveContract(Long.toString(i));
 		System.out.println(contract);
 	}
-}
+}*/

@@ -1,8 +1,6 @@
 package tn.weinsure1.restController;
-
-import java.util.List; 
+import java.util.List;   
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.service.IsinisterService;
-
 @RestController
 public class sinisterrestController {
 	@Autowired

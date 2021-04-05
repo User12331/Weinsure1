@@ -84,6 +84,11 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 		List<sinister> sinistres = is.findByAny("2018") ;
 
 	} 
+	 @Test
+	public void testSendMail() {
+		is.SendMail();
+	}
+	
 
 	
 	

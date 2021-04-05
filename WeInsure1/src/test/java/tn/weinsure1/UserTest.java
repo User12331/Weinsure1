@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import tn.weinsure1.entities.User;
 import tn.weinsure1.entities.User.UserRole;
 import tn.weinsure1.service.IUserService;
-
+/*
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserTest {
@@ -39,3 +39,4 @@ public class UserTest {
 		Assert.assertEquals(u.getIdUser(), UserAdded.getIdUser());
 	} 
 }
+*/

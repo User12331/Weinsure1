@@ -13,8 +13,10 @@ public interface sinisterRepository  extends CrudRepository<sinister, Long> {
 	@Query("SELECT s From sinister s WHERE s.status =:status")
 	List<sinister> findSinisterByStatus(@Param("status")  sinisterstatus sinstatus );
 	
-	@Query("SELECT s From sinister s WHERE s.status =:rejected")
-	List<sinister> findSinisterByStatusRejected();
+	//@Query("SELECT s From sinister s WHERE s.status =:'rejected'")
+	//List<sinister> findSinisterByStatusRejected();
+	@Query("select c from sinister c where c.status = 'rejected' ")
+    List<sinister> findSinisterByStatusRejected();
 	
 	@Query("SELECT s From sinister s WHERE s.description like %:description%")
 	List<sinister> findSinisterByStatuss(@Param("description")  String description );
@@ -27,9 +29,12 @@ public interface sinisterRepository  extends CrudRepository<sinister, Long> {
 	@Query("select c from sinister c where cast (c.dateOccurence as string) like %:date%")
     List<sinister> findByYear(@Param("date") String date);
 		
-    
+  
 		//recherche mixte
 	@Query("select c from sinister c where CONCAT (c.status ,c.description, c.dateOccurence )like  %?1% ")
 	List<sinister> findByAny(String any); 
 
+	
+	
+	
 }
