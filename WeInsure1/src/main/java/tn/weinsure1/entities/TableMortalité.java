@@ -27,5 +27,45 @@ public class TableMortalité  implements Serializable{
 
 		@Column(name="TV99")
 		private float Tv_99;
+
+		public Long getIdTable() {
+			return idTable;
+		}
+
+		public void setIdTable(Long idTable) {
+			this.idTable = idTable;
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public void setX(int x) {
+			this.x = x;
+		}
+
+		public float getTd_99() {
+			return Td_99;
+		}
+
+		public void setTd_99(float td_99) {
+			Td_99 = td_99;
+		}
+
+		public float getTv_99() {
+			return Tv_99;
+		}
+
+		public void setTv_99(float tv_99) {
+			Tv_99 = tv_99;
+		}
+
+		public TableMortalité(int x, float td_99, float tv_99) {
+			this.x = x;
+			Td_99 = td_99;
+			Tv_99 = tv_99;
+		}
+		
+		
 }
 

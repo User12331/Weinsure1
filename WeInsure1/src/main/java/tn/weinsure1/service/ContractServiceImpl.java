@@ -61,12 +61,14 @@ public class ContractServiceImpl implements IContractService {
 		return cnt;
 	}
 	 
-	/*
+	
 	@Override
-	public float CapitalVieunique (long id){
-		float prime;
-		float C;
+	public float CapitalVieUnique (float C,long id, int ageClient,int k, double taux, int n ){
+		float prime =0;
 		float lx = tr.findBySurvivantsLx(ageClient);
+		double v = Math.pow( 1/ (1+taux) , k);
+		prime = (float) (C*(lx+n)/lx * v);
+		L.info("PRIME+++++++++ =" + prime) ;
 		return prime;
-	}*/
+	}
 }
