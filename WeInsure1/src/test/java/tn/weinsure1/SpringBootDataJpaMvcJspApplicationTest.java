@@ -25,12 +25,12 @@ import org.junit.Assert;
 public class SpringBootDataJpaMvcJspApplicationTest {
 	@Autowired 
 	IsinisterService is;
-
+/*
 	@Test
 	public void testRetrieveAllUsers() {
 		List<sinister> sinistres = is.retrieveAllSinistres() ;
 		//Assert.assertEquals(1, sinistres.size()); }
-	}
+	}*/
 	@Test
 	public void testAddSinistre() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
@@ -40,7 +40,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 		Assert.assertEquals(s.getIdSinistre(), sinistreAdded.getIdSinistre());
 
 	} 
-
+/*
 
 	@Test
 	public void testUpdateSinistre() throws ParseException    {
@@ -85,7 +85,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 
 	} 
 
-	
+	*/
 	
 }
     
