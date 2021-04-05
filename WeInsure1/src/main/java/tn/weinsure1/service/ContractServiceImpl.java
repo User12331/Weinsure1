@@ -1,7 +1,6 @@
 package tn.weinsure1.service;
 
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,20 +9,27 @@ import org.springframework.stereotype.Service;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.repository.ContractRepository;
+import tn.weinsure1.repository.TableMortalitéRepository;
+import tn.weinsure1.repository.UserRepository;
 
 
 @Service
 public class ContractServiceImpl implements IContractService {
 	@Autowired
 	ContractRepository ContractRepository;
+	@Autowired
+	UserRepository UserRepository;
+	@Autowired
+	TableMortalitéRepository tr ;
+
 	private static final Logger L= LogManager.getLogger(ContractServiceImpl.class);
 	@Override
 	public List<Contract> RetrieveAllContracts(){
-		List<Contract> users = (List<Contract>) ContractRepository.findAll();
-		for (Contract user : users){
-			L.info("user +++ :" + user);
+		List<Contract> cnts = (List<Contract>) ContractRepository.findAll();
+		for (Contract cnt : cnts){
+			L.info("user +++ :" + cnt);
 		}
-		return users;
+		return cnts;
 	}
 	@Override
 	public Contract AddContract(Contract c) {
@@ -47,4 +53,20 @@ public class ContractServiceImpl implements IContractService {
 		L.info("Contract returned = : " + c);
 		return c;	
 	}
+	
+	@Override
+	public List<Contract> findByDurationGreater(int year) {
+		List<Contract> cnt = ContractRepository.findByDurationGreater(year);
+		L.info("Contract +++ :" + cnt) ;
+		return cnt;
+	}
+	 
+	/*
+	@Override
+	public float CapitalVieunique (long id){
+		float prime;
+		float C;
+		float lx = tr.findBySurvivantsLx(ageClient);
+		return prime;
+	}*/
 }

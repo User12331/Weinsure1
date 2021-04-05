@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -56,18 +57,47 @@ public class User implements Serializable{
 	
 	@Column(name="Salary")
 	private Float salary ;
-	
-	
+
 	@Enumerated(EnumType.STRING)
     @Column(name="Role")
-	UserRole role;
+	Role role;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("user")
 	private List<sinister> sinisterList = new ArrayList<>();
+
+	@OneToMany(mappedBy="user")
+    private Set<Contract> contracts;
 	
-	public enum UserRole{
-		Insurer,Insured,Administrator}
+	@OneToMany(mappedBy="user")
+	private  Set<Offer> offers ;
+	
+	
+
+
+	public Set<Offer> getOffers() {
+		return offers;
+	}
+
+
+	public void setOffers(Set<Offer> offers) {
+		this.offers = offers;
+	}
+
+
+	public User(Set<Offer> offers) {
+		super();
+		this.offers = offers;
+	}
+
+	
+	public Set<Contract> getContracts() {
+		return contracts;
+	}
+
+	public void setContracts(Set<Contract> contracts) {
+		this.contracts = contracts;
+	}
 
 	public Long getIdUser() {
 		return idUser;
@@ -149,14 +179,19 @@ public class User implements Serializable{
 		this.salary = salary;
 	}
 
-	public UserRole getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(UserRole role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 
+	
+public User(){
+	super();
+}
+	
 	/**
 	 * @param idUser
 	 * @param lastname
@@ -164,31 +199,28 @@ public class User implements Serializable{
 	 * @param birthdate
 	 * @param login
 	 * @param paswword
-	 * @param phonenumber
-	 * @param cin
-	 * @param salary
+	 * @param i
+	 * @param j
+	 * @param k
 	 * @param role
 	 */
 	public User(Long idUser, String lastname, String firstname, Date birthdate, String login, String paswword,
-			Long phonenumber, Long cin, Float salary, UserRole role) {
-		super();
+			long i, long j, float  k, Role role) {
 		this.idUser = idUser;
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.birthdate = birthdate;
 		this.login = login;
 		this.paswword = paswword;
-		this.phonenumber = phonenumber;
-		this.cin = cin;
-		this.salary = salary;
-		
+		this.phonenumber = i;
+		this.cin = j;
+		this.salary = k;
 		this.role = role;
 	}
-	
-	
-	
+
+
 	public User(String lastname, String firstname, Date birthdate, String login, String paswword, Long phonenumber,
-			Long cin, Float salary, UserRole role, List<sinister> sinisterList) {
+			Long cin, Float salary, Role role, List<sinister> sinisterList) {
 		super();
 		this.lastname = lastname;
 		this.firstname = firstname;
@@ -203,7 +235,7 @@ public class User implements Serializable{
 	}
 
 	public User( String lastname, String firstname, Date birthdate, String login, String paswword,
-			long i, long j, float k, UserRole role) {
+			long i, long j, float k, Role administrator) {
 
 		this.lastname = lastname;
 		this.firstname = firstname;
@@ -213,7 +245,7 @@ public class User implements Serializable{
 		this.phonenumber = i;
 		this.cin = j;
 		this.salary = k;
-		this.role = role;
+		this.role = administrator;
 	}
 
 	@Override
@@ -222,27 +254,7 @@ public class User implements Serializable{
 				+ birthdate + ", login=" + login + ", paswword=" + paswword + ", phonenumber=" + phonenumber + ", cin="
 				+ cin + ", salary=" + salary + ", role=" + role + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 
-
-
-
-
-
+	
 }
