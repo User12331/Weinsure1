@@ -27,7 +27,7 @@ public class UserController {
 	// http://localhost:8081/SpringMVC/servlet/retrieve-all-users
 	@GetMapping("/retrieve-all-users")
 	@ResponseBody
-	public List<User> getUsers() {
+	public List<User> getUsers() { 
 	List<User> list = userService.RetrieveAllUsers();
 	return list;
 	}

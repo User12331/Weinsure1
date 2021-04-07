@@ -127,7 +127,7 @@ public class AuthController {
 					roles.add(userRole);
 				}
 			});
-		}
+		} 
 
 		user.setRoles(roles);
 		userRepository.save(user);

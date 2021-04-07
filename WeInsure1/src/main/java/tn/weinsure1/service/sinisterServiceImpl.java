@@ -231,7 +231,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		LocalDate localDate = LocalDate.now();
 		int years = localDate.getYear()-bdate.getYear();
 		float cd = 0; 
-		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		int s = findcontractdurationBysinister(u.getId()) ; 
 		for (k =0; k < s-1; k++) {
 			float dxk= tr.findByDecesDx(years+k); 	
 			L.info("DX " + dxk) ;
@@ -255,7 +255,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		LocalDate localDate = LocalDate.now();
 		int years = localDate.getYear()-bdate.getYear();
-		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		int s = findcontractdurationBysinister(u.getId()) ; 
 		for (k1 =0; k1 < s-1; k1++) {
 			float lxk= tr.findBySurvivantsLx(years+k1); 	
 			L.info("DX " + lxk) ;
@@ -291,7 +291,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		LocalDate localDate = LocalDate.now();
 		int years = localDate.getYear()-bdate.getYear();
 		float crd = 0 , crd1 = 0 , tde = 0; 
-		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		int s = findcontractdurationBysinister(u.getId()) ; 
 		for (k =0; k < ((s-1)*12) ; k++) {
 			 double v = Math.pow((1+(taux/12)) ,  s*12 );
 			 double l = Math.pow( 1/ (1+(taux/12)) ,  s*12 - 1 );

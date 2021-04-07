@@ -31,7 +31,7 @@ import org.junit.Assert;
 @SpringBootTest
 public class SpringBootDataJpaMvcJspApplicationTest {
 	@Autowired 
-	IsinisterService is;
+	IsinisterService is; 
    @Autowired 
    ITableMortaliteService tr; 
    private static final Logger L = LogManager.getLogger(sinisterServiceImpl.class);

@@ -29,7 +29,7 @@ public class Role {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 
 	public ERole getName() {
 		return name;

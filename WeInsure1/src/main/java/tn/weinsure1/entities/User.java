@@ -41,7 +41,6 @@ public class User  implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="IdUser")
 	private Long id;
-
 	@NotBlank
 	@Size(max = 20)
 	private String username;
