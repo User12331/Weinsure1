@@ -53,43 +53,8 @@ public class TableMortalité  implements Serializable{
 			super();
 		}
 
-		public Long getIdTable() {
-			return idTable;
-		}
-
-		public void setIdTable(Long idTable) {
-			this.idTable = idTable;
-		}
-
-		public int getX() {
-			return x;
-		}
-
-		public void setX(int x) {
-			this.x = x;
-		}
-
-		public float getTd_99() {
-			return Td_99;
-		}
-
-		public void setTd_99(float td_99) {
-			Td_99 = td_99;
-		}
-
-		public float getTv_99() {
-			return Tv_99;
-		}
-
-		public void setTv_99(float tv_99) {
-			Tv_99 = tv_99;
-		}
 		
-		
-		
-		
-=======
-
+	
 		public Long getIdTable() {
 			return idTable;
 		}
@@ -127,7 +92,7 @@ public class TableMortalité  implements Serializable{
 			Td_99 = td_99;
 			Tv_99 = tv_99;
 		}
->>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
+
 		
 		
 }

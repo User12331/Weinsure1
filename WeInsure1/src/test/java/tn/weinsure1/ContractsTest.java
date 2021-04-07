@@ -74,8 +74,7 @@ public class ContractsTest {
 <<<<<<< HEAD
 }*/
 	
-=======
-	*/
+
 	/*@Test
 	public void testfindByYear() {
 
@@ -206,11 +205,11 @@ public class ContractsTest {
 		TableMortalité t119=new TableMortalité(119,0,0);	TableMortalité tm119=tr.Addtm(t119);	Assert.assertEquals(t119.getIdTable(),tm119.getIdTable());
 
 	} */
-	@Test
+/*	@Test
 	public void testcalcul (){
 		float cnt = ic.CapitalVieUnique(5000,1,50,4,12,20);
 		System.out.println(cnt);	
 	}
 	
 }
->>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
+*/

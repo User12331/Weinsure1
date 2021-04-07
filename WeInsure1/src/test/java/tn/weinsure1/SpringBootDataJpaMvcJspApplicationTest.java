@@ -29,7 +29,6 @@ import org.junit.Assert;
 public class SpringBootDataJpaMvcJspApplicationTest {
 	@Autowired 
 	IsinisterService is;
-<<<<<<< HEAD
    @Autowired 
    ITableMortaliteService tr; 
  /*
@@ -374,9 +373,9 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 			TableMortalité t119=new TableMortalité(0,0,120,0f);	TableMortalité tm119=tr.Addtm(t119);
 		}
 		*/
-=======
-	*/
->>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
+
+	
+
 	
 }
     

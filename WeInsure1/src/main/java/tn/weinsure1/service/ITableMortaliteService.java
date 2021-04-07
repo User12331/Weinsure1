@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package tn.weinsure1.service;
 
 import tn.weinsure1.entities.TableMortalité;
@@ -22,4 +21,4 @@ public interface ITableMortaliteService {
 	TableMortalité Addtm(TableMortalité t);
 
 }
->>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
+

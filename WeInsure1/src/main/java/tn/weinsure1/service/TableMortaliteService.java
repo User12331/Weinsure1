@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 package tn.weinsure1.service;
 
 import java.util.List;
@@ -93,4 +93,3 @@ public class TableMortaliteService implements ITableMortaliteService {
 		return tm;
 	}
 }
->>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
