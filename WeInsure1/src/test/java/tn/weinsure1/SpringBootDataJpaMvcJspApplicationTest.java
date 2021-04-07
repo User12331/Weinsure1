@@ -29,14 +29,18 @@ import org.junit.Assert;
 public class SpringBootDataJpaMvcJspApplicationTest {
 	@Autowired 
 	IsinisterService is;
+<<<<<<< HEAD
    @Autowired 
    ITableMortaliteService tr; 
  /*
+=======
+/*
+>>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
 	@Test
 	public void testRetrieveAllUsers() {
 		List<sinister> sinistres = is.retrieveAllSinistres() ;
 		//Assert.assertEquals(1, sinistres.size()); }
-	}
+	}*/
 	@Test
 	public void testAddSinistre() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
@@ -46,7 +50,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 		Assert.assertEquals(s.getIdSinistre(), sinistreAdded.getIdSinistre());
 
 	} 
-
+/*
 
 	@Test
 	public void testUpdateSinistre() throws ParseException    {
@@ -217,6 +221,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 			TableMortalité t118=new TableMortalité(118,0,0);	TableMortalité tm118=tr.Addtm(t118);	Assert.assertEquals(t118.getIdTable(),tm118.getIdTable());
 			TableMortalité t119=new TableMortalité(119,0,0);	TableMortalité tm119=tr.Addtm(t119);	Assert.assertEquals(t119.getIdTable(),tm119.getIdTable());
 
+<<<<<<< HEAD
 		}*/
 	 /*
 	 @Test
@@ -369,6 +374,9 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 			TableMortalité t119=new TableMortalité(0,0,120,0f);	TableMortalité tm119=tr.Addtm(t119);
 		}
 		*/
+=======
+	*/
+>>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
 	
 }
     

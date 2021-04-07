@@ -12,6 +12,6 @@ public interface IContractService {
 	Contract UpdateContract(Contract c);
 	Contract RetrieveContract(String id);
 	List<Contract> findByDurationGreater(int year);
-//	float CapitalVieunique(long id);
+	float CapitalVieUnique(float C, long id, int ageClient, int k, double taux, int n);
 
 }
