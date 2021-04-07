@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.ContractType;
+import tn.weinsure1.entities.TableMortalité;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.entities.typeSinister;
@@ -26,6 +27,7 @@ public class ContractsTest {
 
 	@Autowired 
 	IContractService ic;
+	
 	/*
 	@Test		//Add Contract
 	public void TestAddContract() throws ParseException    {
@@ -64,14 +66,4 @@ public class ContractsTest {
 	}
 <<<<<<< HEAD
 }*/
-=======
-	*/
-	@Test
-	public void testfindByYear() {
-
-		List<Contract> cnt = ic.findByDurationGreater(2) ;
-		System.out.println(cnt);
-	} 
 	
-}
->>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git

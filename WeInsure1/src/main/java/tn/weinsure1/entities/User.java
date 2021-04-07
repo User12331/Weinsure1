@@ -63,7 +63,6 @@ public class User implements Serializable{
 	Role role;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("user")
 	private List<sinister> sinisterList = new ArrayList<>();
 
 	@OneToMany(mappedBy="user")
@@ -247,6 +246,25 @@ public User(){
 		this.salary = k;
 		this.role = administrator;
 	}
+
+	public User(Date birthdate) {
+		super();
+		this.birthdate = birthdate;
+	}
+
+
+	public User(Long idUser) {
+		super();
+		this.idUser = idUser;
+	}
+
+
+	public User(Long idUser, Date birthdate) {
+		super();
+		this.idUser = idUser;
+		this.birthdate = birthdate;
+	}
+
 
 	@Override
 	public String toString() {

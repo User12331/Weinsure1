@@ -34,6 +34,11 @@ public interface sinisterRepository  extends CrudRepository<sinister, Long> {
 	@Query("select c from sinister c where CONCAT (c.status ,c.description, c.dateOccurence )like  %?1% ")
 	List<sinister> findByAny(String any); 
 
+	@Query("select c from sinister c where c.user.idUser =:idd")
+	List<sinister> findbyuserid(@Param("idd") Long id);
+	
+	@Query("select c.Duration from Contract c where c.user.idUser =:idd")
+	int findcontractdurationBysinister(@Param("idd") Long id2);
 	
 	
 	

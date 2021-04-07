@@ -64,7 +64,7 @@ public class UserTest {
 		List<User> users= iu.RetrieveAllUsers() ;
 		System.out.println(users);
 	}
-	*/
+	*//*
 	@Test		//Show User 
 	public void TestRetriveUser() {
 		User user = iu.RetrieveUser("1");
@@ -79,5 +79,4 @@ public class UserTest {
 		List<User> u = iu.findByYearGreater("2021") ;
 	} */
 	
-}
-*/
+

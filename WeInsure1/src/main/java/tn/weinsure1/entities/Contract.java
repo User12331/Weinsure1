@@ -134,5 +134,11 @@ public class Contract implements Serializable {
 		this.Type = type;
 		this.Document = document;
 	}
+	public Contract(float price, User user) {
+		super();
+		Price = price;
+		this.user = user;
+	}
 		
+	
 }
