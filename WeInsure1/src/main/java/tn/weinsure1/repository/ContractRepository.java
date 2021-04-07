@@ -17,6 +17,8 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
 	@Query("SELECT c from Contract c WHERE c.Duration > :Duration ORDER By c.Duration asc ")
 	List<Contract> findByDurationGreater(@Param("Duration") int Duration);
 	
+	@Query("Select "
+			+ "DISTINCT SUM(cnt.Price) from Contract cnt ")
+	public float TotalPricing();
 	
-	// 
 }
