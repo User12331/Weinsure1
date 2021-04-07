@@ -21,7 +21,7 @@ import tn.weinsure1.service.IUserService;
 public class UserController {
 	
 	
-	/*@Autowired
+	@Autowired
 	IUserService userService;
 
 	// http://localhost:8081/SpringMVC/servlet/retrieve-all-users
@@ -31,6 +31,7 @@ public class UserController {
 	List<User> list = userService.RetrieveAllUsers();
 	return list;
 	}
+	/*
 	// http://localhost:8081/SpringMVC/servlet/retrieve-user/{user-id}
 	@GetMapping("/retrieve-user/{user-id}")
 	@ResponseBody
