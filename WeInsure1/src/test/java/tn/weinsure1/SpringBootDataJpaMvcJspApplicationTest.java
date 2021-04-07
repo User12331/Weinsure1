@@ -45,7 +45,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 		//Assert.assertEquals(1, sinistres.size()); }
 	}*/
    /*s
-	@Test
+	@Tests
 	public void testAddSinistre() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date d = dateFormat.parse("2018-02-02");
