@@ -13,5 +13,9 @@ public interface TableMortalitéRepository  extends CrudRepository<TableMortalit
 
 	@Query("select t.Tv_99 from TableMortalité t where t.x = ?1 ")
 	float findByDecesDx(int deces);
+	
+	@Query("select t.proba from TableMortalité t where t.x = ?1 ")
+	float findProbaByAgeClient(int ageClient);
+
 
 }

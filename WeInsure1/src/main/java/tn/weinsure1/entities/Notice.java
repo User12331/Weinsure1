@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Notice")
 public class Notice implements Serializable {
@@ -27,6 +29,7 @@ public class Notice implements Serializable {
 	@Column(name="Description")
 	private String description;
 
+	@JsonIgnore
 	@OneToOne(mappedBy="notice")
 	private Contraint contraint ;
 	
@@ -66,6 +69,10 @@ public class Notice implements Serializable {
 		super();
 		this.note = note;
 		this.description = description;
+	}
+
+	public Notice() {
+		super();
 	}
 	
 	

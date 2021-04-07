@@ -26,8 +26,10 @@ public class Offer implements Serializable {
 	private Date Expiration_date;
 	@Column(name="Description")
 	private String Description;
-	@Column(name="Document")
-	private File Document;
+	@Column(name="score_min")
+	private int score_min;
+	@Column(name="score_max")
+	private int score_max;
 	public Long getIdOffer() {
 		return IdOffer;
 	}
@@ -52,12 +54,20 @@ public class Offer implements Serializable {
 	public void setDescription(String description) {
 		Description = description;
 	}
-	public File getDocument() {
-		return Document;
+
+	public int getScore_min() {
+		return score_min;
 	}
-	public void setDocument(File document) {
-		Document = document;
+	public void setScore_min(int score_min) {
+		this.score_min = score_min;
 	}
+	public int getScore_max() {
+		return score_max;
+	}
+	public void setScore_max(int score_max) {
+		this.score_max = score_max;
+	}
+
 	@ManyToOne
 	 @JoinColumn(name="IdUser")
 	 private User user;
@@ -71,13 +81,14 @@ public class Offer implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Offer(Long idOffer, String type, Date expiration_date, String description, File document) {
+	public Offer(Long idOffer, String type, Date expiration_date, String description, int scoremin, int scoremax) {
 		super();
 		IdOffer = idOffer;
 		Type = type;
 		Expiration_date = expiration_date;
 		Description = description;
-		Document = document;
+		score_min = scoremin;
+		score_max = scoremax;
 	}
 	/**
 	 * 

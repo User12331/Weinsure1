@@ -1,5 +1,5 @@
 package tn.weinsure1.entities;
 
 public enum ContractType {
-Personne, Dommages
+Personne, Dommages, Décès, Vie
 }

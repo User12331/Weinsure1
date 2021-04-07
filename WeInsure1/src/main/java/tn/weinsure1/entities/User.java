@@ -12,6 +12,22 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -61,9 +77,10 @@ public class User  implements Serializable {
 	private Set<Role> roles = new HashSet<>();
 ////////////////////////////////////////////////////////////////////
 	
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("user")
 	private List<sinister> sinisterList = new ArrayList<>();
+
 /////////////////////////////////////////////////////////////////
 @OneToMany(mappedBy="user")
 private Set<Contract> contracts;
@@ -71,8 +88,21 @@ private Set<Contract> contracts;
 @OneToMany(mappedBy="user")
 private  Set<Offer> offers ;
 ////////////////////////////////////////////////////////////////
-	
-	
+
+
+	@JsonIgnore
+	//@JsonBackReference
+	@OneToOne
+	@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
+	private Contraint contraint;
+
+
+
+	public User(Set<Offer> offers) {
+		super();
+		this.offers = offers;
+	}
+
 	
 public Long getId() {
 		return id;

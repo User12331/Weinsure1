@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -53,8 +54,8 @@ public class sinister implements Serializable{
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idUser",referencedColumnName="IdUser")
 	@JsonIgnoreProperties("sinisterList")
+	@JsonIgnore
 	private User user;
-
 
 
 	

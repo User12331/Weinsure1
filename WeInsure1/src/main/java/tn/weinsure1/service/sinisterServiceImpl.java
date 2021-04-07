@@ -1,24 +1,35 @@
 package tn.weinsure1.service;
-
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List; 
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.SendEmailService;
 import tn.weinsure1.entities.SinisterMotif;
+import tn.weinsure1.entities.User;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
+import tn.weinsure1.repository.ContractRepository;
 import tn.weinsure1.repository.TableMortalitéRepository;
+import tn.weinsure1.repository.UserRepository;
 import tn.weinsure1.repository.sinisterRepository;
-
-
-
 
 @Service
 public class sinisterServiceImpl implements IsinisterService {
@@ -31,15 +42,21 @@ public class sinisterServiceImpl implements IsinisterService {
 
 	@Autowired     
 	sinisterRepository sinistreRepository ;
+	@Autowired
 	TableMortalitéRepository tr ;
+	@Autowired
+	UserRepository ur ;
+	@Autowired
+	ContractRepository cr ;
 	private static final Logger L = LogManager.getLogger(sinisterServiceImpl.class);
 	
 	@Override
-	public sinister addSinistre(sinister s) {
-		sinister sinistreSaved = null;
-		sinistreSaved = sinistreRepository.save(s);
+	public sinister addSinistre(sinister s , Long id ) {
+		User u=ur.findById(id).get();
+		s.setUser(u);
+		sinistreRepository.save(s);
 		
-		return sinistreSaved;
+		return s;
 	
 	}
 	@Override
@@ -120,7 +137,7 @@ public class sinisterServiceImpl implements IsinisterService {
 			String motif =sinstreRej.get(i).getMotifStatus().toString(); 
 			String date =sinstreRej.get(i).getDateOccurence().toString(); 
 			
-			sendEmailService.sendEmail("yahiabourguiba1997@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
+			sendEmailService.sendEmail("bourguibaahmed06@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
 					+ "de sinistre, envoyée à la date "+date+ " , a été rejetée car cette demande " + motif + ". Merci pour votre compréhension. ", file);	
 		} 
 		} 
@@ -134,7 +151,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		Calendar currentdate = Calendar.getInstance(); 
 		Date d = currentdate.getTime();  
 		
-		currentdate.add(Calendar.DAY_OF_MONTH, -5);
+		currentdate.add(Calendar.DAY_OF_MONTH,-5);
 		Date d1= currentdate.getTime();
 	
 	
@@ -150,8 +167,8 @@ public class sinisterServiceImpl implements IsinisterService {
 			{
 				 L.info("BOUCLE 1:");
 				 SinisterMotif motif=SinisterMotif.depasse5jours;
-				sinsenattente.get(i).setStatus(status);
-				sinsenattente.get(i).setMotifStatus(motif);
+				 sinsenattente.get(i).setStatus(status);
+				 sinsenattente.get(i).setMotifStatus(motif);
 				 sinistreRepository.save(sinsenattente.get(i));
 				 L.info("new sin +++ :" + sinsenattente.get(i)) ;
 
@@ -176,29 +193,175 @@ public class sinisterServiceImpl implements IsinisterService {
 	
 	
 	@Override
-	public float calcul(float capital , int ageClient, int AgeMax, double taux){
+	public float CVE(double taux  , User u , Contract c , double AgeMax){
+		int k;
+		float prime = 0 ; 
+		float cd = 0  ;
+		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate localDate = LocalDate.now();
+		int years = localDate.getYear()-bdate.getYear();
+		for (k =0; k < AgeMax - years; k++) {
+			float dxk= tr.findByDecesDx(years+k); 	
+			L.info("DX " + dxk) ;
+			float lx = tr.findBySurvivantsLx(years);
+			 double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );			 
+			prime = (float) (v) *  ( dxk / lx) ;	
+	}
+		cd= c.getPrice() / prime ; 
+		L.info("PRIME+++++++++ =" + cd) ;
+		return cd;
+	}
+	
+	public List<sinister> findbyuserid(Long id) {
+		List<sinister> sins = sinistreRepository.findbyuserid(id);
+		L.info("sinister +++ :" + sins) ;
+		return sins;
+	}
+	public int findcontractdurationBysinister(Long id2) {
+		int k = sinistreRepository.findcontractdurationBysinister(id2);
+		L.info("sinister +++ :" + k) ;
+		return k;
+	}
+	
+	@Override
+	public float CapitalCasDéces(double taux  , User u , Contract c  ) throws ParseException {
 		int k;
 		float prime = 0;
-		for (k =0; k < AgeMax - ageClient; k++) {
-			float dxk= tr.findByDecesDx(ageClient+k); 	
+		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate localDate = LocalDate.now();
+		int years = localDate.getYear()-bdate.getYear();
+		float cd = 0; 
+		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		for (k =0; k < s-1; k++) {
+			float dxk= tr.findByDecesDx(years+k); 	
 			L.info("DX " + dxk) ;
-			float lx = tr.findBySurvivantsLx(ageClient);
-			 double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );
-			 
-			prime = (float) (capital * v) *  ( dxk / lx) ;
-			
+			float lx = tr.findBySurvivantsLx(years);
+			 double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );			 
+			prime = (float) (v) *  ( dxk / lx) ;	
+								 }
+		 cd = c.getPrice() / prime ; 
+		L.info("PRIME+++++++++ =" + cd) ;
+		return cd;
+	}
+	
+	
+	
+	
+	@Override
+	public float CapitalDécesPeriodique(double taux  , User u , Contract c  ) throws ParseException {
+		int k1,k2;
+		float prime1 = 0 , prime = 0;
+		float cd = 0 ;
+		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate localDate = LocalDate.now();
+		int years = localDate.getYear()-bdate.getYear();
+		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		for (k1 =0; k1 < s-1; k1++) {
+			float lxk= tr.findBySurvivantsLx(years+k1); 	
+			L.info("DX " + lxk) ;
+			float lx = tr.findBySurvivantsLx(years);
+			 double v = Math.pow( 1/ (1+taux) ,  k1   );	
+			 double p = c.getPrice() * (( ( Math.pow((1 + taux) , (years + 1)) - 1 ) / years ) ) ; 
+				L.info("DX " + p) ;
+			prime1 = (float) (p * v) *  ( lxk / lx) ;	
 	}
 
+		for (k2 =0; k2 < s-1; k2++) {
+			float lxk= tr.findByDecesDx(years+k2); 	
+			L.info("DX " + lxk) ;
+			float lx = tr.findBySurvivantsLx(years);
+			 double v = Math.pow( 1/ (1+taux) ,  k2 +(1/2)   );	
+			// double p = c.getPrice() * (( ( Math.pow((1 + taux) , (years + 1)) - 1 ) / years ) - 1) ; 
+			prime = (float) (v) *  ( lxk / lx) ;	
+	}
 		L.info("PRIME+++++++++ =" + prime) ;
-		return prime;
+		L.info("PRIME1+++++++++ =" + prime1) ;
+		cd = prime1 / prime ;
+		
+		L.info("PRIME+++++++++ =" + cd) ;
+		return cd;
 	}
 	
 	
+	public float TDEMPRUNTEUR(double taux  , User u , Contract c  ) {
 	
-	
-		 
+		int k;
+		float prime = 0;
+		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		LocalDate localDate = LocalDate.now();
+		int years = localDate.getYear()-bdate.getYear();
+		float crd = 0 , crd1 = 0 , tde = 0; 
+		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		for (k =0; k < ((s-1)*12) ; k++) {
+			 double v = Math.pow((1+(taux/12)) ,  s*12 );
+			 double l = Math.pow( 1/ (1+(taux/12)) ,  s*12 - 1 );
+			prime = ((float) (v) * c.getPrice()) - (float)(v) ;	
+			crd = (float) (prime / l) ; 
+			crd1 = (float) (crd / Math.pow( (1+taux) , k )) ; 
+			L.info("crd1+++++++++ =" + crd1) ;
+			float lxk= tr.findProbaByAgeClient(years); 
+			L.info("lxk+++++++++ =" + lxk) ;
+			tde = crd1*lxk ; 
+									      }
+		L.info("PRIME+++++++++ =" + tde) ;
+		return tde;
+		
+	}
+	public void affecterUserSinister(Long SinId , Long UserId){
+		User u  = ur.findById(UserId).get();
+	    sinister s =  sinistreRepository.findById(SinId).get();
+	    s.setUser(u);
+	    sinistreRepository.save(s);	
+	}
+	@Transactional	
+	public void affecterSinisterUser(Long SinId, Long userId) {
+		User u = ur.findById(userId).get();
+		sinister s = sinistreRepository.findById(SinId).get();
+
+		if(s.getUser() == null){
+
+			List<User> urs = new ArrayList<>();
+			urs.add(u);
+			s.setUser(u);
+		}else{
+
+			s.setUser(u);
+
+		}
 
 	}
+	public String findSinisterDescriptionwithUR( Long id)
+	{ 
+		String k = sinistreRepository.findSinisterDescriptionwithUR(id);
+		L.info("description +++ :" + k) ;
+		return k;
+		
+	}
+	public double CreditSimulator( double taux , Long idu, Long idc) {
+		
+		
+		User u= ur.findById(idu).get();
+		Contract c=cr.findById(idc).get();
+		//Long id=(Long)session.getAttribute("name");	 
+		int dur=c.getDuration();
+		double Montant= u.getSalary()*0.8;
+		double a = Math.pow((1+taux),-dur);
+		double mfy=Montant*(taux/(1-a));
+		return mfy ; 
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	}
+	
+	
+	
+	
 	
 	
 	

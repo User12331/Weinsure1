@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Contraint")
@@ -43,10 +46,40 @@ public class Contraint implements Serializable {
 	@Enumerated(EnumType.STRING)
 	ContraintType type;
 
+	@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="IDNotice")
 	private Notice notice ;
 	
+	
+	@JsonIgnore
+	@OneToOne(mappedBy="contraint" , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private User user;
+	
+	public Contraint() {
+		super();
+	}
+
+	public Contraint(int state, String description, File documents, Date datecontraint, ContraintType type,
+			Notice notice, User user) {
+		super();
+		this.state = state;
+		this.description = description;
+		this.documents = documents;
+		this.datecontraint = datecontraint;
+		this.type = type;
+		this.notice = notice;
+		this.user = user;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public Notice getNotice() {
 		return notice;
 	}

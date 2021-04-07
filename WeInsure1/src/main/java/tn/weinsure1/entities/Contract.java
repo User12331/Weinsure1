@@ -5,11 +5,12 @@ import java.io.Serializable;
 
 import java.util.Date;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,8 +41,10 @@ public class Contract implements Serializable {
 	@Column(name="Price")
 	private float Price;
 	@Enumerated(EnumType.STRING)
-	@Column (name="Type")
+	@Column (name="Type",nullable=false)
 	ContractType Type;
+	@Column(name="Rate",nullable=false)
+	private float rate;
 	@Column(name="Document")
 	private File Document;
 	
@@ -89,8 +92,8 @@ public class Contract implements Serializable {
 		Document = document;
 	}
 	
-	 @ManyToOne
-	 @JoinColumn(name="IdUser")
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "idUser",referencedColumnName="IdUser")
 	 private User user;
 	
 	 
@@ -111,18 +114,19 @@ public class Contract implements Serializable {
 	
 	public Contract() {
 		super();
-		// 
-	}
-
 		
-	public Contract(Date creation_date, Date expiration_date, int duration, float price, ContractType type,
-			File document) {
-		this.Creation_date = creation_date;
+	}
+	public Contract(Date expiration_date, float price, ContractType type, File document) {
 		this.Expiration_date = expiration_date;
-		this.Duration = duration;
 		this.Price = price;
 		this.Type = type;
 		this.Document = document;
 	}
+	public Contract(float price, User user) {
+		super();
+		Price = price;
+		this.user = user;
+	}
 		
+	
 }

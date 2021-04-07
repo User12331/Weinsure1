@@ -11,5 +11,8 @@ public interface IContractService {
 	void DeleteContract(String id);
 	Contract UpdateContract(Contract c);
 	Contract RetrieveContract(String id);
-	//List<Contract> findByYearGreater(String year);
+	List<Contract> findByDurationGreater(int year);
+	float CapitalVieUnique(float C, int ageClient, double taux, int duree);
+	void ContractToUser(long cntID, long userID);
+	float TotalPricing();
 }

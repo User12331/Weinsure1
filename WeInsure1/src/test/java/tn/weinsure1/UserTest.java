@@ -20,7 +20,7 @@ import tn.weinsure1.entities.typeSinister;
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.Role;
 import tn.weinsure1.service.IUserService;
-
+/*
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserTest {
@@ -64,7 +64,7 @@ public class UserTest {
 		List<User> users= iu.RetrieveAllUsers() ;
 		System.out.println(users);
 	}
-	*/
+	*//*
 	@Test		//Show User 
 	public void TestRetriveUser() {
 		User user = iu.RetrieveUser("1");
@@ -80,4 +80,4 @@ public class UserTest {
 		List<User> u = iu.findByYearGreater("2021") ;
 	} */
 	
-}
+
