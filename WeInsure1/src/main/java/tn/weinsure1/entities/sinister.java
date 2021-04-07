@@ -54,6 +54,7 @@ public class sinister implements Serializable{
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idUser",referencedColumnName="IdUser")
 	@JsonIgnoreProperties("sinisterList")
+	@JsonIgnore
 	private User user;
 
 

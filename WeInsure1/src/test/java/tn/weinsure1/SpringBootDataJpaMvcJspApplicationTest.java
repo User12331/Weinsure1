@@ -20,7 +20,10 @@ import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.entities.typeSinister;
 import tn.weinsure1.service.ITableMortaliteService;
 import tn.weinsure1.service.IsinisterService;
+import tn.weinsure1.service.sinisterServiceImpl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 
 
@@ -31,6 +34,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 	IsinisterService is;
    @Autowired 
    ITableMortaliteService tr; 
+   private static final Logger L = LogManager.getLogger(sinisterServiceImpl.class);
  /*
 =======
 /*
@@ -40,6 +44,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 		List<sinister> sinistres = is.retrieveAllSinistres() ;
 		//Assert.assertEquals(1, sinistres.size()); }
 	}*/
+   /*s
 	@Test
 	public void testAddSinistre() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
@@ -234,11 +239,13 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 		 List<sinister> sinistres = is.findbyuserid(10L);	
 		}
 		*/
-   /*
+   
 	 @Test
 		public void test33() {
-		 int k = is.findcontractdurationBysinister(10L);	
-		}*/
+		 String k = is.findSinisterDescriptionwithUR(5L);
+		 L.info("description +++ :" + k) ;
+		}
+	 /*
 	 @Test
 		public void test334() throws ParseException {
 		 SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");

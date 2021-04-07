@@ -1,6 +1,6 @@
 package tn.weinsure1.repository;
 
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,7 +15,7 @@ public interface sinisterRepository  extends CrudRepository<sinister, Long> {
 	
 	//@Query("SELECT s From sinister s WHERE s.status =:'rejected'")
 	//List<sinister> findSinisterByStatusRejected();
-	@Query("select c from sinister c where c.status = 'rejected' ")
+	@Query("select c from sinister c where c.status = 'enAttente' ")
     List<sinister> findSinisterByStatusRejected();
 	
 	@Query("SELECT s From sinister s WHERE s.description like %:description%")
@@ -39,6 +39,10 @@ public interface sinisterRepository  extends CrudRepository<sinister, Long> {
 	
 	@Query("select c.Duration from Contract c where c.user.idUser =:idd")
 	int findcontractdurationBysinister(@Param("idd") Long id2);
+	
+	@Query("select c.description from sinister c  JOIN c.user u Join u.contraint s where s.idcontraint =:idd ")
+	String findSinisterDescriptionwithUR(@Param("idd") Long id);
+	
 	
 	
 	

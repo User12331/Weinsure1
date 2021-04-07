@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import tn.weinsure1.entities.User;
 import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.service.ITableMortaliteService;
@@ -42,21 +45,11 @@ public class sinisterrestController {
 		 int s = sr.findcontractdurationBysinister(id);
 		 return s;
 		 } 
-		 /*
-		//*http://localhost:8087/SpringMVC/servlet/retrieve-sinistre/{sinistre-id}
-		  @GetMapping("/sinister-user/{sinister-id}")
-		  @ResponseBody
-		  public sinister retrieveUser(@PathVariable("sinistre-id") Long sinisterid) {
-			 
-		  return sr.retrieveSinistre(sinisterid.toString());
-		  }
-		  */
-
 		 // Ajouter sinister : http://localhost:8000/SpringMVC/servlet/add-sinistre
-		  @PostMapping("/add-sinistre")
+		  @PostMapping("/add-sinistre/{id}")
 		  @ResponseBody
-		  public sinister addSinister(@RequestBody sinister s) {
-		  return sr.addSinistre(s);
+		  public sinister addSinister(@RequestBody sinister s, @PathVariable Long id) {
+		  return sr.addSinistre(s,id);
 		  
 		  }
 		  @GetMapping("/calcul/{capital}/{ageClient}/{AgeMax}/{taux}")
@@ -75,19 +68,26 @@ public class sinisterrestController {
 				L.info("PRIME+++++++++ =" + prime) ;
 				return prime;
 			}
-		  /*
-		// http://localhost:8081/SpringMVC/servlet/remove-user/{user-id}
-		   @DeleteMapping("/remove-user/{user-id}")
-		   @ResponseBody
-		   public void removeUser(@PathVariable("user-id") user userId) {
-		   userService.deleteUser(userId);
-		   }
+		  //http://localhost:8000/SpringMVC/servlet/aff-sinistre/10/10
+		  @PutMapping(value = "/aff-sinistre/{idSin}/{idUser}") 
+		  public void affecterEmployeADepartement(@PathVariable("idSin")Long idSin, @PathVariable("idUser")Long idUser) {
+		  sr.affecterSinisterUser(idSin, idUser);
+		  }
+		  @GetMapping("/creditsimul/{taux}/{idU}/{idC}")
+		  @ResponseBody
+		  public float creditsimul(@PathVariable("taux") double taux , @PathVariable("idU") Long idU, @PathVariable("idC") Long idC){
+				float k = 0 ;
+				k = (float) sr.CreditSimulator(taux, idU, idC) ; 
+				return k ;
+			  
+			}
+		     @PutMapping("/CheckStatus")
+			 public void checkStatus() {
+			 sr.CheckStatus();
+			 } 
 		  
-		   // http://localhost:8081/SpringMVC/servlet/modify-user
-		   @PutMapping("/modify-user")
-		    @ResponseBody
-		    public user modifyUser(@RequestBody user user){
-		    return userService.updateUser(user);
-		   }
-*/
-}
+		  
+		  
+		  
+				}
+

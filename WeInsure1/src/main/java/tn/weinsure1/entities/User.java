@@ -15,11 +15,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -62,16 +65,43 @@ public class User implements Serializable{
     @Column(name="Role")
 	Role role;
 	
+	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	private List<sinister> sinisterList = new ArrayList<>();
 
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
     private Set<Contract> contracts;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private  Set<Offer> offers ;
 	
-	
+	@JsonIgnore
+	//@JsonBackReference
+	@OneToOne
+	@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
+	private Contraint contraint;
+
+
+	public User(String lastname, String firstname, Date birthdate, String login, String paswword, Long phonenumber,
+			Long cin, Float salary, Role role, List<sinister> sinisterList, Set<Contract> contracts, Set<Offer> offers,
+			Contraint contraint) {
+		super();
+		this.lastname = lastname;
+		this.firstname = firstname;
+		this.birthdate = birthdate;
+		this.login = login;
+		this.paswword = paswword;
+		this.phonenumber = phonenumber;
+		this.cin = cin;
+		this.salary = salary;
+		this.role = role;
+		this.sinisterList = sinisterList;
+		this.contracts = contracts;
+		this.offers = offers;
+		this.contraint = contraint;
+	}
 
 
 	public Set<Offer> getOffers() {
