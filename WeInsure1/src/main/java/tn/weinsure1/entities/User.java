@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(	name = "users", 
+@Table(	name = "user", 
 		uniqueConstraints = { 
 			@UniqueConstraint(columnNames = "username"),
 			@UniqueConstraint(columnNames = "email") 
@@ -82,7 +82,7 @@ public class User  implements Serializable {
 
 /////////////////////////////////////////////////////////////////
 @OneToMany(mappedBy="user")
-private Set<Contract> contracts;
+private List<Contract> contracts;
 ////////////////////////////////////////////////////////////
 @OneToMany(mappedBy="user")
 private  Set<Offer> offers ;
@@ -164,12 +164,27 @@ public Long getId() {
 	public void setSinisterList(List<sinister> sinisterList) {
 		this.sinisterList = sinisterList;
 	}
-	public Set<Contract> getContracts() {
+
+	public List<Contract> getContracts() {
 		return contracts;
 	}
-	public void setContracts(Set<Contract> contracts) {
+
+
+	public void setContracts(List<Contract> contracts) {
 		this.contracts = contracts;
 	}
+
+
+	public Contraint getContraint() {
+		return contraint;
+	}
+
+
+	public void setContraint(Contraint contraint) {
+		this.contraint = contraint;
+	}
+
+
 	public Set<Offer> getOffers() {
 		return offers;
 	}

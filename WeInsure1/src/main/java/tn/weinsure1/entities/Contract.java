@@ -1,5 +1,6 @@
 package tn.weinsure1.entities;
 
+
 import java.io.File;
 import java.io.Serializable;
 
@@ -44,7 +45,7 @@ public class Contract implements Serializable {
 	@Column (name="Type",nullable=false)
 	ContractType Type;
 	@Column(name="Rate",nullable=false)
-	private float rate;
+	private double rate;
 	@Column(name="Document")
 	private File Document;
 	
