@@ -31,7 +31,7 @@ import org.junit.Assert;
 @SpringBootTest
 public class SpringBootDataJpaMvcJspApplicationTest {
 	@Autowired 
-	IsinisterService is;
+	IsinisterService is; 
    @Autowired 
    ITableMortaliteService tr; 
    private static final Logger L = LogManager.getLogger(sinisterServiceImpl.class);
@@ -43,9 +43,15 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 	public void testRetrieveAllUsers() {
 		List<sinister> sinistres = is.retrieveAllSinistres() ;
 		//Assert.assertEquals(1, sinistres.size()); }
+<<<<<<< HEAD
+	}
+	
+	@Test
+=======
 	}*/
    /*s
 	@Tests
+>>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
 	public void testAddSinistre() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date d = dateFormat.parse("2018-02-02");

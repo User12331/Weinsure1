@@ -252,7 +252,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		LocalDate now = LocalDate.now();
 		int years = now.getYear()-BDay;
 		float cd = 0; 
-		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		int s = findcontractdurationBysinister(u.getId()) ; 
 		for (k =0; k < s-1; k++) {
 			float dxk= tr.findByDecesDx(years+k); 	
 			L.info("DX " + dxk) ;
@@ -281,7 +281,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		int BDay = calendar.get(Calendar.YEAR);
 		LocalDate now = LocalDate.now();
 		int years = now.getYear()-BDay;
-		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		int s = findcontractdurationBysinister(u.getId()) ; 
 		for (k1 =0; k1 < s-1; k1++) {
 			float lxk= tr.findBySurvivantsLx(years+k1); 	
 			L.info("DX " + lxk) ;
@@ -322,7 +322,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		LocalDate now = LocalDate.now();
 		int years = now.getYear()-BDay;
 		float crd = 0 , crd1 = 0 , tde = 0; 
-		int s = findcontractdurationBysinister(u.getIdUser()) ; 
+		int s = findcontractdurationBysinister(u.getId()) ; 
 		for (k =0; k < ((s-1)*12) ; k++) {
 			 double v = Math.pow((1+(taux/12)) ,  s*12 );
 			 double l = Math.pow( 1/ (1+(taux/12)) ,  s*12 - 1 );
@@ -336,6 +336,7 @@ public class sinisterServiceImpl implements IsinisterService {
 									      }
 		L.info("PRIME+++++++++ =" + tde) ;
 		return tde;
+		
 		
 	}
 	public void affecterUserSinister(Long SinId , Long UserId){

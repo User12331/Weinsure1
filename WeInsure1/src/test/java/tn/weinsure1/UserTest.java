@@ -42,7 +42,7 @@ public class UserTest {
 		User UserAdded = iu.AddUser(u);
 		Assert.assertEquals(u.getIdUser(), UserAdded.getIdUser());
 	} 
-	
+	 
 	@Test		//Update  user 
 	public void TestUpdateUser() throws ParseException    {
 		Date d =new Date() ;
@@ -70,6 +70,7 @@ public class UserTest {
 		User user = iu.RetrieveUser("1");
 		System.out.println(user);
 	}
+	
 	
 	
 	/*

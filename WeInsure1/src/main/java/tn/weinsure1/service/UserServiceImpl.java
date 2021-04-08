@@ -30,7 +30,7 @@ public class UserServiceImpl implements IUserService {
 	
 		for (User user : users){
 			L.info("user +++ :" + user);
-		}
+		} 
 		return users;
 	}
 	@Override

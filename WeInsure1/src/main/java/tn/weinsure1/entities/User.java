@@ -3,14 +3,18 @@ package tn.weinsure1.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,34 +26,36 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="User")
-public class User implements Serializable{
+@Table(	name = "user", 
+		uniqueConstraints = { 
+			@UniqueConstraint(columnNames = "username"),
+			@UniqueConstraint(columnNames = "email") 
+		})
+public class User  implements Serializable {
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="IdUser")
-	private Long idUser ;
-	
-	
-	@Column(name="Lastname")
-	private String lastname ;
-	
-	@Column(name="Firstname")
-	private String firstname ;
+	private Long id;
+	@NotBlank
+	@Size(max = 20)
+	private String username;
+	@NotBlank
+	@Size(max = 50)
+	@Email
+	private String email;
+
+	@NotBlank
+	@Size(max = 120)
+	private String password;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="Birthdate")
 	private Date birthdate ;
-	
-	
-	@Column(name="Login")
-	private String login ;
-	
-	@Column(name="Password")
-	private String paswword ;
 	
 	
 	@Column(name="Phonenumber")
@@ -61,57 +67,34 @@ public class User implements Serializable{
 	@Column(name="Salary")
 	private Float salary ;
 
-	@Enumerated(EnumType.STRING)
-    @Column(name="Role")
-	Role role;
+
+///////////////////////////////////////////////////////////////////
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+////////////////////////////////////////////////////////////////////
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	private List<sinister> sinisterList = new ArrayList<>();
 
-	@JsonIgnore
-	@OneToMany(mappedBy="user")
-    private Set<Contract> contracts;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy="user")
-	private  Set<Offer> offers ;
-	
+/////////////////////////////////////////////////////////////////
+@OneToMany(mappedBy="user")
+private List<Contract> contracts;
+////////////////////////////////////////////////////////////
+@OneToMany(mappedBy="user")
+private  Set<Offer> offers ;
+////////////////////////////////////////////////////////////////
+
+
 	@JsonIgnore
 	//@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
 	private Contraint contraint;
 
-
-	public User(String lastname, String firstname, Date birthdate, String login, String paswword, Long phonenumber,
-			Long cin, Float salary, Role role, List<sinister> sinisterList, Set<Contract> contracts, Set<Offer> offers,
-			Contraint contraint) {
-		super();
-		this.lastname = lastname;
-		this.firstname = firstname;
-		this.birthdate = birthdate;
-		this.login = login;
-		this.paswword = paswword;
-		this.phonenumber = phonenumber;
-		this.cin = cin;
-		this.salary = salary;
-		this.role = role;
-		this.sinisterList = sinisterList;
-		this.contracts = contracts;
-		this.offers = offers;
-		this.contraint = contraint;
-	}
-
-
-	public Set<Offer> getOffers() {
-		return offers;
-	}
-
-
-	public void setOffers(Set<Offer> offers) {
-		this.offers = offers;
-	}
 
 
 	public User(Set<Offer> offers) {
@@ -120,189 +103,162 @@ public class User implements Serializable{
 	}
 
 	
-	public Set<Contract> getContracts() {
-		return contracts;
+public Long getId() {
+		return id;
 	}
-
-	public void setContracts(Set<Contract> contracts) {
-		this.contracts = contracts;
+	public void setId(Long id) {
+		this.id = id;
 	}
-
-	public Long getIdUser() {
-		return idUser;
+	public String getUsername() {
+		return username;
 	}
-
-	public void setIdUser(Long idUser) {
-		this.idUser = idUser;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-
-	public List<sinister> getSinisterList() {
-		return sinisterList;
+	public String getEmail() {
+		return email;
 	}
-
-	public void setSinisterList(List<sinister> sinisterList) {
-		this.sinisterList = sinisterList;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-
-	public String getLastname() {
-		return lastname;
+	public String getPassword() {
+		return password;
 	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
 	public Date getBirthdate() {
 		return birthdate;
 	}
-
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getPaswword() {
-		return paswword;
-	}
-
-	public void setPaswword(String paswword) {
-		this.paswword = paswword;
-	}
-
 	public Long getPhonenumber() {
 		return phonenumber;
 	}
-
 	public void setPhonenumber(Long phonenumber) {
 		this.phonenumber = phonenumber;
 	}
-
 	public Long getCin() {
 		return cin;
 	}
-
 	public void setCin(Long cin) {
 		this.cin = cin;
 	}
-
 	public Float getSalary() {
 		return salary;
 	}
-
 	public void setSalary(Float salary) {
 		this.salary = salary;
 	}
 
-	public Role getRole() {
-		return role;
+	public Set<Role> getRoles() {
+		return roles;
 	}
-
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
-
-	
-public User(){
-	super();
-}
-	
-	/**
-	 * @param idUser
-	 * @param lastname
-	 * @param firstname
-	 * @param birthdate
-	 * @param login
-	 * @param paswword
-	 * @param i
-	 * @param j
-	 * @param k
-	 * @param role
-	 */
-	public User(Long idUser, String lastname, String firstname, Date birthdate, String login, String paswword,
-			long i, long j, float  k, Role role) {
-		this.idUser = idUser;
-		this.lastname = lastname;
-		this.firstname = firstname;
-		this.birthdate = birthdate;
-		this.login = login;
-		this.paswword = paswword;
-		this.phonenumber = i;
-		this.cin = j;
-		this.salary = k;
-		this.role = role;
+	public List<sinister> getSinisterList() {
+		return sinisterList;
 	}
-
-
-	public User(String lastname, String firstname, Date birthdate, String login, String paswword, Long phonenumber,
-			Long cin, Float salary, Role role, List<sinister> sinisterList) {
-		super();
-		this.lastname = lastname;
-		this.firstname = firstname;
-		this.birthdate = birthdate;
-		this.login = login;
-		this.paswword = paswword;
-		this.phonenumber = phonenumber;
-		this.cin = cin;
-		this.salary = salary;
-		this.role = role;
+	public void setSinisterList(List<sinister> sinisterList) {
 		this.sinisterList = sinisterList;
 	}
 
-	public User( String lastname, String firstname, Date birthdate, String login, String paswword,
-			long i, long j, float k, Role administrator) {
+	public List<Contract> getContracts() {
+		return contracts;
+	}
 
-		this.lastname = lastname;
-		this.firstname = firstname;
+
+	public void setContracts(List<Contract> contracts) {
+		this.contracts = contracts;
+	}
+
+
+	public Contraint getContraint() {
+		return contraint;
+	}
+
+
+	public void setContraint(Contraint contraint) {
+		this.contraint = contraint;
+	}
+
+
+	public Set<Offer> getOffers() {
+		return offers;
+	}
+	public void setOffers(Set<Offer> offers) {
+		this.offers = offers;
+	}
+	/**
+	 * @param id
+	 * @param username
+	 * @param email
+	 * @param password
+	 * @param birthdate
+	 * @param phonenumber
+	 * @param cin
+	 * @param salary
+	 * @param role
+	 * @param roles
+	 * @param sinisterList
+	 * @param contracts
+	 * @param offers
+	 */
+	public User(Long id, @NotBlank @Size(max = 20) String username, @NotBlank @Size(max = 50) @Email String email,
+			@NotBlank @Size(max = 120) String password, Date birthdate, Long phonenumber, Long cin, Float salary,
+		 Set<Role> roles) {
+		this.id = id;
+		this.username = username;
+		this.email = email;
+		this.password = password;
 		this.birthdate = birthdate;
-		this.login = login;
-		this.paswword = paswword;
-		this.phonenumber = i;
-		this.cin = j;
-		this.salary = k;
-		this.role = administrator;
+		this.phonenumber = phonenumber;
+		this.cin = cin;
+		this.salary = salary;
+		this.roles = roles;
+
 	}
-
-	public User(Date birthdate) {
-		super();
-		this.birthdate = birthdate;
-	}
-
-
-	public User(Long idUser) {
-		super();
-		this.idUser = idUser;
-	}
-
-
-	public User(Long idUser, Date birthdate) {
-		super();
-		this.idUser = idUser;
-		this.birthdate = birthdate;
-	}
-
-
-	@Override
-	public String toString() {
-		return "User [idUser=" + idUser + ", lastname=" + lastname + ", firstname=" + firstname + ", birthdate="
-				+ birthdate + ", login=" + login + ", paswword=" + paswword + ", phonenumber=" + phonenumber + ", cin="
-				+ cin + ", salary=" + salary + ", role=" + role + "]";
-	}
-
 
 	
+	/**
+	 * @param username
+	 * @param email
+	 * @param password
+	 * @param birthdate
+	 * @param phonenumber
+	 * @param cin
+	 * @param salary
+	 * @param roles
+	 */
+	public User(@NotBlank @Size(max = 20) String username, @NotBlank @Size(max = 50) @Email String email,
+			@NotBlank @Size(max = 120) String password, Date birthdate, Long phonenumber, Long cin, Float salary,
+			Set<Role> roles) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.birthdate = birthdate;
+		this.phonenumber = phonenumber;
+		this.cin = cin;
+		this.salary = salary;
+		this.roles = roles;
+	}
+	public User(String username, String email, String password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+	public User(){
+		super();
+	}
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
+				+ ", birthdate=" + birthdate + ", phonenumber=" + phonenumber + ", cin=" + cin + ", salary=" + salary
+				+  ", roles=" + roles +  "]";
+	}
+	
 }
+	
