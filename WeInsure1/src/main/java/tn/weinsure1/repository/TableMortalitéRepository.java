@@ -16,6 +16,9 @@ public interface TableMortalitéRepository  extends CrudRepository<TableMortalit
 	
 	@Query("select t.proba from TableMortalité t where t.x = ?1 ")
 	float findProbaByAgeClient(int ageClient);
+	
+	@Query("select MAX(t.x) from TableMortalité t  ")
+	int findAgeMax();
 
 
 }

@@ -1,4 +1,5 @@
 package tn.weinsure1.restController;
+import java.text.ParseException;
 import java.util.List;    
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
@@ -52,32 +53,53 @@ public class sinisterrestController {
 		  return sr.addSinistre(s,id);
 		  
 		  }
-		  @GetMapping("/calcul/{capital}/{ageClient}/{AgeMax}/{taux}")
+		  @GetMapping("/calculCVE/{idU}/{idC}")
 		  @ResponseBody
-		  public float calcul(@PathVariable("capital") float capital , @PathVariable("ageClient") int ageClient, @PathVariable("AgeMax") int AgeMax, @PathVariable("taux") double taux){
-				int k;
-				float prime = 0;
-				for (k =0; k < AgeMax - ageClient; k++) {
-					float dxk= ts.findByDecesDx(ageClient+k); 	
-					L.info("DX " + dxk) ;
-					float lx = ts.findBySurvivantsLx(ageClient);
-					 double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );			 
-					prime = (float) (capital * v) *  ( dxk / lx) ;	
+		  public float calculCVE(@PathVariable("idU") Long idU, @PathVariable("idC") Long idC){
+				float k = 0 ;
+				k = (float) sr.CVE(idU, idC) ; 
+				return k ;
+			  
 			}
+		  
 
-				L.info("PRIME+++++++++ =" + prime) ;
-				return prime;
-			}
+		@GetMapping("/calculCD/{idU}/{idC}")
+		@ResponseBody
+		public float CapitalCasDéces(@PathVariable("idU") Long idU, @PathVariable("idC") Long idC) throws ParseException{
+		float k = 0 ;
+		k = (float) sr.CapitalCasDéces(idU, idC) ; 
+		return k ;
+	  
+	}
+		
+		@GetMapping("/calculCDP/{idU}/{idC}")
+		@ResponseBody
+		public float CapitalDécesPeriodique(@PathVariable("idU") Long idU, @PathVariable("idC") Long idC) throws ParseException{
+		float k = 0 ;
+		k = (float) sr.CapitalDécesPeriodique(idU, idC) ; 
+		return k ;
+	  
+	}
+		@GetMapping("/calculTDE/{idU}/{idC}")
+		@ResponseBody
+		public float TDEMPRUNTEUR(@PathVariable("idU") Long idU, @PathVariable("idC") Long idC) throws ParseException{
+		float k = 0 ;
+		k = (float) sr.TDEMPRUNTEUR(idU, idC) ; 
+		return k ;
+	  
+	}
+		  
+		  
 		  //http://localhost:8000/SpringMVC/servlet/aff-sinistre/10/10
 		  @PutMapping(value = "/aff-sinistre/{idSin}/{idUser}") 
 		  public void affecterEmployeADepartement(@PathVariable("idSin")Long idSin, @PathVariable("idUser")Long idUser) {
 		  sr.affecterSinisterUser(idSin, idUser);
 		  }
-		  @GetMapping("/creditsimul/{taux}/{idU}/{idC}")
+		  @GetMapping("/creditsimul/{idU}/{idC}")
 		  @ResponseBody
-		  public float creditsimul(@PathVariable("taux") double taux , @PathVariable("idU") Long idU, @PathVariable("idC") Long idC){
+		  public float creditsimul(@PathVariable("idU") Long idU, @PathVariable("idC") Long idC){
 				float k = 0 ;
-				k = (float) sr.CreditSimulator(taux, idU, idC) ; 
+				k = (float) sr.CreditSimulator( idU, idC) ; 
 				return k ;
 			  
 			}
@@ -85,7 +107,10 @@ public class sinisterrestController {
 			 public void checkStatus() {
 			 sr.CheckStatus();
 			 } 
-		  
+		     @PutMapping("/sendMail")
+			 public void sendMail() {
+			 sr.SendMail();
+			 } 
 		  
 		  
 		  

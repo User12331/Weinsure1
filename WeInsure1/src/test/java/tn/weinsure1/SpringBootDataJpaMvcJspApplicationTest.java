@@ -242,7 +242,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
    
 	 @Test
 		public void test33() {
-		 String k = is.findSinisterDescriptionwithUR(5L);
+		 int k = tr.findAgeMax();
 		 L.info("description +++ :" + k) ;
 		}
 	 /*

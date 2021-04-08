@@ -9,6 +9,7 @@ import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,20 +125,24 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("sinistre +++ :" + sins) ;
 		return sins;
 	}
+	@Override
+	public List<sinister> findSinisterByStatusEnAttente( ) {
+		List<sinister> sins = sinistreRepository.findSinisterByStatusEnAttente();
+		L.info("sinistre +++ :" + sins) ;
+		return sins;
+	}
 	
 	@Override
 	public void SendMail() {
 		try {
 		List<sinister> sinstreRej = sinistreRepository.findSinisterByStatusRejected();
-
 		//SimpleMailMessage mail = new SimpleMailMessage();
 		for(int i=0;i< sinstreRej.size();i++)
 		{   // String email = sinstreRej.get(i).getClient().getEmail();
 			//nom=  String email = sinstreRej.get(i).getClient().getNom();
-			String motif =sinstreRej.get(i).getMotifStatus().toString(); 
-			String date =sinstreRej.get(i).getDateOccurence().toString(); 
-			
-			sendEmailService.sendEmail("bourguibaahmed06@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
+			String motif =sinstreRej.get(i).getMotifStatus().toString();
+			String date =sinstreRej.get(i).getDateOccurence().toString();			
+			sendEmailService.sendEmail("talentaholic2020@gmail.com", "Sinistre rejeté" , "Cher cleint monsieur M, on vous informe que votre demande de remboursement"
 					+ "de sinistre, envoyée à la date "+date+ " , a été rejetée car cette demande " + motif + ". Merci pour votre compréhension. ", file);	
 		} 
 		} 
@@ -147,7 +152,7 @@ public class sinisterServiceImpl implements IsinisterService {
 	
 	@Override
 	public void CheckStatus() {
-		List<sinister> sinsenattente = sinistreRepository.findSinisterByStatusRejected();
+		List<sinister> sinsenattente = sinistreRepository.findSinisterByStatusEnAttente();
 		Calendar currentdate = Calendar.getInstance(); 
 		Date d = currentdate.getTime();  
 		
@@ -171,6 +176,7 @@ public class sinisterServiceImpl implements IsinisterService {
 				 sinsenattente.get(i).setMotifStatus(motif);
 				 sinistreRepository.save(sinsenattente.get(i));
 				 L.info("new sin +++ :" + sinsenattente.get(i)) ;
+				 SendMail();
 
 			}
 			else if (sinsenattente.get(i).getDocuments() == null)
@@ -181,6 +187,7 @@ public class sinisterServiceImpl implements IsinisterService {
 				sinsenattente.get(i).setMotifStatus(motif);
 				 sinistreRepository.save(sinsenattente.get(i));
 				 L.info("new sin 2 +++ :" + sinsenattente.get(i));
+				 SendMail();
 			} 
 			else {
 				sinsenattente.get(i).setStatus(status2);
@@ -193,22 +200,31 @@ public class sinisterServiceImpl implements IsinisterService {
 	
 	
 	@Override
-	public float CVE(double taux  , User u , Contract c , double AgeMax){
+	public float CVE( Long idU , Long idC  ){
 		int k;
 		float prime = 0 ; 
 		float cd = 0  ;
-		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate localDate = LocalDate.now();
-		int years = localDate.getYear()-bdate.getYear();
+		User u  = ur.findById(idU).get();
+		Contract c = cr.findById(idC).get();
+		int AgeMax = tr.findAgeMax();
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(ur.findById(idU).get().getBirthdate());
+		int BDay = calendar.get(Calendar.YEAR);
+		LocalDate now = LocalDate.now();
+		int years = now.getYear()-BDay;
+		double taux = c.getRate();
 		for (k =0; k < AgeMax - years; k++) {
 			float dxk= tr.findByDecesDx(years+k); 	
 			L.info("DX " + dxk) ;
 			float lx = tr.findBySurvivantsLx(years);
-			 double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );			 
-			prime = (float) (v) *  ( dxk / lx) ;	
+			 double v = Math.pow( (1/(1+taux)) ,  (k + (1/2))  );			 
+			prime = (float) (v) * ( dxk / lx) ;	
+			L.info("PRIMEeee+++++++++ =" + prime) ;
 	}
+		L.info("PRIME11eee+++++++++ =" + prime) ;
 		cd= c.getPrice() / prime ; 
 		L.info("PRIME+++++++++ =" + cd) ;
+		L.info("prix cotnract+++++++++ =" + c.getPrice()) ;
 		return cd;
 	}
 	
@@ -224,12 +240,17 @@ public class sinisterServiceImpl implements IsinisterService {
 	}
 	
 	@Override
-	public float CapitalCasDéces(double taux  , User u , Contract c  ) throws ParseException {
+	public float CapitalCasDéces(Long idU , Long idC  ) throws ParseException {
 		int k;
 		float prime = 0;
-		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate localDate = LocalDate.now();
-		int years = localDate.getYear()-bdate.getYear();
+		User u  = ur.findById(idU).get();
+		Contract c = cr.findById(idC).get();
+		double taux = c.getRate();
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(ur.findById(idU).get().getBirthdate());
+		int BDay = calendar.get(Calendar.YEAR);
+		LocalDate now = LocalDate.now();
+		int years = now.getYear()-BDay;
 		float cd = 0; 
 		int s = findcontractdurationBysinister(u.getIdUser()) ; 
 		for (k =0; k < s-1; k++) {
@@ -248,13 +269,18 @@ public class sinisterServiceImpl implements IsinisterService {
 	
 	
 	@Override
-	public float CapitalDécesPeriodique(double taux  , User u , Contract c  ) throws ParseException {
+	public float CapitalDécesPeriodique(Long idU , Long idC ) throws ParseException {
 		int k1,k2;
 		float prime1 = 0 , prime = 0;
 		float cd = 0 ;
-		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate localDate = LocalDate.now();
-		int years = localDate.getYear()-bdate.getYear();
+		User u  = ur.findById(idU).get();
+		Contract c = cr.findById(idC).get();
+		double taux = c.getRate();
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(ur.findById(idU).get().getBirthdate());
+		int BDay = calendar.get(Calendar.YEAR);
+		LocalDate now = LocalDate.now();
+		int years = now.getYear()-BDay;
 		int s = findcontractdurationBysinister(u.getIdUser()) ; 
 		for (k1 =0; k1 < s-1; k1++) {
 			float lxk= tr.findBySurvivantsLx(years+k1); 	
@@ -283,13 +309,18 @@ public class sinisterServiceImpl implements IsinisterService {
 	}
 	
 	
-	public float TDEMPRUNTEUR(double taux  , User u , Contract c  ) {
+	public float TDEMPRUNTEUR(Long idU , Long idC  ) {
 	
 		int k;
 		float prime = 0;
-		LocalDate bdate = u.getBirthdate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		LocalDate localDate = LocalDate.now();
-		int years = localDate.getYear()-bdate.getYear();
+		User u  = ur.findById(idU).get();
+		Contract c = cr.findById(idC).get();
+		double taux = c.getRate();
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(ur.findById(idU).get().getBirthdate());
+		int BDay = calendar.get(Calendar.YEAR);
+		LocalDate now = LocalDate.now();
+		int years = now.getYear()-BDay;
 		float crd = 0 , crd1 = 0 , tde = 0; 
 		int s = findcontractdurationBysinister(u.getIdUser()) ; 
 		for (k =0; k < ((s-1)*12) ; k++) {
@@ -337,11 +368,12 @@ public class sinisterServiceImpl implements IsinisterService {
 		return k;
 		
 	}
-	public double CreditSimulator( double taux , Long idu, Long idc) {
+	public double CreditSimulator( Long idu, Long idc) {
 		
 		
 		User u= ur.findById(idu).get();
 		Contract c=cr.findById(idc).get();
+		double taux = c.getRate();
 		//Long id=(Long)session.getAttribute("name");	 
 		int dur=c.getDuration();
 		double Montant= u.getSalary()*0.8;
@@ -350,6 +382,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		return mfy ; 
 	
 	}
+
 	
 	
 	

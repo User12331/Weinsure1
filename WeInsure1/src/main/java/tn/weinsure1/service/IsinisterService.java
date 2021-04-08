@@ -22,18 +22,19 @@ public interface IsinisterService {
 	 List<sinister> findByYear(String year) ;
 	 List<sinister> findByAny(String any);
 	 List<sinister> findSinisterByStatusRejected()  ;
+	 List<sinister> findSinisterByStatusEnAttente()  ;
 	 void CheckStatus() ; 
-	 float CVE(double taux  , User u , Contract c , double AgeMax) ; 
+	 float CVE(Long idU , Long idC  ) ; 
 	 void SendMail() ;
 	 List<sinister> findbyuserid(Long id);
 	 int findcontractdurationBysinister(Long id2 );
-	 float CapitalCasDéces(double taux , User u , Contract c) throws ParseException ;
-	 float CapitalDécesPeriodique(double taux  , User u , Contract c  ) throws ParseException ;
-	 float TDEMPRUNTEUR(double taux  , User u , Contract c  ) throws ParseException ;
+	 float CapitalCasDéces(Long idU , Long idC) throws ParseException ;
+	 float CapitalDécesPeriodique(Long idU , Long idC  ) throws ParseException ;
+	 float TDEMPRUNTEUR(Long idU , Long idC  ) throws ParseException ;
 	 void affecterUserSinister(Long SinId , Long UserId) ; 
 	 void affecterSinisterUser(Long SinId, Long userId);
 	 String findSinisterDescriptionwithUR( Long id);
-	 double CreditSimulator( double taux , Long idu, Long idc) ;
+	 double CreditSimulator( Long idU , Long idC) ;
 
 
 }

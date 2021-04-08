@@ -64,6 +64,11 @@ public class TableMortaliteService implements ITableMortaliteService {
 		return k;
 		
 	}
+	public int findAgeMax(){
+		int k = tr.findAgeMax();
+		return k;
+		
+	}
 	
 	
 	

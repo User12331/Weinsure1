@@ -44,7 +44,7 @@ public class Contract implements Serializable {
 	@Column (name="Type",nullable=false)
 	ContractType Type;
 	@Column(name="Rate",nullable=false)
-	private float rate;
+	private double rate;
 	@Column(name="Document")
 	private File Document;
 	
@@ -98,6 +98,12 @@ public class Contract implements Serializable {
 	
 	 
 
+	public double getRate() {
+		return rate;
+	}
+	public void setRate(double rate) {
+		this.rate = rate;
+	}
 	public User getUser() {
 		return user;
 	}
