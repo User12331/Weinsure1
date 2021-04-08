@@ -306,6 +306,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("PRIME+++++++++ =" + tde) ;
 		return tde;
 		
+		
 	}
 	public void affecterUserSinister(Long SinId , Long UserId){
 		User u  = ur.findById(UserId).get();
