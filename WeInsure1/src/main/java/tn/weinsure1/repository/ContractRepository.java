@@ -4,6 +4,9 @@ package tn.weinsure1.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -26,4 +29,8 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
 	@Query("Select c from Contract c where c.user.id=:id")
 	List<Contract> RetrieveContractsByUserId(@Param("id")long id);
 	
+	@Modifying
+    @Transactional
+    @Query("UPDATE Contract c SET c.Price=:price where c.idcontract=:cntid")
+    public void MAJContractPrice(@Param("price")float price, @Param("cntid")long cntid);
 }

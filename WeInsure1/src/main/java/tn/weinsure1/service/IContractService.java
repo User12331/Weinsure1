@@ -13,11 +13,12 @@ public interface IContractService {
 	Contract UpdateContract(Contract c);
 	Contract RetrieveContract(String id);
 	List<Contract> findByDurationGreater(int year);
-	//float CapitalVieUnique(float C, int ageClient, double taux, int duree);
 	void ContractToUser(long cntID, long userID);
 	float TotalPricing();
 	List<Contract> RetrieveContractsByUserId(long id);
 	float CapitalVieUnique(float C, long userid, int duree);
 	float PrimeVieUnique(float prime, long userid, int duree);
-	float RITP(float prime,long userid, int duree);
+	double RITP(double prime,long userid);
+	double RITC(double d,long userid);
+	void MAJContractPrice(float price,long cntid);
 }
