@@ -61,8 +61,6 @@ public class sinisterrestController {
 				return k ;
 			  
 			}
-		  
-
 		@GetMapping("/calculCD/{idU}/{idC}")
 		@ResponseBody
 		public float CapitalCasDéces(@PathVariable("idU") Long idU, @PathVariable("idC") Long idC) throws ParseException{

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,9 +18,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -93,10 +97,14 @@ public class Contract implements Serializable {
 		Document = document;
 	}
 	
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "idUser",referencedColumnName="IdUser")
 	 private User user;
 	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="transactionprice")
+	private List<Transaction> transactionCredit;
 	 
 
 	public double getRate() {

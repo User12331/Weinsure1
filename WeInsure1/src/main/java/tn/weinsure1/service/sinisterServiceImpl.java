@@ -242,7 +242,7 @@ public class sinisterServiceImpl implements IsinisterService {
 	@Override
 	public float CapitalCasDéces(Long idU , Long idC  ) throws ParseException {
 		int k;
-		float prime = 0;
+		float prime = 0 , dxk = 0 , lx = 0 ; ;
 		User u  = ur.findById(idU).get();
 		Contract c = cr.findById(idC).get();
 		double taux = c.getRate();
@@ -251,15 +251,14 @@ public class sinisterServiceImpl implements IsinisterService {
 		int BDay = calendar.get(Calendar.YEAR);
 		LocalDate now = LocalDate.now();
 		int years = now.getYear()-BDay;
+		L.info("PRIME+++++++++ =" +years) ;	
 		float cd = 0; 
 		int s = findcontractdurationBysinister(u.getId()) ; 
 		for (k =0; k < s-1; k++) {
-			float dxk= tr.findByDecesDx(years+k); 	
 			L.info("DX " + dxk) ;
-			float lx = tr.findBySurvivantsLx(years);
-			 double v = Math.pow( 1/ (1+taux) ,  k + (1/2)  );			 
-			prime = (float) (v) *  ( dxk / lx) ;	
-								 }
+			 lx = tr.findBySurvivantsLx(years);
+			prime += Math.pow( 1/ (1+taux) ,  k + (1/2)  ) * ( tr.findByDecesDx(years+k) / lx) ;
+			L.info("PRIME+++++++++ =" +prime) ;				 }
 		 cd = c.getPrice() / prime ; 
 		L.info("PRIME+++++++++ =" + cd) ;
 		return cd;
@@ -282,11 +281,11 @@ public class sinisterServiceImpl implements IsinisterService {
 		LocalDate now = LocalDate.now();
 		int years = now.getYear()-BDay;
 		int s = findcontractdurationBysinister(u.getId()) ; 
-		for (k1 =0; k1 < s-1; k1++) {
-			float lxk= tr.findBySurvivantsLx(years+k1); 	
+		for (k1 =0; k1 < (s-1)*12; k1++) {
+			float lxk= tr.findBySurvivantsLx((years+k1)/12); 	
 			L.info("DX " + lxk) ;
 			float lx = tr.findBySurvivantsLx(years);
-			 double v = Math.pow( 1/ (1+taux) ,  k1   );	
+			 double v = Math.pow( 1/ (1+taux) ,  k1/12   );	
 			 double p = c.getPrice() * (( ( Math.pow((1 + taux) , (years + 1)) - 1 ) / years ) ) ; 
 				L.info("DX " + p) ;
 			prime1 = (float) (p * v) *  ( lxk / lx) ;	
