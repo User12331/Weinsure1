@@ -96,7 +96,7 @@ public class TransactionRestController {
         t.setNbreC(nbreC);
         t. setAmountC(amount);
 		transService.addTransaction(t);
-		twilioCon.sendotp("+216"+c.getUser().getPhonenumber());
+		//twilioCon.sendotp("+216"+c.getUser().getPhonenumber());
 		return true;
 	}
 }

@@ -72,9 +72,6 @@ public class Offer implements Serializable {
 	 @JoinColumn(name="IdUser")
 	 private User user;
 	
-	 
-
-	
 	public User getUser() {
 		return user;
 	}

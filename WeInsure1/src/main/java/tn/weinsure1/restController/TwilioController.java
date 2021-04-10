@@ -26,7 +26,7 @@ import tn.weinsure1.service.sinisterServiceImpl;
 @RestController
 public class TwilioController {
 
-	@Autowired
+	/*@Autowired
 	PhoneverificationService phonesmsservice;
 	    
 	private static final Logger L = LogManager.getLogger(sinisterServiceImpl.class);
@@ -53,5 +53,5 @@ public class TwilioController {
 		L.info("DX ") ;
 	}
 	
-	
+	*/
 }
