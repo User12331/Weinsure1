@@ -17,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import tn.weinsure1.service.PhoneverificationService;
-import tn.weinsure1.service.VerificationResult;
+/*import tn.weinsure1.service.PhoneverificationService;
+import tn.weinsure1.service.VerificationResult;*/
 import tn.weinsure1.service.sinisterServiceImpl;
 
 

@@ -70,6 +70,7 @@ public class User  implements Serializable {
 
 ///////////////////////////////////////////////////////////////////
 	@ManyToMany(fetch = FetchType.LAZY)
+	@JsonIgnore
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -82,9 +83,11 @@ public class User  implements Serializable {
 
 /////////////////////////////////////////////////////////////////
 @OneToMany(mappedBy="user")
+@JsonIgnore
 private List<Contract> contracts;
 ////////////////////////////////////////////////////////////
 @OneToMany(mappedBy="user")
+@JsonIgnore
 private  Set<Offer> offers ;
 ////////////////////////////////////////////////////////////////
 

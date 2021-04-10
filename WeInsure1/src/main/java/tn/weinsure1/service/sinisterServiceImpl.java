@@ -55,6 +55,7 @@ public class sinisterServiceImpl implements IsinisterService {
 	public sinister addSinistre(sinister s , Long id ) {
 		User u=ur.findById(id).get();
 		s.setUser(u);
+		s.setStatus(sinisterstatus.enAttente);
 		sinistreRepository.save(s);
 		
 		return s;
@@ -233,8 +234,8 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("sinister +++ :" + sins) ;
 		return sins;
 	}
-	public int findcontractdurationBysinister(Long id2) {
-		int k = sinistreRepository.findcontractdurationBysinister(id2);
+	public int findcontractdurationBysinister(Long id) {
+		int k = sinistreRepository.findcontractdurationBysinister(id);
 		L.info("sinister +++ :" + k) ;
 		return k;
 	}

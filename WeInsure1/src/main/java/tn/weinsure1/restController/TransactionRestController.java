@@ -1,7 +1,7 @@
 package tn.weinsure1.restController;
 
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -50,8 +50,6 @@ public class TransactionRestController {
 	@Autowired
 	UserRepository userRepository;
 	
-	@Autowired
-	TwilioController twilioCon;
 	
 	@GetMapping("/all")
 	@ResponseBody
@@ -99,4 +97,5 @@ public class TransactionRestController {
 		//twilioCon.sendotp("+216"+c.getUser().getPhonenumber());
 		return true;
 	}
+	
 }
