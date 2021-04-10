@@ -1,5 +1,5 @@
 package tn.weinsure1.entities;
 
 public enum typeSinister {
-vie , nonvie 
+VieEntiere , TemporairedecesEmprunteur , casDeces , casDecesperiodique 
 }

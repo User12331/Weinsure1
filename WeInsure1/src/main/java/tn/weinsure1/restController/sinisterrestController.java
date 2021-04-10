@@ -1,7 +1,10 @@
 package tn.weinsure1.restController;
-import java.text.ParseException;
+import java.text.ParseException; 
 import java.util.List;    
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,7 @@ public class sinisterrestController {
 		  @PostMapping("/add-sinistre/{id}")
 		  @ResponseBody
 		  public sinister addSinister(@RequestBody sinister s, @PathVariable Long id) {
+			  s.setStatus(sinisterstatus.enAttente);
 		  return sr.addSinistre(s,id);
 		  
 		  }
@@ -108,9 +112,8 @@ public class sinisterrestController {
 		     @PutMapping("/sendMail")
 			 public void sendMail() {
 			 sr.SendMail();
-			 } 
-		  
-		  
+			 }
+		     
 		  
 				}
 

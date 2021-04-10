@@ -27,7 +27,7 @@ public interface IsinisterService {
 	 float CVE(Long idU , Long idC  ) ; 
 	 void SendMail() ;
 	 List<sinister> findbyuserid(Long id);
-	 int findcontractdurationBysinister(Long id2 );
+	 int findcontractdurationBysinister(Long id );
 	 float CapitalCasDéces(Long idU , Long idC) throws ParseException ;
 	 float CapitalDécesPeriodique(Long idU , Long idC  ) throws ParseException ;
 	 float TDEMPRUNTEUR(Long idU , Long idC  ) throws ParseException ;

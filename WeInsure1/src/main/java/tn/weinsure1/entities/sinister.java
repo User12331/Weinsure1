@@ -41,7 +41,7 @@ public class sinister implements Serializable{
 	private Date dateOccurence;
 	
 	@Enumerated(EnumType.STRING)
-    @Column(name="Status")
+    @Column(name="Status" , nullable=false)
 	private sinisterstatus status;
 	
 	@Column(name="Documents")
