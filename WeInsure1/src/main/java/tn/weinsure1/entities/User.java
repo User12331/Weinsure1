@@ -86,9 +86,8 @@ public class User  implements Serializable {
 @JsonIgnore
 private List<Contract> contracts;
 ////////////////////////////////////////////////////////////
-@OneToMany(mappedBy="user")
-@JsonIgnore
-private  Set<Offer> offers ;
+@ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
+List<Offer> offers;
 ////////////////////////////////////////////////////////////////
 
 
@@ -100,7 +99,7 @@ private  Set<Offer> offers ;
 
 
 
-	public User(Set<Offer> offers) {
+	public User(List<Offer> offers) {
 		super();
 		this.offers = offers;
 	}
@@ -188,10 +187,10 @@ public Long getId() {
 	}
 
 
-	public Set<Offer> getOffers() {
+	public List<Offer> getOffers() {
 		return offers;
 	}
-	public void setOffers(Set<Offer> offers) {
+	public void setOffers(List<Offer> offers) {
 		this.offers = offers;
 	}
 	/**

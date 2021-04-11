@@ -3,6 +3,8 @@ package tn.weinsure1.entities;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -28,10 +32,8 @@ public class Offer implements Serializable {
 	private Date Expiration_date;
 	@Column(name="Description")
 	private String Description;
-	@Column(name="score_min")
-	private int score_min;
-	@Column(name="score_max")
-	private int score_max;
+	@Column(name="Prix")
+	private int Prix;
 	public Long getIdOffer() {
 		return IdOffer;
 	}
@@ -57,38 +59,33 @@ public class Offer implements Serializable {
 		Description = description;
 	}
 
-	public int getScore_min() {
-		return score_min;
+	public int getPrix() {
+		return Prix;
 	}
-	public void setScore_min(int score_min) {
-		this.score_min = score_min;
-	}
-	public int getScore_max() {
-		return score_max;
-	}
-	public void setScore_max(int score_max) {
-		this.score_max = score_max;
+	public void setPrix(int prix) {
+		Prix = prix;
 	}
 
-	@ManyToOne
-	 @JoinColumn(name="IdUser")
-	@JsonIgnore
-	 private User user;
+	@ManyToMany
+	@JoinTable(
+	  name = "Offer_User", 
+	  joinColumns = @JoinColumn(name = "IdOffer"), 
+	  inverseJoinColumns = @JoinColumn(name = "IdUser"))
+	List<User> users;
 	
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	public Offer(Long idOffer, String type, Date expiration_date, String description, int scoremin, int scoremax) {
+	public Offer(Long idOffer, String type, Date expiration_date, String description, int prix) {
 		super();
 		IdOffer = idOffer;
 		Type = type;
 		Expiration_date = expiration_date;
 		Description = description;
-		score_min = scoremin;
-		score_max = scoremax;
+		Prix = prix;
+	}
+	public List<User> getUsers() {
+		return users;
+	}
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 	/**
 	 * 

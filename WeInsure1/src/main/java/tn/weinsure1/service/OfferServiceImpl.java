@@ -1,6 +1,8 @@
 package tn.weinsure1.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tn.weinsure1.entities.Offer;
+import tn.weinsure1.entities.User;
 import tn.weinsure1.repository.OfferRepository;
+import tn.weinsure1.repository.UserRepository;
 
 
 @Service
@@ -16,6 +20,7 @@ public class OfferServiceImpl implements IOfferService {
 
 	@Autowired     
 	OfferRepository OfferRepository ;
+	UserRepository userRepository;
 	private static final Logger L = LogManager.getLogger(OfferServiceImpl.class);
 
 	@Override
@@ -55,6 +60,22 @@ public class OfferServiceImpl implements IOfferService {
 		}
 					
 		return Offers;
+	}
+	@Override
+	public void affecterUserOffer(long UserId, long OfferId) {
+	Offer offer = OfferRepository.findById(OfferId).get();
+	User user = userRepository.findById(UserId).get();
+	
+	if(offer.getUsers() == null){
+		List<User> users = new ArrayList<>();
+		users.add(user);
+		offer.setUsers(users);
+		}
+	else{
+		offer.getUsers().add(user);
+	}
 	}	
+	
+	
 	
 }

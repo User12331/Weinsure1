@@ -11,5 +11,5 @@ public interface IOfferService {
 	 void deleteOffer(String id);
 	 Offer updateOffer(Offer O);
 	 Offer retrieveOffer(String id);
-	
+	void affecterUserOffer(long UserId,long OfferId);
 }

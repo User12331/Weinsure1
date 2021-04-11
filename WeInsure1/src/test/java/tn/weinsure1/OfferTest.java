@@ -27,7 +27,7 @@ public class OfferTest {
 	public void TestAddOffer() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date d = dateFormat.parse("2021-03-31");
-		Offer o = new Offer((long) 30, "remise pour les 3 plus fidèles", d, "les 3 clients les plus anciens auront une remise exceptionnelle", 120, 150);
+		Offer o = new Offer();
 		Offer OfferAdded = io.addOffer(o);
 		Assert.assertEquals(o.getIdOffer(), OfferAdded.getIdOffer());
 	} 
@@ -36,7 +36,7 @@ public class OfferTest {
 	public void TestUpdateOffer() throws ParseException    {
 		SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
 		Date d = dateFormat.parse("2021-04-01");
-		Offer o = new Offer((long) 30, "remise pour les 3 plus fidèles", d, "les 3 clients les plus anciens auront une remise exceptionnelle", 120, 150);
+		Offer o = new Offer();
 		Offer OfferUpdated = io.updateOffer(o);
 		Assert.assertEquals(o.getExpiration_date(), OfferUpdated.getExpiration_date());
 	}
