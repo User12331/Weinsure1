@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.Offer;
 import tn.weinsure1.entities.User;
 import tn.weinsure1.repository.OfferRepository;
@@ -75,7 +76,38 @@ public class OfferServiceImpl implements IOfferService {
 		offer.getUsers().add(user);
 	}
 	}	
+	@Override
+	public List<Long> Old_User1() {
+		List<Long> l = (List<Long>) OfferRepository.Old_User(); 
+		for(Long ls : l)
+		{
+			L.info("Offer +++ :" + ls);
+		}
+					
+		return l;
+	}
 	
-	
+	@Override
+	public Long topnum() {
+		List<Long> l = (List<Long>) OfferRepository.Top_num_Contracts(); 
+		for(Long ls : l)
+		{
+			L.info("Offer +++ :" + ls);
+
+		}
+					
+		return l.get(0);	
+	}
+	@Override
+	public Long test1() {
+		List<Long> l = (List<Long>) OfferRepository.Top_num_Contracts(); 
+		for(Long ls : l)
+		{
+			L.info("Offer +++ :" + ls);
+
+		}
+					
+		return l.get(0);	
+	}
 	
 }

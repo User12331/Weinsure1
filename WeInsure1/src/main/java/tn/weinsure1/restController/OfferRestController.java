@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.Offer;
+import tn.weinsure1.entities.User;
 import tn.weinsure1.service.IOfferService;
 
 @RestController
@@ -37,4 +38,18 @@ public class OfferRestController {
 	  public void affecterUseraOffer(@PathVariable("idUser")Long iduser,@PathVariable("idOffer")Long idoffer) {
 	  io.affecterUserOffer(iduser, idoffer);
 	  }
+	
+	@GetMapping("/olduser")
+	@ResponseBody
+	public List<Long> OldUser() {
+	 List<Long> o = io.Old_User1();
+	 return o;
+	 }
+	
+	@GetMapping("/test")
+	@ResponseBody
+	public Long test2() {
+	 Long o = io.test1();
+	 return o;
+	 }
 }
