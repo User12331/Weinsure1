@@ -14,9 +14,13 @@ public interface IOfferService {
 	 Offer updateOffer(Offer O);
 	 Offer retrieveOffer(String id);
 	void affecterUserOffer(long UserId,long OfferId);
-	List<Long> Old_User1(); 
+	Long Old_User1(); 
 	Long test1();
-	Long topnum(); 
+	Long topnum();
+	List<Long> pack_3();
+	List<Long> pack_2();
+	List<Long> pack_1();
+	List<Long> Top_Users(Long topnum);
 
 
 }

@@ -41,8 +41,29 @@ public class OfferRestController {
 	
 	@GetMapping("/olduser")
 	@ResponseBody
-	public List<Long> OldUser() {
-	 List<Long> o = io.Old_User1();
+	public Long OldUser() {
+	 Long o = io.Old_User1();
+	 return o;
+	 }
+	
+	@GetMapping("/pack3")
+	@ResponseBody
+	public List<Long> pack3() {
+	 List<Long> o = io.pack_3();
+	 return o;
+	 }
+	
+	@GetMapping("/pack2")
+	@ResponseBody
+	public List<Long> pack2() {
+	 List<Long> o = io.pack_2();
+	 return o;
+	 }
+	
+	@GetMapping("/pack1")
+	@ResponseBody
+	public List<Long> pack1() {
+	 List<Long> o = io.pack_1();
 	 return o;
 	 }
 	
@@ -50,6 +71,20 @@ public class OfferRestController {
 	@ResponseBody
 	public Long test2() {
 	 Long o = io.test1();
+	 return o;
+	 }
+	
+	@GetMapping("/topnum")
+	@ResponseBody
+	public Long topnum() {
+	 Long o = io.topnum();
+	 return o;
+	 }
+	
+	@GetMapping("/topusers")
+	@ResponseBody
+	public List<Long> topusers() {
+	 List<Long> o = io.Top_Users(io.topnum());
 	 return o;
 	 }
 }

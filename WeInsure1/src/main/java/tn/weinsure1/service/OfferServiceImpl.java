@@ -77,14 +77,14 @@ public class OfferServiceImpl implements IOfferService {
 	}
 	}	
 	@Override
-	public List<Long> Old_User1() {
+	public Long Old_User1() {
 		List<Long> l = (List<Long>) OfferRepository.Old_User(); 
 		for(Long ls : l)
 		{
 			L.info("Offer +++ :" + ls);
 		}
 					
-		return l;
+		return l.get(0);	
 	}
 	
 	@Override
@@ -108,6 +108,51 @@ public class OfferServiceImpl implements IOfferService {
 		}
 					
 		return l.get(0);	
+	}
+	
+	@Override
+	public List<Long> pack_3() {
+		List<Long> l = (List<Long>) OfferRepository.Users_pack3(); 
+		for(Long ls : l)
+		{
+			L.info("Offer +++ :" + ls);
+		}
+					
+		return l;	
+	}
+	
+	@Override
+	public List<Long> pack_2() {
+		List<Long> l = (List<Long>) OfferRepository.Users_pack2(); 
+		for(Long ls : l)
+		{
+			L.info("Offer +++ :" + ls);
+		}
+					
+		return l;	
+	}
+	
+	@Override
+	public List<Long> pack_1() {
+		List<Long> l = (List<Long>) OfferRepository.Users_pack1(); 
+		for(Long ls : l)
+		{
+			L.info("Offer +++ :" + ls);
+		}
+					
+		return l;	
+	}
+	
+	@Override
+	public List<Long> Top_Users(Long num) {
+		List<Long> l = (List<Long>) OfferRepository.Top_Users(num); 
+		for(Long ls : l)
+		{
+			L.info("Offer +++ :" + ls);
+
+		}
+					
+		return l;	
 	}
 	
 }

@@ -12,19 +12,28 @@ import tn.weinsure1.entities.User;
 @Repository
 public interface OfferRepository extends CrudRepository<Offer, Long > {
 
-	@Query(value = "select a.id_user from contract a inner join contract b where a.id_user = "
-			+ "b.id_user and a.type = 'Vie' and b.type = 'Décès' and a.expiration_date >"
-			+ " now() and b.expiration_date > now()", nativeQuery = true)
+	@Query("select a.user.id from Contract a "
+			+ "join Contract b "
+			+ "on a.user.id = b.user.id"
+			+ " where a.Type like 'Vie' and b.Type like 'Décès'"
+			+ "and a.Expiration_date > now() "
+			+ "and b.Expiration_date > now()")
 	public List<Long> Users_pack1();
 	
-	@Query(value = "select a.id_user from contract a inner join contract b where a.id_user = "
-			+ "b.id_user and a.type = 'Décès' and b.type = 'Personne' and a.expiration_date >"
-			+ " now() and b.expiration_date > now()", nativeQuery = true)
+	@Query("select a.user.id from Contract a "
+			+ "join Contract b "
+			+ "on a.user.id = b.user.id"
+			+ " where a.Type like 'Personne' and b.Type like 'Décès'"
+			+ "and a.Expiration_date > now() "
+			+ "and b.Expiration_date > now()")
 	public List<Long> Users_pack2();
 	
-	@Query(value = "select a.id_user from contract a inner join contract b where a.id_user = "
-			+ "b.id_user and a.type = 'Vie' and b.type = 'Dommages' and a.expiration_date >"
-			+ " now() and b.expiration_date > now()", nativeQuery = true)
+	@Query("select a.user.id from Contract a "
+			+ "join Contract b "
+			+ "on a.user.id = b.user.id"
+			+ " where a.Type like 'Vie' and b.Type like 'Dommages'"
+			+ "and a.Expiration_date > now() "
+			+ "and b.Expiration_date > now()")
 	public List<Long> Users_pack3();
 	
 	@Query("select count(*) from Contract c"
@@ -35,7 +44,7 @@ public interface OfferRepository extends CrudRepository<Offer, Long > {
 	@Query("select c.user.id from Contract c"
 			+ " group by c.user.id"
 			+" HAVING count(*) = ?1 ")
-	public List<Long> Top_Users(int num);
+	public List<Long> Top_Users(Long num);
 	
 	@Query("select distinct c.user.id from Contract c "
 			+ "where c.Creation_date = "
