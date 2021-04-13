@@ -22,6 +22,6 @@ public interface IContractService {
 	void MAJContractPrice(float price,long cntid);
 	float CapitalMixte(double prime,long userid,int n);
 	void DeleteContractsByUserId(long id);
-	int CountCntracts();
+	int CountContracts();
 	void MAJContractDuration(int duration,long cntid);
 }

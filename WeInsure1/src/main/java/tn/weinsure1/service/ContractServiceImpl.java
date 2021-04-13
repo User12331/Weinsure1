@@ -2,6 +2,7 @@ package tn.weinsure1.service;
 
 
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -12,6 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import tn.weinsure1.entities.Contract;
@@ -34,10 +38,9 @@ public class ContractServiceImpl implements IContractService {
 	
 	@Override
 	public List<Contract> RetrieveAllContracts(){
+	/*	Principal principal = null;
+		User u =UserRepository.findByUsername(principal.getName()).get();*/
 		List<Contract> cnts = (List<Contract>) ContractRepository.findAll();
-		for (Contract cnt : cnts){
-			L.info("user +++ :" + cnt);
-		}
 		return cnts;
 	}
 	
@@ -75,8 +78,8 @@ public class ContractServiceImpl implements IContractService {
 	}
 		
 	@Override
-	public int CountCntracts(){
-		return ContractRepository.CountCntracts();
+	public int CountContracts(){
+		return ContractRepository.CountContracts();
 	}
 	
 	@Override
@@ -143,7 +146,7 @@ public class ContractServiceImpl implements IContractService {
 		taux = 0.19;
 		else if ((ageClient >50) &&( ageClient<60) )
 		taux = 0.27;
-		else {L.info("Erreur: Le client n'est pas eligible a  ce type de contrat");
+		else {L.info("Erreur: Le client n'est pas eligible aÂ  ce type de contrat");
 		return 0;
 		}
 		float lxn = tr.findBySurvivantsLx(ageClient+duree);
@@ -190,7 +193,7 @@ public class ContractServiceImpl implements IContractService {
 		taux = 0.19;
 		else if ((ageClient >50) &&( ageClient<60) )
 		taux = 0.27;
-		else {L.info("Erreur: Le client n'est pas eligible a  ce type de contrat");
+		else {L.info("Erreur: Le client n'est pas eligible aÂ  ce type de contrat");
 		return 0;
 		}
 		float lxn = tr.findBySurvivantsLx(ageClient+duree);
@@ -235,7 +238,7 @@ public class ContractServiceImpl implements IContractService {
 		L.info("Taux ="+taux);
 		}
 	else {
-		L.info("Erreur: Le client n'est pas eligible a  ce type de contrat");
+		L.info("Erreur: Le client n'est pas eligible aÂ  ce type de contrat");
 		return 0;
 	}
 		for (int i=0;i<60-ageClient-1;i++)
@@ -291,7 +294,7 @@ public class ContractServiceImpl implements IContractService {
 		L.info("Taux ="+taux);
 		}
 	else {
-		L.info("Erreur: Le client n'est pas eligible a  ce type de contrat");
+		L.info("Erreur: Le client n'est pas eligible aÂ  ce type de contrat");
 		return 0;
 	}
 		for (int i=0;i<60-ageClient-1;i++)
@@ -342,7 +345,7 @@ public class ContractServiceImpl implements IContractService {
 		else if ((ageClient >50) &&( ageClient<60) )
 			taux = 0.27;
 		else {
-		L.info("Erreur: Le client n'est pas eligible a  ce type de contrat");
+		L.info("Erreur: Le client n'est pas eligible aÂ  ce type de contrat");
 		return 0;
 		}
 		for (int i=0;i<60-ageClient-1;i++)

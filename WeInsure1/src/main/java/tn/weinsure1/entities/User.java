@@ -91,11 +91,11 @@ List<Offer> offers;
 ////////////////////////////////////////////////////////////////
 
 
-	@JsonIgnore
-	//@JsonBackReference
-	@OneToOne(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
-	private Contraint contraint;
-
+@JsonIgnore
+//@JsonBackReference
+@OneToOne
+@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
+private Contraint contraint;
 
 
 	public User(List<Offer> offers) {

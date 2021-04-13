@@ -44,6 +44,6 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
     public void DeleteContractsByUserId(@Param("id")long id);
 	
 	@Query("Select count(*) from Contract")
-	public int CountCntracts();
-
+	public int CountContracts();
+	
 }
