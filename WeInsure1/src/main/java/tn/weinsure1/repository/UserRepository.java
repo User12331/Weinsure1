@@ -1,25 +1,23 @@
 package tn.weinsure1.repository;
 
 
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import tn.weinsure1.entities.Role;
 import tn.weinsure1.entities.User;
 
+import java.util.Optional;
 
+public interface UserRepository extends JpaRepository<User, Long> {
 
-public interface UserRepository  extends CrudRepository <User, Long >
-{
+    Optional<User> findByUsername(String username);
 
-	Optional<User> findByUsername(String username);
+    Boolean existsByEmail(String email);
 
-	Boolean existsByUsername(String username);
+    Optional<User> findByEmail(String email);
 
-	Boolean existsByEmail(String email);
+    
+    Boolean existsByUsername(String username);
+}
 
 /*	@Query( "Select u from User u where u.firstname is not null")
 	List<User>findByFirstnameNotNull();
@@ -56,4 +54,3 @@ public interface UserRepository  extends CrudRepository <User, Long >
 		
 	/*@Query("SELECT u From User u WHERE u.status =:Insured")
 	List<User> findSinisterByRoleInsured();*/
-}

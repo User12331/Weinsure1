@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +16,7 @@ import tn.weinsure1.entities.sinister;
 import tn.weinsure1.entities.sinisterstatus;
 import tn.weinsure1.repository.UserRepository;
 
+
 @Service
 public class UserServiceImpl implements IUserService { 
 	
@@ -22,7 +24,6 @@ public class UserServiceImpl implements IUserService {
 	UserRepository userRepository;
 	
 	private static final Logger L= LogManager.getLogger(UserServiceImpl.class);
-	
 	
 	@Override
 	public List<User> RetrieveAllUsers(){
@@ -60,7 +61,16 @@ public class UserServiceImpl implements IUserService {
 		User u = userRepository.findById(Long.parseLong(id)).get();
 		L.info("Usert returned = : " + u);
 		return u;	
-	}	}
+	}
+	@Override
+	public Optional<User> findByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}	
+	
+}
+
+
 	/*
 	@Override
 	public List<User> findByRole(Role ro) {

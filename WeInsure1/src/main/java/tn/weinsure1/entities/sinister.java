@@ -51,8 +51,9 @@ public class sinister implements Serializable{
     @Column(name="Motif")
 	SinisterMotif motifStatus;
 	
+	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "idUser",referencedColumnName="IdUser")
+	@JoinColumn(name = "USER_ID",referencedColumnName="USER_ID")
 	@JsonIgnoreProperties("sinisterList")
 	@JsonIgnore
 	private User user;
