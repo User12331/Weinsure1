@@ -93,8 +93,7 @@ List<Offer> offers;
 
 	@JsonIgnore
 	//@JsonBackReference
-	@OneToOne
-	@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
+	@OneToOne(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	private Contraint contraint;
 
 

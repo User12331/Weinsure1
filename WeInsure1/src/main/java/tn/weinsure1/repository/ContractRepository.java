@@ -17,7 +17,6 @@ import tn.weinsure1.entities.Contract;
 @Repository
 public interface ContractRepository extends CrudRepository<Contract,Long> {
 
-	// Find by year greater than X sorted asc
 	@Query("SELECT c from Contract c WHERE c.Duration > :Duration ORDER By c.Duration asc ")
 	List<Contract> findByDurationGreater(@Param("Duration") int Duration);
 	
@@ -33,4 +32,18 @@ public interface ContractRepository extends CrudRepository<Contract,Long> {
     @Transactional
     @Query("UPDATE Contract c SET c.Price=:price where c.idcontract=:cntid")
     public void MAJContractPrice(@Param("price")float price, @Param("cntid")long cntid);
+	
+	@Modifying
+    @Transactional
+    @Query("UPDATE Contract c SET c.Duration=:duration where c.idcontract=:cntid")
+    public void MAJContractDuration(@Param("duration")int duration, @Param("cntid")long cntid);
+	
+	@Modifying
+    @Transactional
+    @Query("DELETE from Contract c WHERE c.user.id=:id")
+    public void DeleteContractsByUserId(@Param("id")long id);
+	
+	@Query("Select count(*) from Contract")
+	public int CountCntracts();
+
 }
