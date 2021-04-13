@@ -6,34 +6,51 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.Offer;
+import tn.weinsure1.entities.User;
 @Repository
 public interface OfferRepository extends CrudRepository<Offer, Long > {
 
-	@Query(value = "select a.id_user from contract a inner join contract b where a.id_user = "
-			+ "b.id_user and a.type = 'Vie' and b.type = 'Décès' and a.expiration_date >"
-			+ " now() and b.expiration_date > now()", nativeQuery = true)
-	public List<Integer> Users_pack1();
+	@Query("select a.user.id from Contract a "
+			+ "join Contract b "
+			+ "on a.user.id = b.user.id"
+			+ " where a.Type like 'Vie' and b.Type like 'Décès'"
+			+ "and a.Expiration_date > now() "
+			+ "and b.Expiration_date > now()")
+	public List<Long> Users_pack1();
 	
-	@Query(value = "select a.id_user from contract a inner join contract b where a.id_user = "
-			+ "b.id_user and a.type = 'Décès' and b.type = 'Personne' and a.expiration_date >"
-			+ " now() and b.expiration_date > now()", nativeQuery = true)
-	public List<Integer> Users_pack2();
+	@Query("select a.user.id from Contract a "
+			+ "join Contract b "
+			+ "on a.user.id = b.user.id"
+			+ " where a.Type like 'Personne' and b.Type like 'Décès'"
+			+ "and a.Expiration_date > now() "
+			+ "and b.Expiration_date > now()")
+	public List<Long> Users_pack2();
 	
-	@Query(value = "select a.id_user from contract a inner join contract b where a.id_user = "
-			+ "b.id_user and a.type = 'Vie' and b.type = 'Dommages' and a.expiration_date >"
-			+ " now() and b.expiration_date > now()", nativeQuery = true)
-	public List<Integer> Users_pack3();
+	@Query("select a.user.id from Contract a "
+			+ "join Contract b "
+			+ "on a.user.id = b.user.id"
+			+ " where a.Type like 'Vie' and b.Type like 'Dommages'"
+			+ "and a.Expiration_date > now() "
+			+ "and b.Expiration_date > now()")
+	public List<Long> Users_pack3();
 	
-	@Query(value = "select count(*) from contract group by id_user order by 1 desc LIMIT 1", nativeQuery = true)
-	public int Top_num_Contracts();
+	@Query("select count(*) from Contract c"
+			+ " group by c.user.id"
+			+ " order by 1 desc")
+	public List<Long> Top_num_Contracts();
 	
-	@Query(value = "select id_user from contract group by id_user HAVING count(*) = ?1 ", nativeQuery = true)
-	public List<Integer> Top_Users(int num);
+	@Query("select c.user.id from Contract c"
+			+ " group by c.user.id"
+			+" HAVING count(*) = ?1 ")
+	public List<Long> Top_Users(Long num);
 	
-	@Query(value = "select distinct id_user from contract where creation_date ="
-			+ " (select min(creation_date) from contract) ", nativeQuery = true)
-	public List<Integer> Old_User();
+	@Query("select distinct c.user.id from Contract c "
+			+ "where c.Creation_date = "
+			+ "(select min(b.Creation_date) "
+			+ "from Contract b)")
+	public List<Long> Old_User();
 	
 	
 }

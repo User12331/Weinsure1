@@ -110,12 +110,11 @@ List<Offer> offers;
 ////////////////////////////////////////////////////////////////
 
 
-	@JsonIgnore
-	//@JsonBackReference
-	@OneToOne
-	@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
-	private Contraint contraint;
-
+@JsonIgnore
+//@JsonBackReference
+@OneToOne
+@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
+private Contraint contraint;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "USER_AUTHORITY", joinColumns = {
