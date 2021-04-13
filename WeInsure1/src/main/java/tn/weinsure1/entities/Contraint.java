@@ -53,8 +53,7 @@ public class Contraint implements Serializable {
 	
 	
 	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "idUser",referencedColumnName="IdUser")
+	@OneToOne(mappedBy="contraint" , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	
 	public Contraint() {
