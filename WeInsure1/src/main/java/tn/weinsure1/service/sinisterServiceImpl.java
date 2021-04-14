@@ -236,6 +236,14 @@ public class sinisterServiceImpl implements IsinisterService {
 			L.info("Veuillez verifier votre Type de Sinistre" ) ;
 			return 0 ;
 		}
+		else if ( sinistreRepository.GetSalaireMoyenUsersContractSinister() < sinistreRepository.GetPrixContratContractSinister())
+		{
+			L.info("Vous devez verifier votre Contract le plutot possible" ) ;
+			ss.setReglemntation(0);
+			ss.setStatus(sinisterstatus.rejected);
+			sinistreRepository.save(ss);
+			return 0 ;
+		}
 		for (k =0; k < AgeMax - years; k++) {
 			float dxk= tr.findByDecesDx(years+k); 	
 			L.info("DX " + dxk) ;
@@ -458,12 +466,16 @@ public class sinisterServiceImpl implements IsinisterService {
 	return ((UserDetails)principal).getUsername() ; 
 }
 
-	public float GetSalaireMoyenUsersContractSinister(Long id){
+	public float GetSalaireMoyenUsersContractSinister(){
 		float k = 0 ; 
-		k = sinistreRepository.GetSalaireMoyenUsersContractSinister(id);
+		k = sinistreRepository.GetSalaireMoyenUsersContractSinister();
 		return k ;
 	}
-	
+	public float GetPrixContratContractSinister() {
+		float k = 0 ;
+		k = sinistreRepository.GetPrixContratContractSinister();
+		return k ;
+	}
 	
 	
 	

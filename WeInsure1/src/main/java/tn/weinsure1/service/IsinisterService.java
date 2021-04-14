@@ -37,7 +37,8 @@ public interface IsinisterService {
 	 double CreditSimulator( Long idS , Long idC) ;
 	 void UpdateSinDescription(Long idS ,String description ) ;
 	 String yallacurrent() ;
-	 float GetSalaireMoyenUsersContractSinister(Long id);
+	 float GetSalaireMoyenUsersContractSinister();
+	 float GetPrixContratContractSinister();
 	 
 
 }

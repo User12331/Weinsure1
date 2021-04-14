@@ -149,11 +149,11 @@ public class sinisterrestController {
 		 		sr.UpdateSinDescription(idS, disc);
 		 		
 		 	}
-			@GetMapping("/AVG/{idU}")
+			@GetMapping("/AVG")
 			@ResponseBody
-			  public float CapitalCasDéces(@PathVariable("idU") Long idU)  {
+			  public float CapitalCasDéces()  {
 			float k = 0 ;
-			k = (float) sr.GetSalaireMoyenUsersContractSinister(idU) ; 
+			k = (float) sr.GetSalaireMoyenUsersContractSinister() ; 
 			return k ;
 		  
 		}
