@@ -73,7 +73,7 @@ public class sinisterrestController {
 		return k ;
 	  
 	}
-		
+
 		@GetMapping("/calculCDP/{idU}/{idC}")
 		@ResponseBody
 		public float CapitalDécesPeriodique(@PathVariable("idU") Long idU, @PathVariable("idC") Long idC) throws ParseException{
@@ -90,8 +90,7 @@ public class sinisterrestController {
 		return k ;
 	  
 	}
-		  
-		  
+  
 		  //http://localhost:8000/SpringMVC/servlet/aff-sinistre/10/10
 		  @PutMapping(value = "/aff-sinistre/{idSin}/{idUser}") 
 		  public void affecterEmployeADepartement(@PathVariable("idSin")Long idSin, @PathVariable("idUser")Long idUser) {
@@ -113,6 +112,12 @@ public class sinisterrestController {
 			 public void sendMail() {
 			 sr.SendMail();
 			 }
+		    @PutMapping(value = "/modifyDescription/{idS}/{newdescription}") 
+		 	@ResponseBody
+		 	public void mettreAjourEmailByEmployeId(@PathVariable("idS") Long idS, @PathVariable("newdescription") String disc) {
+		 		sr.UpdateSinDescription(idS, disc);
+		 		
+		 	}
 		     
 		  
 				}

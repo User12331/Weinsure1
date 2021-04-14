@@ -213,7 +213,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		int BDay = calendar.get(Calendar.YEAR);
 		LocalDate now = LocalDate.now();
 		int years = now.getYear()-BDay;
-		double taux = c.getRate();
+		double taux = c.getRate();	
 		for (k =0; k < AgeMax - years; k++) {
 			float dxk= tr.findByDecesDx(years+k); 	
 			L.info("DX " + dxk) ;
@@ -310,7 +310,6 @@ public class sinisterServiceImpl implements IsinisterService {
 	
 	
 	public float TDEMPRUNTEUR(Long idU , Long idC  ) {
-	
 		int k;
 		float prime = 0;
 		User u  = ur.findById(idU).get();
@@ -371,17 +370,22 @@ public class sinisterServiceImpl implements IsinisterService {
 	}
 	public double CreditSimulator( Long idu, Long idc) {
 		
-		
 		User u= ur.findById(idu).get();
 		Contract c=cr.findById(idc).get();
 		double taux = c.getRate();
 		//Long id=(Long)session.getAttribute("name");	 
 		int dur=c.getDuration();
-		double Montant= u.getSalary()*0.8;
+		double Montant= u.getSalary()* 0.8;
 		double a = Math.pow((1+taux),-dur);
 		double mfy=Montant*(taux/(1-a));
 		return mfy ; 
 	
+	}
+	public void UpdateSinDescription( Long idS , String description) {
+		sinister s = sinistreRepository.findById(idS).get();
+		s.setDescription(description);
+		sinistreRepository.save(s);
+
 	}
 
 	

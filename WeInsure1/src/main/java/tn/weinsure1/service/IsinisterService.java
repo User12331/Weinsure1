@@ -35,6 +35,6 @@ public interface IsinisterService {
 	 void affecterSinisterUser(Long SinId, Long userId);
 	 String findSinisterDescriptionwithUR( Long id);
 	 double CreditSimulator( Long idU , Long idC) ;
-
+	 void UpdateSinDescription(Long idS ,String description ) ;
 
 }

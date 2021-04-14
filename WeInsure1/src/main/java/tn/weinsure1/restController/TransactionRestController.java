@@ -82,17 +82,23 @@ public class TransactionRestController {
 	
 	
 	//as an investor
-	@GetMapping("/GiveMoney/{idContract}/{nbreC}/{amount}")
+	@GetMapping("/GiveMoney/{idContract}")
 	@ResponseBody
-	public Boolean payWithCoupon (@PathVariable("idContract")Long idC ,@PathVariable("nbreC")int nbreC,@PathVariable("amount")float amount){
+	public Boolean payWithCoupon (@PathVariable("idContract")Long idC ){
 		Date d=convertToDateViaSqlTimestamp(LocalDateTime.now());
-		float sum=amount * nbreC;
+	
 		Optional<Contract> ContractOptional=crr.findById(idC);
-	    Contract c=ContractOptional.get();	        
-		Transaction t =new Transaction(d,sum,TransType.debit);
+	    Contract c=ContractOptional.get();	 
+	    float amout = c.getPrice() ; 
+	    double nbreC = c.getRate();
+		float sum= (float) (amout * nbreC);
+		System.out.println(""+sum);
+		float sum1 = sum + amout ; 
+		System.out.println(""+sum1);
+		Transaction t =new Transaction(d,sum1,TransType.debit);
         t.setTransactionprice(c);
-        t.setNbreC(nbreC);
-        t. setAmountC(amount);
+        t.setNbreC((int) nbreC);
+        t. setAmountC(c.getPrice());
 		transService.addTransaction(t);
 		//twilioCon.sendotp("+216"+c.getUser().getPhonenumber());
 		return true;
