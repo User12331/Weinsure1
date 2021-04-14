@@ -465,7 +465,6 @@ public class sinisterServiceImpl implements IsinisterService {
 	
 	return ((UserDetails)principal).getUsername() ; 
 }
-
 	public float GetSalaireMoyenUsersContractSinister(){
 		float k = 0 ; 
 		k = sinistreRepository.GetSalaireMoyenUsersContractSinister();

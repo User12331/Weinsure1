@@ -13,6 +13,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +24,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.weinsure1.entities.Contract;
+import tn.weinsure1.entities.Smsrequest;
 import tn.weinsure1.entities.TransType;
 import tn.weinsure1.entities.Transaction;
 import tn.weinsure1.repository.ContractRepository;
 import tn.weinsure1.repository.UserRepository;
 import tn.weinsure1.service.ContractServiceImpl;
+import tn.weinsure1.service.Smsservice;
 import tn.weinsure1.service.TransactionServiceImpl;
 
 
@@ -46,6 +50,8 @@ public class TransactionRestController {
 	
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	Smsservice sm;
 	
 	
 	@GetMapping("/all")
@@ -81,7 +87,7 @@ public class TransactionRestController {
 	//as an investor
 	@GetMapping("/GiveMoney/{idContract}")
 	@ResponseBody
-	public Boolean payWithCoupon (@PathVariable("idContract")Long idC ){
+	public ResponseEntity<Object> payWithCoupon (@PathVariable("idContract")Long idC , Smsrequest smsrequest){
 		Date d=convertToDateViaSqlTimestamp(LocalDateTime.now());
 	
 		Optional<Contract> ContractOptional=crr.findById(idC);
@@ -97,8 +103,13 @@ public class TransactionRestController {
         t.setNbreC((int) nbreC);
         t. setAmountC(c.getPrice());
 		transService.addTransaction(t);
-		//twilioCon.sendotp("+216"+c.getUser().getPhonenumber());
-		return true;
+		String status=sm.sendsms(smsrequest);
+		   if("sent".equals(status)||"queued".equals(status))
+	       {
+	       	return new ResponseEntity<Object>("sent successfully",HttpStatus.OK);
+	       }
+		   return new ResponseEntity<Object>("failed to send message",HttpStatus.NOT_FOUND);
+		
 	}
 	
 }
