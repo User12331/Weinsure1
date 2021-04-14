@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,7 +29,11 @@ public class Notice implements Serializable {
 	
 	@Column(name="Description")
 	private String description;
-
+	
+	@ManyToOne
+	User user;
+	
+/*
 	@JsonIgnore
 	@OneToOne(mappedBy="notice")
 	private Contraint contraint ;
@@ -40,7 +45,7 @@ public class Notice implements Serializable {
 	public void setContraint(Contraint contraint) {
 		this.contraint = contraint;
 	}
-
+*/
 	public Long getIdnotice() {
 		return idnotice;
 	}

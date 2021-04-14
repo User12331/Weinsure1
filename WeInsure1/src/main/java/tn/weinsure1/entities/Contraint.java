@@ -39,18 +39,20 @@ public class Contraint implements Serializable {
 	@Column(name="Documents")
 	private File documents;
 	
-	@Column(name="DateContraint")
-	@Temporal(TemporalType.DATE)
+	@Column(name = "DateContraint", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date datecontraint;
 	
 	@Column(name="Type")
 	@Enumerated(EnumType.STRING)
 	ContraintType type;
 
-	@JsonIgnore
+	/*@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="IDNotice")
-	private Notice notice ;
+	private Notice notice ;*/
+	
+	@Column(name="Reponse")
+	private String reponse;
 	
 	
 	@JsonIgnore
@@ -69,7 +71,7 @@ public class Contraint implements Serializable {
 		this.documents = documents;
 		this.datecontraint = datecontraint;
 		this.type = type;
-		this.notice = notice;
+		//this.notice = notice;
 		this.user = user;
 	}
 
@@ -80,7 +82,7 @@ public class Contraint implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+/*
 	public Notice getNotice() {
 		return notice;
 	}
@@ -88,7 +90,7 @@ public class Contraint implements Serializable {
 	public void setNotice(Notice notice) {
 		this.notice = notice;
 	}
-
+*/
 	public Long getIdcontraint() {
 		return idcontraint;
 	}
@@ -136,14 +138,25 @@ public class Contraint implements Serializable {
 	public void setType(ContraintType type) {
 		this.type = type;
 	}
+	
+	
+	
+	public String getReponse() {
+		return reponse;
+	}
 
-	public Contraint(int state, String description, File documents, Date datecontraint, ContraintType type) {
+	public void setReponse(String reponse) {
+		this.reponse = reponse;
+	}
+
+	public Contraint(int state, String description , String reponse, File documents, Date datecontraint, ContraintType type) {
 		super();
 		this.state = state;
 		this.description = description;
 		this.documents = documents;
 		this.datecontraint = datecontraint;
 		this.type = type;
+		this.reponse = reponse ;
 	}
 	
 	

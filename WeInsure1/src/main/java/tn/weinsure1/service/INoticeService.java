@@ -11,5 +11,6 @@ public interface INoticeService {
 	void DeleteNotice(String id);
 	Notice UpdateNotice(Notice c);
 	Notice RetrieveNotice(String id);
+	List<Notice> NoticeNonLu(String emailUser);
 	
 }

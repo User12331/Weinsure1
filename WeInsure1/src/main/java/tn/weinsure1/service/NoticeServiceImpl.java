@@ -50,4 +50,9 @@ public class NoticeServiceImpl implements INoticeService{
 		L.info("Notice returned = : " + c);
 		return c;	
 	}
+	@Override
+	public List<Notice> NoticeNonLu(String emailUser) {
+		List<Notice> notices =  NoticeRepository.NoticeNonLu(emailUser);
+		return notices;
+	}
 }
