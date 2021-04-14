@@ -98,26 +98,30 @@ public Float getPointsF() {
 		return PointsF;
 	}
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 
 	public void setPointsF(Float pointsF) {
 		PointsF = pointsF;
 	}
 
 	///////////////////////////////////////////////////////////////////
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JsonIgnore
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+	*/
+	
+  @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "USER_AUTHORITY", joinColumns = {
+            @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")}, inverseJoinColumns = {
+            @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")})
+    private Set<Role> roles = new HashSet<>();
+	
+	
+/*	
 ////////////////////////////////////////////////////////////////////
-=======
+//=======
 ///////////////////////////////////////////////////////////////////
 
 
->>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
-	
+/*>>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
+	*/
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
 	private List<sinister> sinisterList = new ArrayList<>();
