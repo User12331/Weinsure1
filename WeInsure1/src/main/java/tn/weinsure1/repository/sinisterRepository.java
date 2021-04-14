@@ -28,6 +28,9 @@ public interface sinisterRepository  extends CrudRepository<sinister, Long> {
 	int findcontractdurationBysinister(@Param("idd") Long id2);
 	@Query("select c from sinister c  JOIN c.user u Join u.contraint s where s.idcontraint =:idd AND c.status = 'WaitingForReclamation' ")
 	List<sinister> findSinisterDescriptionwithUR(@Param("idd") Long id);
+	@Query("select AVG(u.salary) from sinister s  JOIN  s.user u JOIN u.contracts c where c.Type = 'Vie' AND s.typeSinistre = 'VieEntiere' ")
+	float GetSalaireMoyenUsersContractSinister(@Param("idd") Long id) ;
+
 
 
 	

@@ -77,7 +77,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		sinister sinistreAdded = sinistreRepository.save(s);
 		return sinistreAdded;
 	}
-	
 	@Override
 	public sinister retrieveSinistre(String id) {
 		L.info("in retrieveSinistre id = " + id);
@@ -85,8 +84,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("sinistre returned = : " + s);
 		return s;
 			}
-	
-	
 	@Override
 	public List<sinister> retrieveAllSinistres() {
 		List<sinister> sinistres = (List<sinister>) sinistreRepository.findAll(); 
@@ -97,13 +94,11 @@ public class sinisterServiceImpl implements IsinisterService {
 					
 		return sinistres;
 	}	
-	
 	@Override 
 	public List<sinister> findByStatus(sinisterstatus sins) {
 		return sinistreRepository.findSinisterByStatus(sins);
 		
 	}
-	
 	@Override
 	public List<sinister> findByDescription(String name) {
 
@@ -111,7 +106,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("sinister +++ :" + sins) ;
 		return sins;
 	} 
-
 	@Override
 	public List<sinister> findByYear(String year) {
 		List<sinister> sins = sinistreRepository.findByYear(year);
@@ -124,8 +118,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("sinistre +++ :" + sins) ;
 		return sins;
 	}
-	
-	
 	@Override
 	public List<sinister> findSinisterByStatusRejected( ) {
 		List<sinister> sins = sinistreRepository.findSinisterByStatusRejected();
@@ -138,7 +130,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("sinistre +++ :" + sins) ;
 		return sins;
 	}
-	
 	@Override
 	public void SendMail() {
 		try {
@@ -156,7 +147,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		catch (Exception e)
 		{System.out.println(e.getMessage());}
 		}
-	
 	@Override
 	public void CheckStatus() {
 		List<sinister> sinsenattente = sinistreRepository.findSinisterByStatusEnAttente();
@@ -215,8 +205,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		} 
 
 	}	
-	
-	
 	@Override
 	public float CVE( Long idS , Long idC  ){
 		int k;
@@ -262,7 +250,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("prix cotnract+++++++++ =" + c.getPrice()) ;
 		return cd;
 	}
-	
 	public List<sinister> findbyuserid(Long id) {
 		List<sinister> sins = sinistreRepository.findbyuserid(id);
 		L.info("sinister +++ :" + sins) ;
@@ -273,7 +260,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("sinister +++ :" + k) ;
 		return k;
 	}
-	
 	@Override
 	public float CapitalCasDéces(Long idS , Long idC  ) throws ParseException {
 		int k;
@@ -315,10 +301,6 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("PRIME+++++++++ =" + cd) ;
 		return cd;
 	}
-	
-	
-	
-	
 	@Override
 	public float CapitalDécesPeriodique(Long idS , Long idC   ) throws ParseException {
 		int k1,k2;
@@ -374,10 +356,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		L.info("reg " + ss.getReglemntation()) ;
 
 		return cd;
-	}
-	
-	
-	public float TDEMPRUNTEUR(Long idS , Long idC  ) {
+	}    public float TDEMPRUNTEUR(Long idS , Long idC  ) {
 		int k;
 		float prime = 0;
 		sinister ss = sinistreRepository.findById(idS).get();
@@ -433,18 +412,13 @@ public class sinisterServiceImpl implements IsinisterService {
 	public void affecterSinisterUser(Long SinId, Long userId) {
 		User u = ur.findById(userId).get();
 		sinister s = sinistreRepository.findById(SinId).get();
-
 		if(s.getUser() == null){
-
 			List<User> urs = new ArrayList<>();
 			urs.add(u);
 			s.setUser(u);
 		}else{
-
 			s.setUser(u);
-
 		}
-
 	}
 	public List<sinister> findSinisterDescriptionwithUR( Long id)
 	{ 
@@ -471,7 +445,7 @@ public class sinisterServiceImpl implements IsinisterService {
 		sinistreRepository.save(s);
 
 	}
-public String yallacurrent(){
+	public String yallacurrent(){
 	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 	if (principal instanceof UserDetails) {
@@ -484,6 +458,11 @@ public String yallacurrent(){
 	return ((UserDetails)principal).getUsername() ; 
 }
 
+	public float GetSalaireMoyenUsersContractSinister(Long id){
+		float k = 0 ; 
+		k = sinistreRepository.GetSalaireMoyenUsersContractSinister(id);
+		return k ;
+	}
 	
 	
 	

@@ -36,6 +36,8 @@ public interface IsinisterService {
 	 List<sinister> findSinisterDescriptionwithUR( Long id);
 	 double CreditSimulator( Long idS , Long idC) ;
 	 void UpdateSinDescription(Long idS ,String description ) ;
-	 public String yallacurrent() ;
+	 String yallacurrent() ;
+	 float GetSalaireMoyenUsersContractSinister(Long id);
+	 
 
 }

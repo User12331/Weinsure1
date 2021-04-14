@@ -44,7 +44,7 @@ public class sinisterrestController {
 		 } 
 		  @GetMapping("/retrieve-SinsitresByIdUser")
 			 @ResponseBody
-			  public List<sinister> SinByIdUser() {
+		  public List<sinister> SinByIdUser() {
 				  Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			 List<sinister> s = sr.findbyuserid(((User)principal).getId());
 			// System.out.println(""+ ((User)principal).getContraint().getIdcontraint());
@@ -52,22 +52,21 @@ public class sinisterrestController {
 			 } 
 		  @GetMapping("/findByAny/{any}")
 			 @ResponseBody
-			  public List<sinister> findByANy(@PathVariable(value = "any") String any) {
+		  public List<sinister> findByANy(@PathVariable(value = "any") String any) {
 				  
 			 List<sinister> s = sr.findByAny(any);
 			 return s;
-			 } 
-		  
+			 }  
 		  @GetMapping("/retrieveSinWithReclamation/{id}")
 			 @ResponseBody
-			  public List<sinister> getSinistersRecla(@PathVariable(value = "id") Long id) {
+		  public List<sinister> getSinistersRecla(@PathVariable(value = "id") Long id) {
 				  
 			 List<sinister> s = sr.findSinisterDescriptionwithUR(id);
 			 return s;
 			 } 
 			  @GetMapping("/userrr")
 				 @ResponseBody
-				  public String getetet() {
+		  public String getetet() {
 				 String s = sr.yallacurrent();
 				 return s;
 				 } 
@@ -150,7 +149,14 @@ public class sinisterrestController {
 		 		sr.UpdateSinDescription(idS, disc);
 		 		
 		 	}
-		     
+			@GetMapping("/AVG/{idU}")
+			@ResponseBody
+			  public float CapitalCasDéces(@PathVariable("idU") Long idU)  {
+			float k = 0 ;
+			k = (float) sr.GetSalaireMoyenUsersContractSinister(idU) ; 
+			return k ;
+		  
+		}
 		  
 				}
 
