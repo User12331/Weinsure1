@@ -43,7 +43,7 @@ public class OfferTest {
 	
 	@Test		//Delete Offer
 	public void TestDeleteOffer() {
-		io.deleteOffer("30");
+		io.deleteOffer((long) 30);
 		}
 
 	@Test		//Show all Offer

@@ -33,8 +33,8 @@ public class OfferServiceImpl implements IOfferService {
 	
 	}
 	@Override
-	public void deleteOffer(String id) {
-		OfferRepository.deleteById(Long.parseLong(id));
+	public void deleteOffer(Long id) {
+		OfferRepository.deleteById(id);
 		
 	}
 	@Override
@@ -62,6 +62,7 @@ public class OfferServiceImpl implements IOfferService {
 					
 		return Offers;
 	}
+	
 	@Override
 	public void affecterUserOffer(long UserId, long OfferId) {
 	Offer offer = OfferRepository.findById(OfferId).get();
@@ -154,5 +155,185 @@ public class OfferServiceImpl implements IOfferService {
 					
 		return l;	
 	}
+	/*@Override
+	public void FiedeliteP() {
+	OfferRepository.affect();
+	}*/
+		
+	@Override
+	public void Fidele(float somme, Long idu) {
+	OfferRepository.Fidelite(somme, idu);
+	}
+	
+	@Override
+	public void remise1(float somme, Long idc) {
+	OfferRepository.remise(somme, idc);
+	}
+
+	@Override
+	public Long basprix1(Long idu) {
+		List<Long> l = (List<Long>) OfferRepository.basprix(idu);
+	 return l.get(0);
+	}
+	
+	@Override
+	public Long basprixp1(Long idu) {
+		List<Long> l = (List<Long>) OfferRepository.basprixp1(idu);
+	 return l.get(0);
+	}
+	
+	@Override
+	public Long basprixp2(Long idu) {
+		List<Long> l = (List<Long>) OfferRepository.basprixp2(idu);
+	 return l.get(0);
+	}
+	
+	@Override
+	public Long basprixp3(Long idu) {
+		List<Long> l = (List<Long>) OfferRepository.basprixp3(idu);
+	 return l.get(0);
+	}
+	
+	@Override
+	public List<Long> inDB(Long idu, Long ido) {
+		List<Long> l = OfferRepository.offus(idu,ido); 
+		for(Long ls : l)
+		{
+			L.info("Offer +++ :" + ls);
+
+		}
+					
+		return l;	
+	}
+	
+	@Override
+	public String typeoffer(Long ido) {
+		return OfferRepository.typeoff(ido); 
+	}
+	
+	@Override
+	public float prixoffer(Long ido) {
+		return (float)OfferRepository.prixoff(ido); 
+	}
+	
+	@Override
+	public void affectation(Long idu, Long ido) {
+		//if(inDB(idu, ido) == null)
+		{
+			OfferRepository.affect(idu, ido);
+			String t = typeoffer(ido);
+			if(t.equals("ancien") || t.equals("fidele") || t.equals("best")){
+				remise1(1- prixoffer(ido) , basprix1(idu));
+			}
+			if (t.equals("pack1"))
+			{
+				remise1(1- prixoffer(ido) , basprixp1(idu));
+			}
+			if (t.equals("pack2"))
+			{
+				remise1(1- prixoffer(ido) , basprixp2(idu));
+			}
+			if (t.equals("pack3"))
+			{
+				remise1(1- prixoffer(ido) , basprixp3(idu));
+			}
+			}
+		}
+		
+	
+	@Override
+	public void desaffectation(Long idu, Long ido) {
+		OfferRepository.desaffect(idu, ido);
+		String t = typeoffer(ido);
+		if(t.equals("ancien") || t.equals("fidele") || t.equals("best")){
+			remise1(1/(1- prixoffer(ido)) , basprix1(idu));
+		}
+		if (t.equals("pack1"))
+		{
+			remise1(1/(1- prixoffer(ido)) , basprixp1(idu));
+		}
+		if (t.equals("pack2"))
+		{
+			remise1(1/(1- prixoffer(ido)) , basprixp2(idu));
+		}
+		if (t.equals("pack3"))
+		{
+			remise1(1/(1- prixoffer(ido)) , basprixp3(idu));
+		}
+		}
+	
+	@Override
+	public void affectationauto(Offer O) {
+			Offer Off = addOffer(O);
+			Long id = O.getIdOffer();
+			String Type = O.getType();
+			
+			if(Type.equals("ancien"))
+			{
+				List<Long> L = OfferRepository.Old_User();
+				for(Long ls : L)
+				{
+					OfferRepository.affect(ls, id);
+					remise1(1- prixoffer(id) , basprix1(ls));
+				}
+			}
+			if(Type.equals("fidele"))
+			{
+				List<Long> L = OfferRepository.Fidele_User();
+				for(Long ls : L)
+				{
+					OfferRepository.affect(ls, id);
+					remise1(1- prixoffer(id) , basprix1(ls));
+				}
+			}
+			if(Type.equals("best"))
+			{
+				List<Long> L = OfferRepository.Top_Users(topnum());
+				for(Long ls : L)
+				{
+					OfferRepository.affect(ls, id);
+					remise1(1- prixoffer(id) , basprix1(ls));
+				}
+			}
+			if(Type.equals("pack1"))
+			{
+				List<Long> L = OfferRepository.Users_pack1();	
+				for(Long ls : L)
+				{
+					OfferRepository.affect(ls, id);
+					remise1(1- prixoffer(id) , basprixp1(ls));
+				}
+			}
+			if(Type.equals("pack2"))
+			{
+				List<Long> L = OfferRepository.Users_pack2();	
+				for(Long ls : L)
+				{
+					OfferRepository.affect(ls, id);
+					remise1(1- prixoffer(id) , basprixp2(ls));
+				}
+			}
+			if(Type.equals("pack3"))
+			{
+				List<Long> L = OfferRepository.Users_pack3();	
+				for(Long ls : L)
+				{
+					OfferRepository.affect(ls, id);
+					remise1(1- prixoffer(id) , basprixp3(ls));
+				}
+			}
+	}
+	@Override
+	public String simulateur(Long d, int m) {
+		double p = d*1.01;
+		double ppm = p/m;
+		return "à payer: "+p+"DT\n à payer par mois :"+ppm+" DT";
+	}
+	
+	@Override
+	public String cptendettement(double s, Long ppm) {
+		double cpt = s*0.4 - ppm;
+		return "capacité d'endettement : "+cpt+" DT";
+	}	
 	
 }

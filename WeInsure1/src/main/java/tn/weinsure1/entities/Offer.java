@@ -33,7 +33,7 @@ public class Offer implements Serializable {
 	@Column(name="Description")
 	private String Description;
 	@Column(name="Prix")
-	private int Prix;
+	private float Prix;
 	public Long getIdOffer() {
 		return IdOffer;
 	}
@@ -59,10 +59,10 @@ public class Offer implements Serializable {
 		Description = description;
 	}
 
-	public int getPrix() {
+	public float getPrix() {
 		return Prix;
 	}
-	public void setPrix(int prix) {
+	public void setPrix(float prix) {
 		Prix = prix;
 	}
 
@@ -73,7 +73,7 @@ public class Offer implements Serializable {
 	  inverseJoinColumns = @JoinColumn(name = "IdUser"))
 	List<User> users;
 	
-	public Offer(Long idOffer, String type, Date expiration_date, String description, int prix) {
+	public Offer(Long idOffer, String type, Date expiration_date, String description, float prix) {
 		super();
 		IdOffer = idOffer;
 		Type = type;

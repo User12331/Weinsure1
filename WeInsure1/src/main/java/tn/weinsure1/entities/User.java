@@ -67,8 +67,19 @@ public class User  implements Serializable {
 	@Column(name="Salary")
 	private Float salary ;
 
+	@Column(name="PointsF")
+	public Float PointsF ;
+	
+public Float getPointsF() {
+		return PointsF;
+	}
 
-///////////////////////////////////////////////////////////////////
+
+	public void setPointsF(Float pointsF) {
+		PointsF = pointsF;
+	}
+
+	///////////////////////////////////////////////////////////////////
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JsonIgnore
 	@JoinTable(	name = "user_roles", 
@@ -87,6 +98,7 @@ public class User  implements Serializable {
 private List<Contract> contracts;
 ////////////////////////////////////////////////////////////
 @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
+@JsonIgnore
 List<Offer> offers;
 ////////////////////////////////////////////////////////////////
 

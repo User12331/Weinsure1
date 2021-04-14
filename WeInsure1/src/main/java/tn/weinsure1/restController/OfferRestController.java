@@ -3,6 +3,8 @@ package tn.weinsure1.restController;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.Offer;
 import tn.weinsure1.entities.User;
+import tn.weinsure1.repository.UserRepository;
 import tn.weinsure1.service.IOfferService;
+import tn.weinsure1.service.IUserService;
 
 @RestController
 public class OfferRestController {
 	
 	@Autowired
 	IOfferService io;
+	UserRepository userRepository;
+	IUserService iu;
+
 	
 	@PostMapping("/addOffer")
 	@ResponseBody	
@@ -87,4 +94,93 @@ public class OfferRestController {
 	 List<Long> o = io.Top_Users(io.topnum());
 	 return o;
 	 }
+	
+	/*@PutMapping("/fidelite")
+	@ResponseBody
+		public User UpdateUser() {
+		User u = userRepository.findById((long) 6).get();
+		u.setPointsF((float) 200);
+			return userRepository.save(u);}*/
+	
+	@PostMapping("/affecter/{idUser}/{idOffer}")
+	@ResponseBody
+	public void affuo(@PathVariable("idUser")Long idu,@PathVariable("idOffer")Long ido) {
+	 io.affectation(idu, ido);
+	 }
+	
+	@PutMapping("/fidele/{somme}/{idu}")
+	@ResponseBody
+	public void fidelite(@PathVariable("somme")float som,@PathVariable("idu")Long id) {
+	 io.Fidele(som, id);
+	 }
+	
+	@PutMapping("/remise/{somme}/{idu}")
+	@ResponseBody
+	public void remise(@PathVariable("somme")float som,@PathVariable("idu")Long id) {
+	 io.remise1(1-som, io.basprix1(id));
+	 }
+	
+	// these 5 are for testing remise
+	@PutMapping("/remise1/{somme}/{idc}")
+	@ResponseBody
+	public void remise1(@PathVariable("somme")float som,@PathVariable("idc")Long id) {
+	 io.remise1(1-som, id);
+	 }
+	@GetMapping("/bas/{idu}")
+	@ResponseBody
+	public Long bas(@PathVariable("idu")Long id) {
+		 Long o = io.basprix1(id);
+		 return o;
+	 }
+	@GetMapping("/basp1/{idu}")
+	@ResponseBody
+	public Long basp1(@PathVariable("idu")Long id) {
+		 Long o = io.basprixp1(id);
+		 return o;
+	 }
+	@GetMapping("/basp2/{idu}")
+	@ResponseBody
+	public Long basp2(@PathVariable("idu")Long id) {
+		 Long o = io.basprixp2(id);
+		 return o;
+	 }
+	@GetMapping("/basp3/{idu}")
+	@ResponseBody
+	public Long basp3(@PathVariable("idu")Long id) {
+		 Long o = io.basprixp3(id);
+		 return o;
+	 }
+	
+	@PostMapping("/affectationAuto")
+	@ResponseBody	
+	public void affectationauto1(@RequestBody Offer o) {
+	io.affectationauto(o);}
+	
+	@PutMapping("/desaffecter/{idUser}/{idOffer}")
+	@ResponseBody
+	public void desaffuo(@PathVariable("idUser")Long idu,@PathVariable("idOffer")Long ido) {
+	 io.desaffectation(idu, ido);
+	 }
+	
+	@DeleteMapping("/deleteoffer/{idOffer}")
+	@ResponseBody
+	public void delete(@PathVariable("idOffer")Long ido) {
+		 io.deleteOffer(ido);
+		 }
+
+	@PutMapping("/updateoffer")
+	@ResponseBody	
+	public Offer Update(@RequestBody Offer o) {
+	return io.updateOffer(o);}
+	
+	@GetMapping("/simulateur/{credit}/{mois}")
+	@ResponseBody	
+	public String sim(@PathVariable("credit")Long cred,@PathVariable("mois")int m) {
+	return io.simulateur(cred, m);}
+	
+	@GetMapping("/cptendettement/{salaire}/{ppm}")
+	@ResponseBody	
+	public String cpt(@PathVariable("salaire")double sal,@PathVariable("ppm")Long p) {
+	return io.cptendettement(sal, p);}
 }
+
