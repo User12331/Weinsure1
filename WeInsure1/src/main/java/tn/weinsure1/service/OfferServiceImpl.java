@@ -330,6 +330,7 @@ public class OfferServiceImpl implements IOfferService {
 		return "à payer: "+p+"DT\n à payer par mois :"+ppm+" DT";
 	}
 	
+	
 	@Override
 	public String cptendettement(double s, Long ppm) {
 		double cpt = s*0.4 - ppm;
