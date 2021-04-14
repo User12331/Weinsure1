@@ -1,8 +1,34 @@
 package tn.weinsure1.restController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import tn.weinsure1.annotation.CurrentUser;
+import tn.weinsure1.restController.UserController;
+import tn.weinsure1.entities.CustomUserDetails;
+import tn.weinsure1.entities.payload.ApiResponse;
+import tn.weinsure1.entities.payload.LogOutRequest;
+import tn.weinsure1.entities.payload.UpdatePasswordRequest;
+import tn.weinsure1.event.OnUserAccountChangeEvent;
+import tn.weinsure1.event.OnUserLogoutSuccessEvent;
+import tn.weinsure1.exception.UpdatePasswordException;
+import tn.weinsure1.service.AuthService;
+import tn.weinsure1.service.UserService;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
-
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,48 +43,125 @@ import org.springframework.web.bind.annotation.RestController;
 import tn.weinsure1.entities.User;
 import tn.weinsure1.service.IUserService; 
 @RestController
+@RequestMapping("/user")
+@Api(value = "User Rest API", description = "Defines endpoints for the logged in user. It's secured by default")
+
+
 
 public class UserController {
 	
 	
+	////////////////////////////////////////////////////////CRUD///////////////////////////////////////////////////////////////////////////////////////
 	@Autowired
-	IUserService userService;
+	IUserService userService1;
 
-	// http://localhost:8081/SpringMVC/servlet/retrieve-all-users
+	// http://localhost:8081/test/retrieve-all-users
 	@GetMapping("/retrieve-all-users")
 	@ResponseBody
 	public List<User> getUsers() { 
-	List<User> list = userService.RetrieveAllUsers();
+	List<User> list = userService1.RetrieveAllUsers();
 	return list;
 	}
-	/*
-	// http://localhost:8081/SpringMVC/servlet/retrieve-user/{user-id}
+	
+	// http://localhost:8081/test/retrieve-user/{user-id}
 	@GetMapping("/retrieve-user/{user-id}")
 	@ResponseBody
 	public User retrieveUser(@PathVariable("user-id") String userId) {
-	return userService.RetrieveUser(userId);
+	return userService1.RetrieveUser(userId);
 	}
 
-	// http://localhost:8081/SpringMVC/servlet/add-user
+	// http://localhost:8081/test/add-user
 	@PostMapping("/add-user")
 	@ResponseBody
 	public User addUser(@RequestBody User u) {
-	User user = userService.AddUser(u);
+	User user = userService1.AddUser(u);
 	return user;
 	}
-	// http://localhost:8081/SpringMVC/servlet/remove-user/{user-id}
+	// http://localhost:8081/test/remove-user/{user-id}
 	@DeleteMapping("/remove-user/{user-id}")
 	@ResponseBody
 	public void removeUser(@PathVariable("user-id") String userId) {
-	userService.DeleteUser(userId);
+	userService1.DeleteUser(userId);
 	}
 
-	// http://localhost:8081/SpringMVC/servlet/modify-user
+	// http://localhost:8081/test/modify-user
 	@PutMapping("/modify-user")
 	@ResponseBody
 	public User modifyUser(@RequestBody User user) {
-	return userService.UpdateUser(user);
-	}*/
+	return userService1.UpdateUser(user);
+	}
+	///////////////////////////////////////////////////////////////////////////////
+	private static final Logger logger = Logger.getLogger(UserController.class);
+
+    private final AuthService authService;
+
+    private final UserService userService;
+
+    private final ApplicationEventPublisher applicationEventPublisher;
+
+    @Autowired
+    public UserController(AuthService authService, UserService userService, ApplicationEventPublisher applicationEventPublisher) {
+        this.authService = authService;
+        this.userService = userService;
+        this.applicationEventPublisher = applicationEventPublisher;
+    }
+
+  
+     ////////////////Gets the current user profile of the logged in user/////////////////////
+    
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER')")
+    @ApiOperation(value = "Returns the current user profile")
+    public ResponseEntity getUserProfile(@CurrentUser CustomUserDetails currentUser) {
+        logger.info(currentUser.getEmail() + " has role: " + currentUser.getRoles());
+        return ResponseEntity.ok("Hello. This is about Users");
+    }
+
+
+    ////////////////////// Admin access/////////////////////////////////////////////
+     
+    @GetMapping("/admins")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation(value = "Returns the list of configured admins. Requires ADMIN Access")
+    public ResponseEntity getAllAdmins() {
+        logger.info("Inside secured resource with admin");
+        return ResponseEntity.ok("Hello. This is about admins");
+    }
+
+    
+     ///////////////// Updates the password of the current logged in user/////////////////////////////////
+     
+    @PostMapping("/password/update")
+    @PreAuthorize("hasRole('USER')")
+    @ApiOperation(value = "Allows the user to change his password once logged in by supplying the correct current " +
+            "password")
+    public ResponseEntity updateUserPassword(@CurrentUser CustomUserDetails customUserDetails,
+                                             @ApiParam(value = "The UpdatePasswordRequest payload") @Valid @RequestBody UpdatePasswordRequest updatePasswordRequest) {
+
+        return authService.updatePassword(customUserDetails, updatePasswordRequest)
+                .map(updatedUser -> {
+                    OnUserAccountChangeEvent onUserPasswordChangeEvent = new OnUserAccountChangeEvent(updatedUser, "Update Password", "Change successful");
+                    applicationEventPublisher.publishEvent(onUserPasswordChangeEvent);
+                    return ResponseEntity.ok(new ApiResponse(true, "Password changed successfully"));
+                })
+                .orElseThrow(() -> new UpdatePasswordException("--Empty--", "No such user present."));
+    }
+
+    /**
+     * Log the user out. Release the refresh token associated with the  user device.
+     */
+    @PostMapping("/logout")
+    @ApiOperation(value = "Logs the specified user device and clears the refresh tokens associated with it")
+    public ResponseEntity logoutUser(@CurrentUser CustomUserDetails customUserDetails,
+                                     @ApiParam(value = "The LogOutRequest payload") @Valid @RequestBody LogOutRequest logOutRequest) {
+        userService.logoutUser(customUserDetails, logOutRequest);
+        Object credentials = SecurityContextHolder.getContext().getAuthentication().getCredentials();
+
+        OnUserLogoutSuccessEvent logoutSuccessEvent = new OnUserLogoutSuccessEvent(customUserDetails.getEmail(), credentials.toString(), logOutRequest);
+        applicationEventPublisher.publishEvent(logoutSuccessEvent);
+        return ResponseEntity.ok(new ApiResponse(true, "Log out successful"));
+    }
+	
 	}
 	
 	
@@ -81,106 +184,3 @@ public class UserController {
 	
 	
 	
-	
-	
-//	/*
-//	
-//  // ------------------------
-//  // PUBLIC METHODS
-//  // ------------------------
-//  
-//  /**
-//   * /create  --> Create a new user and save it in the database.
-//   * 
-//   * @param email User's email
-//   * @param name User's name
-//   * @return A string describing if the user is successfully created or not.
-//   */
-//	
-//	
-//  @RequestMapping("/create")
-//	User us = userRepository.save(u);
-//  @ResponseBody
-//  public User AddUser(User u) {
-//    User user = null;
-//    try {
-//      user = new User
-//    		  User us = serRepository.save(u);
-//    }
-//    catch (Exception ex) {
-//      return "Error creating the user: " + ex.toString();
-//    }
-//    return "User succesfully created! (id = " + user.getId() + ")";
-//  }
-//  
-//  /**
-//   * /delete  --> Delete the user having the passed id.
-//   * 
-//   * @param id The id of the user to delete
-//   * @return A string describing if the user is successfully deleted or not.
-//   */
-//  @RequestMapping("/delete")
-//  @ResponseBody
-//  public String delete(long id) {
-//    try {
-//      User user = new User(id);
-//      userDao.delete(user);
-//    }
-//    catch (Exception ex) {
-//      return "Error deleting the user: " + ex.toString();
-//    }
-//    return "User successfully deleted!";
-//  }
-//  
-//  /**
-//   * /get-by-email  --> Return the id for the user having the passed email.
-//   * 
-//   * @param email The email to search in the database.
-//   * @return The user id or a message error if the user is not found.
-//   */
-//  @RequestMapping("/get-by-email")
-//  @ResponseBody
-//  public String getByEmail(String email) {
-//    String userId;
-//    try {
-//      User user = userDao.findByEmail(email);
-//      userId = String.valueOf(user.getId());
-//    }
-//    catch (Exception ex) {
-//      return "User not found";
-//    }
-//    return "The user id is: " + userId;
-//  }
-//  
-//  /**
-//   * /update  --> Update the email and the name for the user in the database 
-//   * having the passed id.
-//   * 
-//   * @param id The id for the user to update.
-//   * @param email The new email.
-//   * @param name The new name.
-//   * @return A string describing if the user is successfully updated or not.
-//   */
-//  @RequestMapping("/update")
-//  @ResponseBody
-//  public String updateUser(long id, String email, String name) {
-//    try {
-//      User user = userDao.findOne(id);
-//      user.setEmail(email);
-//      user.setName(name);
-//      userDao.save(user);
-//    }
-//    catch (Exception ex) {
-//      return "Error updating the user: " + ex.toString();
-//    }
-//    return "User successfully updated!";
-//  }
-//
-//  // ------------------------
-//  // PRIVATE FIELDS
-//  // ------------------------
-//
-//  @Autowired
-//  private UserDao userDao;
-//
-//} // class UserControlle*/

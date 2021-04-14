@@ -2,11 +2,8 @@ package tn.weinsure1.restController;
 
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.weinsure1.entities.Contract;
-import tn.weinsure1.entities.sinister;
 import tn.weinsure1.service.IContractService;
 
 @RestController

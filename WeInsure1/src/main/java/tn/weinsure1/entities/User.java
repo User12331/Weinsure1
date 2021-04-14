@@ -1,16 +1,10 @@
 package tn.weinsure1.entities;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import org.hibernate.annotations.NaturalId;
+
+import tn.weinsure1.entities.audit.DateAudit;
+import tn.weinsure1.validation.annotation.NullOrNotBlank;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,44 +14,74 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(	name = "user", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
-		})
-public class User  implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="IdUser")
-	private Long id;
-	@NotBlank
-	@Size(max = 20)
-	private String username;
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	private String email;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-	@NotBlank
-	@Size(max = 120)
-	private String password;
+@Entity(name = "USER")
+public class User extends DateAudit {
+
+    @Id
+    @Column(name = "USER_ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", allocationSize = 1)
+    private Long id;
+
+    @NaturalId
+    @Column(name = "EMAIL", unique = true)
+    @NotBlank(message = "User email cannot be null")
+    private String email;
+
+    @Column(name = "USERNAME", unique = true)
+    @NullOrNotBlank(message = "Username can not be blank")
+    private String username;
+
+    @Column(name = "PASSWORD")
+    @NotNull(message = "Password cannot be null")
+    private String password;
+
+    @Column(name = "FIRST_NAME")
+    @NullOrNotBlank(message = "First name can not be blank")
+    private String firstName;
+
+    
+    @Column(name = "LAST_NAME")
+    @NullOrNotBlank(message = "Last name can not be blank")
+    private String lastName;
+
+    @Column(name = "IS_ACTIVE", nullable = false)
+    private Boolean active;
+
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="Birthdate")
 	private Date birthdate ;
 	
 	
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+
 	@Column(name="Phonenumber")
 	private Long phonenumber ;
 	
@@ -74,6 +98,7 @@ public Float getPointsF() {
 		return PointsF;
 	}
 
+<<<<<<< HEAD
 
 	public void setPointsF(Float pointsF) {
 		PointsF = pointsF;
@@ -87,6 +112,11 @@ public Float getPointsF() {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 ////////////////////////////////////////////////////////////////////
+=======
+///////////////////////////////////////////////////////////////////
+
+
+>>>>>>> branch 'master' of https://github.com/yahiabrgb/Weinsure1.git
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
@@ -103,81 +133,166 @@ List<Offer> offers;
 ////////////////////////////////////////////////////////////////
 
 
-	@JsonIgnore
-	//@JsonBackReference
-	@OneToOne
-	@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
-	private Contraint contraint;
+@JsonIgnore
+//@JsonBackReference
+@OneToOne
+@JoinColumn(name = "idcontraint",referencedColumnName="IDContraint")
+private Contraint contraint;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "USER_AUTHORITY", joinColumns = {
+            @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")}, inverseJoinColumns = {
+            @JoinColumn(name = "ROLE_ID", referencedColumnName = "ROLE_ID")})
+    private Set<Role> roles = new HashSet<>();
+
+    @Column(name = "IS_EMAIL_VERIFIED", nullable = false)
+    private Boolean isEmailVerified;
+
+    public User() {
+        super();
+    }
 
 
+    public void addRole(Role role) {
+        roles.add(role);
+        role.getUserList().add(this);
+    }
 
-	public User(List<Offer> offers) {
-		super();
-		this.offers = offers;
-	}
+    public void addRoles(Set<Role> roles) {
+        roles.forEach(this::addRole);
+    }
 
-	
-public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public Date getBirthdate() {
-		return birthdate;
-	}
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
-	}
+    public void removeRole(Role role) {
+        roles.remove(role);
+        role.getUserList().remove(this);
+    }
+
+    public void markVerificationConfirmed() {
+        setEmailVerified(true);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> authorities) {
+        roles = authorities;
+    }
+
+    public Boolean getEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        isEmailVerified = emailVerified;
+    }
+    public User(User user) {
+        id = user.getId();
+        username = user.getUsername();
+        password = user.getPassword();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        email = user.getEmail();
+        active = user.getActive();
+        roles = user.getRoles();
+        isEmailVerified = user.getEmailVerified();
+    }
+
 	public Long getPhonenumber() {
 		return phonenumber;
 	}
+
+
 	public void setPhonenumber(Long phonenumber) {
 		this.phonenumber = phonenumber;
 	}
+
+
 	public Long getCin() {
 		return cin;
 	}
+
+
 	public void setCin(Long cin) {
 		this.cin = cin;
 	}
+
+
 	public Float getSalary() {
 		return salary;
 	}
+
+
 	public void setSalary(Float salary) {
 		this.salary = salary;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+
 	public List<sinister> getSinisterList() {
 		return sinisterList;
 	}
+
+
 	public void setSinisterList(List<sinister> sinisterList) {
 		this.sinisterList = sinisterList;
 	}
+
 
 	public List<Contract> getContracts() {
 		return contracts;
@@ -186,6 +301,16 @@ public Long getId() {
 
 	public void setContracts(List<Contract> contracts) {
 		this.contracts = contracts;
+	}
+
+
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
 	}
 
 
@@ -199,80 +324,24 @@ public Long getId() {
 	}
 
 
-	public List<Offer> getOffers() {
-		return offers;
-	}
-	public void setOffers(List<Offer> offers) {
-		this.offers = offers;
-	}
-	/**
-	 * @param id
-	 * @param username
-	 * @param email
-	 * @param password
-	 * @param birthdate
-	 * @param phonenumber
-	 * @param cin
-	 * @param salary
-	 * @param role
-	 * @param roles
-	 * @param sinisterList
-	 * @param contracts
-	 * @param offers
-	 */
-	public User(Long id, @NotBlank @Size(max = 20) String username, @NotBlank @Size(max = 50) @Email String email,
-			@NotBlank @Size(max = 120) String password, Date birthdate, Long phonenumber, Long cin, Float salary,
-		 Set<Role> roles) {
-		this.id = id;
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.birthdate = birthdate;
-		this.phonenumber = phonenumber;
-		this.cin = cin;
-		this.salary = salary;
-		this.roles = roles;
-
+	public Boolean getIsEmailVerified() {
+		return isEmailVerified;
 	}
 
-	
-	/**
-	 * @param username
-	 * @param email
-	 * @param password
-	 * @param birthdate
-	 * @param phonenumber
-	 * @param cin
-	 * @param salary
-	 * @param roles
-	 */
-	public User(@NotBlank @Size(max = 20) String username, @NotBlank @Size(max = 50) @Email String email,
-			@NotBlank @Size(max = 120) String password, Date birthdate, Long phonenumber, Long cin, Float salary,
-			Set<Role> roles) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-		this.birthdate = birthdate;
-		this.phonenumber = phonenumber;
-		this.cin = cin;
-		this.salary = salary;
-		this.roles = roles;
+
+	public void setIsEmailVerified(Boolean isEmailVerified) {
+		this.isEmailVerified = isEmailVerified;
 	}
-	public User(String username, String email, String password) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
-	public User(){
-		super();
-	}
-	
+
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", birthdate=" + birthdate + ", phonenumber=" + phonenumber + ", cin=" + cin + ", salary=" + salary
-				+  ", roles=" + roles +  "]";
+		return "User [id=" + id + ", email=" + email + ", username=" + username + ", password=" + password
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", active=" + active + ", birthdate="
+				+ birthdate + ", phonenumber=" + phonenumber + ", cin=" + cin + ", salary=" + salary + ", roles="
+				+ roles + ", isEmailVerified=" + isEmailVerified + "]";
 	}
-	
+    
 }
-	
+
+

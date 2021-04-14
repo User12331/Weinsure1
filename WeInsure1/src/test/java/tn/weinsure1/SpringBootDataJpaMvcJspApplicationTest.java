@@ -46,6 +46,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 <<<<<<< HEAD
 	}
 	
+	
 	@Test
 =======
 	}*/
@@ -245,7 +246,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 		 List<sinister> sinistres = is.findbyuserid(10L);	
 		}
 		*/
-   
+   /*
 	 @Test
 		public void test33() {
 		 int k = tr.findAgeMax();
@@ -261,7 +262,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 		 float sm = is.TDEMPRUNTEUR(0.02, u, c) ;
 
 		}
-	 /*
+	 */
 	 @Test
 		public void testest(){
 			TableMortalité t0=new TableMortalité(100000,100000,1,1f);	TableMortalité tm0=tr.Addtm(t0);
@@ -385,7 +386,7 @@ public class SpringBootDataJpaMvcJspApplicationTest {
 			TableMortalité t118=new TableMortalité(0,0,119,0f);	TableMortalité tm118=tr.Addtm(t118);
 			TableMortalité t119=new TableMortalité(0,0,120,0f);	TableMortalité tm119=tr.Addtm(t119);
 		}
-		*/
+		
 
 	
 

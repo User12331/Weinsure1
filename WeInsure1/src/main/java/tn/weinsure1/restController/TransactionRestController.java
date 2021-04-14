@@ -13,6 +13,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +24,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import tn.weinsure1.entities.Contract;
+import tn.weinsure1.entities.Smsrequest;
 import tn.weinsure1.entities.TransType;
 import tn.weinsure1.entities.Transaction;
 import tn.weinsure1.repository.ContractRepository;
 import tn.weinsure1.repository.UserRepository;
 import tn.weinsure1.service.ContractServiceImpl;
+import tn.weinsure1.service.Smsservice;
 import tn.weinsure1.service.TransactionServiceImpl;
 
 
@@ -44,11 +48,10 @@ public class TransactionRestController {
 	@Autowired
 	ContractRepository crr;
 	
-	/*@Autowired
-	ProjectRepository  projectRepository;
-	*/
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	Smsservice sm;
 	
 	
 	@GetMapping("/all")
@@ -82,20 +85,31 @@ public class TransactionRestController {
 	
 	
 	//as an investor
-	@GetMapping("/GiveMoney/{idContract}/{nbreC}/{amount}")
+	@GetMapping("/GiveMoney/{idContract}")
 	@ResponseBody
-	public Boolean payWithCoupon (@PathVariable("idContract")Long idC ,@PathVariable("nbreC")int nbreC,@PathVariable("amount")float amount){
+	public ResponseEntity<Object> payWithCoupon (@PathVariable("idContract")Long idC , Smsrequest smsrequest){
 		Date d=convertToDateViaSqlTimestamp(LocalDateTime.now());
-		float sum=amount * nbreC;
+	
 		Optional<Contract> ContractOptional=crr.findById(idC);
-	    Contract c=ContractOptional.get();	        
-		Transaction t =new Transaction(d,sum,TransType.debit);
+	    Contract c=ContractOptional.get();	 
+	    float amout = c.getPrice() ; 
+	    double nbreC = c.getRate();
+		float sum= (float) (amout * nbreC);
+		System.out.println(""+sum);
+		float sum1 = sum + amout ; 
+		System.out.println(""+sum1);
+		Transaction t =new Transaction(d,sum1,TransType.debit);
         t.setTransactionprice(c);
-        t.setNbreC(nbreC);
-        t. setAmountC(amount);
+        t.setNbreC((int) nbreC);
+        t. setAmountC(c.getPrice());
 		transService.addTransaction(t);
-		//twilioCon.sendotp("+216"+c.getUser().getPhonenumber());
-		return true;
+		String status=sm.sendsms(smsrequest);
+		   if("sent".equals(status)||"queued".equals(status))
+	       {
+	       	return new ResponseEntity<Object>("sent successfully",HttpStatus.OK);
+	       }
+		   return new ResponseEntity<Object>("failed to send message",HttpStatus.NOT_FOUND);
+		
 	}
 	
 }

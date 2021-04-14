@@ -69,6 +69,9 @@ public class TableMortaliteService implements ITableMortaliteService {
 		return k;
 		
 	}
+
+	
+	
 	
 	
 	

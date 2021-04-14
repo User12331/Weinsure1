@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name="Contract")
@@ -99,7 +100,7 @@ public class Contract implements Serializable {
 	
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "idUser",referencedColumnName="IdUser")
+	@JoinColumn(name = "USER_ID",referencedColumnName="USER_ID")
 	 private User user;
 	
 	@JsonIgnore

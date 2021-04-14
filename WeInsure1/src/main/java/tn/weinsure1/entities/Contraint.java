@@ -29,6 +29,7 @@ public class Contraint implements Serializable {
 	@Column(name="IDContraint")
 	private Long idcontraint;
 	
+	
 	@Column(name="State")
 	private int state;
 

@@ -2,7 +2,6 @@ package tn.weinsure1.service;
 
 
 import java.util.List;
-
 import tn.weinsure1.entities.Contract;
 
 public interface IContractService {
@@ -21,4 +20,8 @@ public interface IContractService {
 	double RITP(double prime,long userid);
 	double RITC(double d,long userid);
 	void MAJContractPrice(float price,long cntid);
+	float CapitalMixte(double prime,long userid,int n);
+	void DeleteContractsByUserId(long id);
+	int CountContracts();
+	void MAJContractDuration(int duration,long cntid);
 }
