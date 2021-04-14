@@ -1,6 +1,6 @@
 package tn.weinsure1.restController;
 
-import io.swagger.annotations.Api;
+import io.swagger.annotations.Api;  
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import tn.weinsure1.entities.CustomUserDetails;
@@ -26,7 +26,8 @@ import tn.weinsure1.exception.UserRegistrationException;
 import tn.weinsure1.security.JwtTokenProvider;
 import tn.weinsure1.service.AuthService;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ import java.util.Optional;
 
 public class AuthController {
 
-    private static final Logger logger = Logger.getLogger(AuthController.class);
+    private static final Logger logger = LogManager.getLogger(AuthController.class);
     private final AuthService authService;
     private final JwtTokenProvider tokenProvider;
     private final ApplicationEventPublisher applicationEventPublisher;

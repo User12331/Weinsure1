@@ -13,11 +13,8 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 })
 public class SpringBootSecurityJwtApplication {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
         SpringApplication.run(SpringBootSecurityJwtApplication.class, args);
     }
 
 }
-
-
-

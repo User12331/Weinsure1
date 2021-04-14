@@ -51,6 +51,8 @@ public class sinister implements Serializable{
     @Column(name="Motif")
 	SinisterMotif motifStatus;
 	
+	@Column(name="Reglementation")
+	private float reglemntation ;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID",referencedColumnName="USER_ID")
@@ -60,6 +62,14 @@ public class sinister implements Serializable{
 
 
 	
+	public float getReglemntation() {
+		return reglemntation;
+	}
+
+	public void setReglemntation(float reglemntation) {
+		this.reglemntation = reglemntation;
+	}
+
 	public Long getIdSinistre() {
 		return idSinistre;
 	}
@@ -168,6 +178,19 @@ public class sinister implements Serializable{
 
 	public sinister() {
 		super();
+	}
+
+	public sinister(typeSinister typeSinistre, String description, Date dateOccurence, sinisterstatus status,
+			File documents, SinisterMotif motifStatus, float reglemntation, User user) {
+		super();
+		this.typeSinistre = typeSinistre;
+		this.description = description;
+		this.dateOccurence = dateOccurence;
+		this.status = status;
+		this.documents = documents;
+		this.motifStatus = motifStatus;
+		this.reglemntation = reglemntation;
+		this.user = user;
 	}
 
 	public sinister(tn.weinsure1.entities.typeSinister typeSinistre, String description, Date dateOccurence,

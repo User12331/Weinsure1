@@ -28,13 +28,14 @@ public interface IsinisterService {
 	 void SendMail() ;
 	 List<sinister> findbyuserid(Long id);
 	 int findcontractdurationBysinister(Long id );
-	 float CapitalCasDéces(Long idU , Long idC) throws ParseException ;
-	 float CapitalDécesPeriodique(Long idU , Long idC  ) throws ParseException ;
-	 float TDEMPRUNTEUR(Long idU , Long idC  ) throws ParseException ;
+	 float CapitalCasDéces(Long idS , Long idC) throws ParseException ;
+	 float CapitalDécesPeriodique(Long idS , Long idC  ) throws ParseException ;
+	 float TDEMPRUNTEUR(Long idS , Long idC  ) throws ParseException ;
 	 void affecterUserSinister(Long SinId , Long UserId) ; 
 	 void affecterSinisterUser(Long SinId, Long userId);
-	 String findSinisterDescriptionwithUR( Long id);
-	 double CreditSimulator( Long idU , Long idC) ;
+	 List<sinister> findSinisterDescriptionwithUR( Long id);
+	 double CreditSimulator( Long idS , Long idC) ;
 	 void UpdateSinDescription(Long idS ,String description ) ;
+	 public String yallacurrent() ;
 
 }

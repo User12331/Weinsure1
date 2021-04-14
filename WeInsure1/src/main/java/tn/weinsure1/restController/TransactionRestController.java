@@ -44,9 +44,6 @@ public class TransactionRestController {
 	@Autowired
 	ContractRepository crr;
 	
-	/*@Autowired
-	ProjectRepository  projectRepository;
-	*/
 	@Autowired
 	UserRepository userRepository;
 	
