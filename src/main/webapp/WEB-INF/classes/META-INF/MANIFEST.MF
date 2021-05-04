@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: WeInsure1
+Implementation-Version: 1.0
+Built-By: Administrateur
+Implementation-Vendor-Id: tn.weinsure1
+Build-Jdk: 1.8.0_261
+Implementation-URL: https://spring.io/projects/spring-boot/tn.weinsure
+ 1
+Created-By: Maven Integration for Eclipse
+
