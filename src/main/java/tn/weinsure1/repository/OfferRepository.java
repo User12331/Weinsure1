@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import tn.weinsure1.entities.Contract;
 import tn.weinsure1.entities.CountContract;
@@ -26,7 +27,7 @@ public interface OfferRepository extends CrudRepository<Offer, Long > {
 			+ "and b.Expiration_date > now()")
 	public List<Long> Users_pack1();
 	
-	@Query("select a.user from Contract a "
+	@Query("select distinct a.user from Contract a "
 			+ "join Contract b "
 			+ "on a.user.id = b.user.id"
 			+ " where a.Type like 'Vie' and b.Type like 'Décès'"
@@ -42,7 +43,23 @@ public interface OfferRepository extends CrudRepository<Offer, Long > {
 			+ "and b.Expiration_date > now()")
 	public List<Long> Users_pack2();
 	
-	@Query("select a from Contract a "
+	@Query(value = "select * from offer a where a.idoffer "
+			+ "not in (select o.idoffer from offer_user"
+			+ " u inner join offer o on o.idoffer = u.id_offer "
+			+ "where id_user = ?1) and a.expiration_date > now()", nativeQuery = true)
+	public List<Offer> offernot(Long id);
+	
+	@Query(value = "select * from offer a where a.idoffer in "
+			+ "(select o.idoffer from offer_user u inner join offer "
+			+ "o on o.idoffer = u.id_offer where id_user = ?1) "
+			+ "and a.expiration_date > now()", nativeQuery = true)
+	public List<Offer> offerin(Long id);
+	
+	@Query(value = "select o.id_user from offer_user u inner join "
+			+ "user o on o.id_user = u.id_user where u.id_offer = ?1)", nativeQuery = true)
+	public List<Long> userin(Long id);
+	
+	@Query("select distinct a.user from Contract a "
 			+ "join Contract b "
 			+ "on a.user.id = b.user.id"
 			+ " where a.Type like 'Personne' and b.Type like 'Décès'"
@@ -58,13 +75,16 @@ public interface OfferRepository extends CrudRepository<Offer, Long > {
 			+ "and b.Expiration_date > now()")
 	public List<Long> Users_pack3();
 	
-	@Query("select a from Contract a "
+	@Query("select distinct a.user from Contract a "
 			+ "join Contract b "
 			+ "on a.user.id = b.user.id"
 			+ " where a.Type like 'Vie' and b.Type like 'Dommages'"
 			+ "and a.Expiration_date > now() "
 			+ "and b.Expiration_date > now()")
 	public List<User> pack3();
+	
+	@Query("select a from User a")
+	public List<User> allusers();
 	
 	@Query("select count(*) from Contract c"
 			+ " group by c.user.id"
@@ -85,6 +105,26 @@ public interface OfferRepository extends CrudRepository<Offer, Long > {
 			+ " from Contract c"
 			+ " group by c.user.id order by count(c) desc")
 	public List<User> Top2();
+	
+	@Query("select c.user.username"
+			+ " from Contract c"
+			+ " group by c.user.id order by count(c) desc")
+	public List<String> Top3();
+	
+	@Query("select count(c)"
+			+ " from Contract c"
+			+ " group by c.user.id order by count(c) desc")
+	public int[] Top4();
+	
+	@Query("select u.username"
+			+ " from User u"
+			+ " order by u.PointsF desc")
+	public List<String> fidele1();
+	
+	@Query("select u.PointsF"
+			+ " from User u"
+			+ " order by u.PointsF desc")
+	public float[] fidele2();
 	
 	@Query("select distinct c.user.id from Contract c "
 			+ "where c.Creation_date = "
@@ -142,6 +182,11 @@ public interface OfferRepository extends CrudRepository<Offer, Long > {
 	@Transactional
 	@Query(value = "DELETE from offer_user where id_user = ?1 and id_offer= ?2", nativeQuery = true)
 	public void desaffect(Long idu, Long ido);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "DELETE from offer_user where id_offer = ?1", nativeQuery = true)
+	public void safeclean(Long id);
 	
 	@Query("select u.id from User u where u.PointsF = (Select max(u.PointsF) from User u)")
 	public List<Long> Fidele_User();

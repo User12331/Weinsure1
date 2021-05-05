@@ -51,5 +51,14 @@ public interface IOfferService {
 	List<Contract> old();
 	Date old(Long id);
 	List<User> old1();
+	List<User> pack2();
+	List<User> pack3();
+	List<User> allusers();
+	List<Offer> offernot(Long id);
+	List<Offer> offerin(Long id);
+	List<String> Top3();
+	int[] Top4();
+	List<String> fidele1();
+	float[] fidele2();
 	
 }

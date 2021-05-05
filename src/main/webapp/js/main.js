@@ -2,7 +2,137 @@
 (function ($) {
   // USE STRICT
   "use strict";
+  
+  $.getJSON("http://localhost:8000/top3", function(result){
+	    var data1 = [];
+	      $.each(result, function(i, field){
+	data1.push(field);   
+	});
+	      $.getJSON("http://localhost:8000/top4", function(result){
+	  	    var data2 = [];
+	  	      $.each(result, function(i, field){
+	  	data2.push(field);   
+	  	});     
+      try {
+          //bar chart
+          var ctx = document.getElementById("barChart");
+          if (ctx) {
+            ctx.height = 500;
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              defaultFontFamily: 'Poppins',
+              data: {
+                labels: data1,
+                datasets: [
+                  {
+                    label: "Number of contracts",
+                    data: data2,
+                    borderColor: "rgba(255, 4, 0, 0.9)",
+                    borderWidth: "0",
+                    backgroundColor: "rgba(255, 4, 0, 0.5)",
+                    fontFamily: "Poppins"
+                  }
+                 
+                ]
+              },
+              options: {
+                legend: {
+                  position: 'top',
+                  labels: {
+                    fontFamily: 'Poppins'
+                  }
 
+                },
+                scales: {
+                  xAxes: [{
+                    ticks: {
+                      fontFamily: "Poppins"
+
+                    }
+                  }],
+                  yAxes: [{
+                    ticks: {
+                      beginAtZero: true,
+                      fontFamily: "Poppins"
+                    }
+                  }]
+                }
+              }
+            });
+          }
+
+
+        } catch (error) {
+          console.log(error);
+        }
+  });
+  });
+  $.getJSON("http://localhost:8000/fidele1", function(result){
+	    var data1 = [];
+	      $.each(result, function(i, field){
+	data1.push(field);   
+	});
+	      $.getJSON("http://localhost:8000/fidele2", function(result){
+	  	    var data2 = [];
+	  	      $.each(result, function(i, field){
+	  	data2.push(field);   
+	  	});     
+    try {
+        //bar chart
+        var ctx = document.getElementById("barChart2");
+        if (ctx) {
+          ctx.height = 500;
+          var myChart = new Chart(ctx, {
+            type: 'bar',
+            defaultFontFamily: 'Poppins',
+            data: {
+              labels: data1,
+              datasets: [
+                {
+                  label: "Points Fidelités",
+                  data: data2,
+                  borderColor: "rgba(0, 128, 128, 0.9)",
+                  borderWidth: "0",
+                  backgroundColor: "rgba(0, 128, 128, 0.5)",
+                  fontFamily: "Poppins"
+                }
+               
+              ]
+            },
+            options: {
+              legend: {
+                position: 'top',
+                labels: {
+                  fontFamily: 'Poppins'
+                }
+
+              },
+              scales: {
+                xAxes: [{
+                  ticks: {
+                    fontFamily: "Poppins"
+
+                  }
+                }],
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                    fontFamily: "Poppins"
+                  }
+                }]
+              }
+            }
+          });
+        }
+
+
+      } catch (error) {
+        console.log(error);
+      }
+});
+});
+
+  
   try {
     //WidgetChart 1
     var ctx = document.getElementById("widgetChart1");
@@ -873,65 +1003,7 @@
     console.log(error);
   }
 
-  try {
-    //bar chart
-    var ctx = document.getElementById("barChart");
-    if (ctx) {
-      ctx.height = 200;
-      var myChart = new Chart(ctx, {
-        type: 'bar',
-        defaultFontFamily: 'Poppins',
-        data: {
-          labels: ["January", "February", "March", "April", "May", "June", "July"],
-          datasets: [
-            {
-              label: "My First dataset",
-              data: [65, 59, 80, 81, 56, 55, 40],
-              borderColor: "rgba(0, 123, 255, 0.9)",
-              borderWidth: "0",
-              backgroundColor: "rgba(0, 123, 255, 0.5)",
-              fontFamily: "Poppins"
-            },
-            {
-              label: "My Second dataset",
-              data: [28, 48, 40, 19, 86, 27, 90],
-              borderColor: "rgba(0,0,0,0.09)",
-              borderWidth: "0",
-              backgroundColor: "rgba(0,0,0,0.07)",
-              fontFamily: "Poppins"
-            }
-          ]
-        },
-        options: {
-          legend: {
-            position: 'top',
-            labels: {
-              fontFamily: 'Poppins'
-            }
-
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                fontFamily: "Poppins"
-
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-                fontFamily: "Poppins"
-              }
-            }]
-          }
-        }
-      });
-    }
-
-
-  } catch (error) {
-    console.log(error);
-  }
+  
 
   try {
 

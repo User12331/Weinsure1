@@ -95,6 +95,34 @@ public class OfferRestController {
 	 return o;
 	 }
 	
+	@GetMapping("/top3")
+	@ResponseBody
+	public List<String> top3() {
+	 List<String> o = io.Top3();
+	 return o;
+	 }
+	
+	@GetMapping("/top4")
+	@ResponseBody
+	public int[] top4() {
+	 int[] o = io.Top4();
+	 return o;
+	 }
+	
+	@GetMapping("/fidele1")
+	@ResponseBody
+	public List<String> fidele1() {
+	 List<String> o = io.fidele1();
+	 return o;
+	 }
+	
+	@GetMapping("/fidele2")
+	@ResponseBody
+	public float[] fidele2() {
+	 float[] o = io.fidele2();
+	 return o;
+	 }
+	
 	/*@PutMapping("/fidelite")
 	@ResponseBody
 		public User UpdateUser() {

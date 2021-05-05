@@ -40,6 +40,17 @@ public class OfferController {
 	private List<User> users;
 	private List<Offer> offers;
 	private Offer offer;
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 
 	public Offer getOffer() {
 		return offer;
@@ -67,33 +78,33 @@ return navigateTo;
 }
 	
 	public String gotoPack1() {
-		String navigateTo = "/pack1?faces-redirect=true";
-return navigateTo;
+		String navigateTo = "/pack1?faces-redirect=true" ;
+return navigateTo ;
 }
 	
 	public String gotoPack2() {
-		String navigateTo = "/pack2?faces-redirect=true";
-return navigateTo;
+		String navigateTo = "/pack2?faces-redirect=true" ;
+return navigateTo ;
 }
 	
 	public String gotoPack3() {
-		String navigateTo = "/pack3?faces-redirect=true";
-return navigateTo;
+		String navigateTo = "/pack3?faces-redirect=true" ;
+return navigateTo ;
 }
 	
 	public String gototop() {
-		String navigateTo = "/top?faces-redirect=true";
-return navigateTo;
+		String navigateTo = "/top?faces-redirect=true" ;
+return navigateTo ;
 }	
 
 	public String gotofidele() {
-		String navigateTo = "/fidele?faces-redirect=true";
-return navigateTo;
+		String navigateTo = "/fidele?faces-redirect=true" ;
+return navigateTo ;
 }
 	
 	public String gotoold() {
-		String navigateTo = "/old?faces-redirect=true";
-return navigateTo;
+		String navigateTo = "/old?faces-redirect=true" ;
+return navigateTo ;
 }
 
 	public Long getIdoffer() {
@@ -201,10 +212,36 @@ return navigateTo;
 		 io.deleteOffer(ido);
 		 }
 	
+	public String SelectUser(User u) {
+		String navigateTo = "/affectation?faces-redirect=true"; 
+		this.offers = io.offernot(u.getId());
+		this.idoffer = u.getId();
+		return navigateTo;
+	}
+	
 	public String updateOffer() {
 		String navigateTo = "/table?faces-redirect=true"; 
 		Offer o = new Offer(idoffer,type,expiration_date,description,prix);
 		io.updateOffer(o);
+		return navigateTo;
+	}
+	
+	public String affectation(Long idu,Long ido) {
+		String navigateTo = "/affecter?faces-redirect=true"; 
+		io.	affectation(idu,ido);
+		return navigateTo;
+	}
+	
+	public String SelectUser2(User u) {
+		String navigateTo = "/desaffectation?faces-redirect=true"; 
+		this.offers = io.offerin(u.getId());
+		this.idoffer = u.getId();
+		return navigateTo;
+	}
+	
+	public String desaffectation(Long idu,Long ido) {
+		String navigateTo = "/desaffecter?faces-redirect=true"; 
+		io.	desaffectation(idu,ido);
 		return navigateTo;
 	}
 	
@@ -214,6 +251,21 @@ public Offer findofferid(Long ido){
 
 public List<User> pack1() {
 	 List<User> o = io.pack1();
+	 return o;
+}
+
+public List<User> allusers() {
+	 List<User> o = io.allusers();
+	 return o;
+}
+
+public List<User> pack2() {
+	 List<User> o = io.pack2();
+	 return o;
+}
+
+public List<User> pack3() {
+	 List<User> o = io.pack3();
 	 return o;
 }
 

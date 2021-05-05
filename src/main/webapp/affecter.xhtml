@@ -1,4 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -56,55 +57,35 @@
                                         <!-- DATA TABLE -->
 
                                         <h3 class="title-5 m-b-35">Les Offres</h3>
-                                                                        <h:form>              
-                        <h:commandButton action="#{OfferController.setOffer2()}" value="Add" />
-                                        </h:form>
-
+                                     
                                         <div class="table-responsive table-responsive-data2">
                                             <h:panelGroup columns="2">
                                               <h:form>
-                                               <h:dataTable value="#{OfferController.retrieveoffer()}" var="off" border="1" styleClass="table table-data2">
-                                                        <h:column>
+                                               <h:dataTable class="table table-borderless table-striped table-earning" value="#{OfferController.allusers()}" var="u" border="1" styleClass="table table-data2">
+                                                         <h:column>
                                                             <f:facet name="header">
                                                                 <h:outputText value="ID" />
                                                             </f:facet>
-                                                            <h:outputText value="#{off.getIdOffer()}" />
+                                                            <h:outputText value="#{u.getId()}" />
                                                         </h:column>
                                                         <h:column>
                                                             <f:facet name="header">
                                                                 <h:outputText value="Type" />
                                                             </f:facet>
-                                                            <h:outputText value="#{off.getType()}" />
+                                                            <h:outputText value="#{u.getUsername()}" />
                                                         </h:column>
-                                                        <h:column>
+                                                          <h:column>
                                                             <f:facet name="header">
-                                                                <h:outputText value="Prix" />
+                                                                <h:outputText value="Type" />
                                                             </f:facet>
-                                                            <h:outputText value="#{off.getPrix()}" />
-                                                        </h:column>
-                                                        <h:column>
-                                                            <f:facet name="header">
-                                                                <h:outputText value="Description" />
-                                                            </f:facet>
-                                                            <h:outputText value="#{off.getDescription()}" />
-                                                        </h:column>
-                                                        <h:column>
-                                                            <f:facet name="header">
-                                                                <h:outputText value="Expiration date" />
-                                                            </f:facet>
-                                                            <h:outputText value="#{off.getExpiration_date()}" />
+                                                            <h:outputText value="#{u.getEmail()}" />
                                                         </h:column>
                                                         <h:column>
                                                         <f:facet name="header">
-                                                        <h:outputText value="Delete"/>
+                                                        <h:outputText value=""/>
                                                         </f:facet>
-                                                        <h:commandButton action="#{OfferController.delete(off.getIdOffer())}" value="Delete" />
-                                                        </h:column>
-                                                        <h:column>
-                                                        <f:facet name="header">
-                                                        <h:outputText value="Delete"/>
-                                                        </f:facet>
-                                                        <h:commandButton  action ="update.jsf"  actionListener="#{OfferController.setOffer(off)}" value="Update" />
+                                                        
+                                                        <b:commandButton action="#{OfferController.SelectUser(u)}" value="Select" class="btn btn-info btn-sm" />
                                                         </h:column>
                                                         </h:dataTable>      
                                                 </h:form>

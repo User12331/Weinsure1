@@ -42,8 +42,9 @@ public class OfferServiceImpl implements IOfferService {
 	
 	@Override
 	public void deleteOffer(Long id) {
-		OfferRepository.deleteById(id);
-		
+OfferRepository.safeclean(id);
+OfferRepository.deleteById(id);
+
 	}
 	@Override
 	public Offer updateOffer(Offer O) {
@@ -162,6 +163,31 @@ public class OfferServiceImpl implements IOfferService {
 	}
 	
 	@Override
+	public List<User> pack2() {
+		return OfferRepository.pack2(); 				
+	}
+	
+	@Override
+	public List<User> allusers() {
+		return OfferRepository.allusers(); 				
+	}
+	
+	@Override
+	public List<Offer> offernot(Long id) {
+		return OfferRepository.offernot(id); 				
+	}
+	
+	@Override
+	public List<Offer> offerin(Long id) {
+		return OfferRepository.offerin(id); 				
+	}
+	
+	@Override
+	public List<User> pack3() {
+		return OfferRepository.pack3(); 				
+	}
+	
+	@Override
 	public List<Long> Top_Users(Long num) {
 		List<Long> l = (List<Long>) OfferRepository.Top_Users(num); 
 		for(Long ls : l)
@@ -177,6 +203,34 @@ public class OfferServiceImpl implements IOfferService {
 	public int Top1(Long id) {
 //		List<Integer> l = OfferRepository.Top1();
 		return OfferRepository.Top1(id);
+
+	}
+	
+	@Override
+	public List<String> Top3() {
+//		List<Integer> l = OfferRepository.Top1();
+		return OfferRepository.Top3();
+
+	}
+	
+	@Override
+	public int[] Top4() {
+//		List<Integer> l = OfferRepository.Top1();
+		return OfferRepository.Top4();
+
+	}
+	
+	@Override
+	public List<String> fidele1() {
+//		List<Integer> l = OfferRepository.Top1();
+		return OfferRepository.fidele1();
+
+	}
+	
+	@Override
+	public float[] fidele2() {
+//		List<Integer> l = OfferRepository.Top1();
+		return OfferRepository.fidele2();
 
 	}
 	
