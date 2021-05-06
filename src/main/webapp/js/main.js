@@ -89,7 +89,7 @@
               labels: data1,
               datasets: [
                 {
-                  label: "Points Fidelités",
+                  label: "Fidelity points",
                   data: data2,
                   borderColor: "rgba(0, 128, 128, 0.9)",
                   borderWidth: "0",

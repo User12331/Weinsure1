@@ -18,6 +18,8 @@
             <!-- Title Page-->
 
             <title>Tables</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"/>
             <!-- Fontfaces CSS-->
             <link href="css/font-face.css" rel="stylesheet" media="all" />
             <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all" />
@@ -65,7 +67,7 @@
                                         <div class="table-responsive table-responsive-data2">
                                             <h:panelGroup columns="2">
                                               <h:form>
-                                               <h:dataTable class="table table-borderless table-striped table-earning" value="#{OfferController.retrieveoffer()}" var="off" border="1" styleClass="table table-data2">
+                                               <h:dataTable class="table table-borderless table-striped table-earning mydatatable" value="#{OfferController.retrieveoffer()}" var="off" border="1" styleClass="table table-data2">
                                                         <h:column>
                                                             <f:facet name="header">
                                                                 <h:outputText value="ID" />
@@ -157,6 +159,19 @@
             <!-- Main JS-->
 
             <script src="js/main.js"></script>
+            
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $('.mydatatable').DataTable({
+    });
+
+</script>
+            
             <!-- end document-->
         </body>
     </ui:define>
