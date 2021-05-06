@@ -3,6 +3,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
                 template="/template/template.xhtml">
 
     <ui:param name="page_name" value="Accueil" />
@@ -56,9 +57,9 @@
 
                                         <!-- DATA TABLE -->
 
-                                        <h3 class="title-5 m-b-35">Les Offres</h3>
+                                        <h3 class="title-5 m-b-35">Offers</h3>
                                                                         <h:form>              
-                        <h:commandButton action="#{OfferController.setOffer2()}" value="+ Add" class="au-btn au-btn-icon au-btn--green au-btn--small" />
+                        <h:commandButton action="#{OfferController.setOffer2()}" value="+ Add new offer" class="au-btn au-btn-icon au-btn--green au-btn--small" />
                                         </h:form>
 <BR />
                                         <div class="table-responsive table-responsive-data2">
@@ -79,7 +80,7 @@
                                                         </h:column>
                                                         <h:column>
                                                             <f:facet name="header">
-                                                                <h:outputText value="Prix" />
+                                                                <h:outputText value="Price" />
                                                             </f:facet>
                                                             <h:outputText value="#{off.getPrix()}" />
                                                         </h:column>
@@ -99,13 +100,12 @@
                                                         <f:facet name="header">
                                                         <h:outputText value=""/>
                                                         </f:facet>
-                                                        <b:commandButton action="#{OfferController.delete(off.getIdOffer())}"  value="Delete" class="btn btn-danger btn-sm"/>
+                                                        <p:commandButton action="#{OfferController.delete(off.getIdOffer())}" value="Delete" class="btn btn-danger btn-sm"/>
                                                         </h:column>
                                                         <h:column>
                                                         <f:facet name="header">
                                                         <h:outputText value=""/>
                                                         </f:facet>
-                                                        
                                                         <b:commandButton action ="update.jsf"  actionListener="#{OfferController.setOffer(off)}" value="Update" class="btn btn-warning btn-sm" />
                                                         </h:column>
                                                         </h:dataTable>      

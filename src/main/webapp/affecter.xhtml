@@ -56,7 +56,7 @@
 
                                         <!-- DATA TABLE -->
 
-                                        <h3 class="title-5 m-b-35">Les Offres</h3>
+                                        <h3 class="title-5 m-b-35">Select a User</h3>
                                      
                                         <div class="table-responsive table-responsive-data2">
                                             <h:panelGroup columns="2">
@@ -76,7 +76,7 @@
                                                         </h:column>
                                                           <h:column>
                                                             <f:facet name="header">
-                                                                <h:outputText value="Type" />
+                                                                <h:outputText value="Email" />
                                                             </f:facet>
                                                             <h:outputText value="#{u.getEmail()}" />
                                                         </h:column>
@@ -85,7 +85,7 @@
                                                         <h:outputText value=""/>
                                                         </f:facet>
                                                         
-                                                        <b:commandButton action="#{OfferController.SelectUser(u)}" value="Select" class="btn btn-info btn-sm" />
+                                                        <b:commandButton action="#{OfferController.SelectUser(u)}" value="Select" class="btn btn-primary btn-sm" />
                                                         </h:column>
                                                         </h:dataTable>      
                                                 </h:form>

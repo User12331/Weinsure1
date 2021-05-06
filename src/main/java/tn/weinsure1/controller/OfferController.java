@@ -227,6 +227,7 @@ return navigateTo ;
 	
 	public void delete(Long ido) {
 		 io.deleteOffer(ido);
+	        addMessage(FacesMessage.SEVERITY_ERROR, "Error Message", "Message Content");
 		 }
 	
 	public String SelectUser(User u) {
@@ -306,12 +307,9 @@ public List<User> old1() {
 	 return io.old1();
 }  
 
-public void confirm() {
-	addMessage("Delete record","Record has been deleted.");  
+public void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+    FacesContext.getCurrentInstance().
+            addMessage(null, new FacesMessage(severity, summary, detail));
 }
-public void addMessage(String summary, String detail) {  
-FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);  
-FacesContext.getCurrentInstance().addMessage(null, message);  
-}  
 
 }

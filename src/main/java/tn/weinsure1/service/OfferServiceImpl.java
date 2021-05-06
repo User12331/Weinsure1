@@ -448,7 +448,7 @@ OfferRepository.deleteById(id);
 		if(cpt>0)
 		{return cpt+" DT";}
 		else 
-		{return "dépassée";}
+		{return "exceeded";}
 	}	
 	
 	@Override

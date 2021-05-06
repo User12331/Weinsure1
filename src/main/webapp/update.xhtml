@@ -60,7 +60,7 @@
                                         <!-- DATA TABLE -->
  <div class="container-fluid">
  
-                                        <h3 class="title-5 m-b-35">Les Contrats</h3>
+                                        <h3 class="title-5 m-b-35">Update Offer</h3>
                                         
                                         <div class="table-responsive table-responsive-data2">
                                             <h:panelGroup columns="2">
@@ -70,9 +70,9 @@
                                                         <tr>
                                                             <td><h:outputText value="Type" class="control-label mb-1"></h:outputText></td>
                                                             <td><h:selectOneMenu value="#{OfferController.type}" class="form-control">
-                                                            <f:selectItem itemValue="pack1" itemLabel="pack Vie Décès" />
-											                <f:selectItem itemValue="pack2" itemLabel="pack Personne  Décès" />
-											                <f:selectItem itemValue="pack3" itemLabel="pack Vie Dommages" />
+                                                            <f:selectItem itemValue="pack1" itemLabel="Life Death pack" />
+											                <f:selectItem itemValue="pack2" itemLabel="Person Death pack" />
+											                <f:selectItem itemValue="pack3" itemLabel="Life Damage pack" />
                                                             <f:selectItem itemValue="ancien" itemLabel="First user to have a contract" />
                                                             <f:selectItem itemValue="best" itemLabel="User having most contracts" />
                                                             <f:selectItem itemValue="fidele" itemLabel="Most loyal user" />
@@ -84,12 +84,12 @@
                                                             <td><h:inputText class="form-control" value="#{OfferController.description}"></h:inputText></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><h:outputText value="Prix" class="control-label mb-1"></h:outputText></td>
+                                                            <td><h:outputText value="Price" class="control-label mb-1"></h:outputText></td>
                                                             <td><h:inputText class="form-control" value="#{OfferController.prix}"></h:inputText></td>
 
                                                         </tr>
                                                         <tr>
-                                                            <td><h:outputText value="Date d'expiration" class="control-label mb-1"></h:outputText></td>
+                                                            <td><h:outputText value="Expiration Date" class="control-label mb-1"></h:outputText></td>
                                                             <td>
                                                                 <h:inputText class="form-control" value="#{OfferController.expiration_date}">
                                                                     <f:convertDateTime pattern="dd-MM-yyyy" />
@@ -99,7 +99,7 @@
                                   
                                                         <tr>
                                                             <td colspan="2">
-                                                        <h:commandButton id="btn" value="Modifier Contrat" action="#{OfferController.updateOffer()}" class="btn btn-warning btn-sm"/> 
+                                                        <h:commandButton id="btn" value="Update Offer" action="#{OfferController.updateOffer()}" class="btn btn-warning btn-sm"/> 
                                                                 </td>
                                                         </tr>
                                                     </table>
