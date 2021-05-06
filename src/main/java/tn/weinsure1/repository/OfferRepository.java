@@ -19,7 +19,7 @@ import tn.weinsure1.entities.User;
 public interface OfferRepository extends CrudRepository<Offer, Long > {
 
 //Get USER  	
-	@Query("select a.user.id from Contract a "
+	@Query("select distinct a.user.id from Contract a "
 			+ "join Contract b "
 			+ "on a.user.id = b.user.id"
 			+ " where a.Type like 'Vie' and b.Type like 'Décès'"
@@ -35,7 +35,7 @@ public interface OfferRepository extends CrudRepository<Offer, Long > {
 			+ "and b.Expiration_date > now()")
 	public List<User> pack1();
 	
-	@Query("select a.user.id from Contract a "
+	@Query("select distinct a.user.id from Contract a "
 			+ "join Contract b "
 			+ "on a.user.id = b.user.id"
 			+ " where a.Type like 'Personne' and b.Type like 'Décès'"
@@ -67,7 +67,7 @@ public interface OfferRepository extends CrudRepository<Offer, Long > {
 			+ "and b.Expiration_date > now()")
 	public List<User> pack2();
 	
-	@Query("select a.user.id from Contract a "
+	@Query("select distinct a.user.id from Contract a "
 			+ "join Contract b "
 			+ "on a.user.id = b.user.id"
 			+ " where a.Type like 'Vie' and b.Type like 'Dommages'"

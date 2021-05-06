@@ -3,8 +3,10 @@ package tn.weinsure1.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.ArrayDataModel;
 import javax.faces.model.DataModel;
 
@@ -41,6 +43,18 @@ public class OfferController {
 	private List<Offer> offers;
 	private Offer offer;
 	private User user;
+	private boolean auto;
+
+
+	public boolean getAuto() {
+		return auto;
+	}
+
+
+	public void setAuto(boolean auto) {
+		this.auto = auto;
+	}
+
 
 	public User getUser() {
 		return user;
@@ -58,23 +72,23 @@ public class OfferController {
 
 
 	public String setOffer(Offer offer) {
-		String navigateTo = "/update?faces-redirect=true";
+		String navigateTo = "/update?faces-redirect=true" ;
 		this.idoffer = offer.getIdOffer();
 		this.type = offer.getType();
 		this.expiration_date = offer.getExpiration_date();
 		this.description = offer.getDescription();
 		this.prix = offer.getPrix();
-return navigateTo;
+return navigateTo ;
 }
 	
 	public String setOffer2() {
-		String navigateTo = "/topnum?faces-redirect=true";
+		String navigateTo = "/topnum?faces-redirect=true" ;
 		this.idoffer = null;
 		this.type = null;
-		this.expiration_date = null;
+		this.expiration_date = null ;
 		this.description = null;
 		this.prix = 0;
-return navigateTo;
+return navigateTo ;
 }
 	
 	public String gotoPack1() {
@@ -197,10 +211,13 @@ return navigateTo ;
 }
 	
 	public String addoffer2() {
-		String navigateTo = "/table?faces-redirect=true"; 
+		String navigateTo = "/table?faces-redirect=true" ; 
 		Offer o = new Offer(type,expiration_date,description,prix);
-		io.addOffer1(o);
-		return navigateTo;
+		if(auto == false)
+		{io.addOffer1(o);}
+		else if(auto == true)
+		{io.affectationauto(o);}
+		return navigateTo ;
 	}
 	
 	public int test() {
@@ -213,36 +230,36 @@ return navigateTo ;
 		 }
 	
 	public String SelectUser(User u) {
-		String navigateTo = "/affectation?faces-redirect=true"; 
+		String navigateTo = "/affectation?faces-redirect=true" ; 
 		this.offers = io.offernot(u.getId());
 		this.idoffer = u.getId();
-		return navigateTo;
+		return navigateTo ;
 	}
 	
 	public String updateOffer() {
-		String navigateTo = "/table?faces-redirect=true"; 
+		String navigateTo = "/table?faces-redirect=true" ; 
 		Offer o = new Offer(idoffer,type,expiration_date,description,prix);
 		io.updateOffer(o);
-		return navigateTo;
+		return navigateTo ;
 	}
 	
 	public String affectation(Long idu,Long ido) {
-		String navigateTo = "/affecter?faces-redirect=true"; 
+		String navigateTo = "/affecter?faces-redirect=true" ; 
 		io.	affectation(idu,ido);
-		return navigateTo;
+		return navigateTo ;
 	}
 	
 	public String SelectUser2(User u) {
-		String navigateTo = "/desaffectation?faces-redirect=true"; 
+		String navigateTo = "/desaffectation?faces-redirect=true" ; 
 		this.offers = io.offerin(u.getId());
 		this.idoffer = u.getId();
-		return navigateTo;
+		return navigateTo ;
 	}
 	
 	public String desaffectation(Long idu,Long ido) {
-		String navigateTo = "/desaffecter?faces-redirect=true"; 
+		String navigateTo = "/desaffecter?faces-redirect=true" ; 
 		io.	desaffectation(idu,ido);
-		return navigateTo;
+		return navigateTo ;
 	}
 	
 public Offer findofferid(Long ido){
@@ -287,6 +304,14 @@ public Date old(Long id) {
 
 public List<User> old1() {
 	 return io.old1();
+}  
+
+public void confirm() {
+	addMessage("Delete record","Record has been deleted.");  
+}
+public void addMessage(String summary, String detail) {  
+FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);  
+FacesContext.getCurrentInstance().addMessage(null, message);  
 }  
 
 }

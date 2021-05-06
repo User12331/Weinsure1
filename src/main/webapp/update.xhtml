@@ -1,7 +1,9 @@
 ﻿<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
                 template="/template/template.xhtml">
 
     <ui:param name="page_name" value="Accueil" />
@@ -47,7 +49,8 @@
                         <div class="section__content section__content--p30">
 
                             <div class="container-fluid">
-
+   <div class="col-lg-6">
+  
 
                                 <div class="row">
 
@@ -55,45 +58,49 @@
 
 
                                         <!-- DATA TABLE -->
-
+ <div class="container-fluid">
+ 
                                         <h3 class="title-5 m-b-35">Les Contrats</h3>
-
+                                        
                                         <div class="table-responsive table-responsive-data2">
                                             <h:panelGroup columns="2">
                                                 <h:form>
                                                     <table class="table table-data2">
-
+                                                    
                                                         <tr>
-
-                                                            <td><h:outputText value="Type"></h:outputText></td>
-                                                            <td><h:inputText id="type" value="#{OfferController.type}" class="inputcontract"></h:inputText>
-                                                          </td>
-                                                           
+                                                            <td><h:outputText value="Type" class="control-label mb-1"></h:outputText></td>
+                                                            <td><h:selectOneMenu value="#{OfferController.type}" class="form-control">
+                                                            <f:selectItem itemValue="pack1" itemLabel="pack Vie Décès" />
+											                <f:selectItem itemValue="pack2" itemLabel="pack Personne  Décès" />
+											                <f:selectItem itemValue="pack3" itemLabel="pack Vie Dommages" />
+                                                            <f:selectItem itemValue="ancien" itemLabel="First user to have a contract" />
+                                                            <f:selectItem itemValue="best" itemLabel="User having most contracts" />
+                                                            <f:selectItem itemValue="fidele" itemLabel="Most loyal user" />
+                                                            
+                                                            </h:selectOneMenu></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><h:outputText value="Description"></h:outputText></td>
-                                                            <td><h:inputText value="#{OfferController.description}"  class="inputcontract"></h:inputText>
-                                                              </td>
+                                                            <td><h:outputText value="Description" class="control-label mb-1"></h:outputText></td>
+                                                            <td><h:inputText class="form-control" value="#{OfferController.description}"></h:inputText></td>
                                                         </tr>
                                                         <tr>
-                                                            <td><h:outputText value="Prix"></h:outputText></td>
-                                                            <td><h:inputText value="#{OfferController.prix}" class="inputcontract"></h:inputText>
-                                                            </td>
+                                                            <td><h:outputText value="Prix" class="control-label mb-1"></h:outputText></td>
+                                                            <td><h:inputText class="form-control" value="#{OfferController.prix}"></h:inputText></td>
 
                                                         </tr>
                                                         <tr>
-                                                            <td><h:outputText value="Date d'expiration"></h:outputText></td>
+                                                            <td><h:outputText value="Date d'expiration" class="control-label mb-1"></h:outputText></td>
                                                             <td>
-                                                                <h:inputText value="#{OfferController.expiration_date}" class="inputcontract">
+                                                                <h:inputText class="form-control" value="#{OfferController.expiration_date}">
                                                                     <f:convertDateTime pattern="dd-MM-yyyy" />
                                                                 </h:inputText>
-                                                               </td>
+                                                            </td>
                                                         </tr>
                                   
                                                         <tr>
                                                             <td colspan="2">
-                                                                <h:commandButton id="btn" value="Modifier Contrat" action="#{OfferController.updateOffer()}"  />
- </td>
+                                                        <h:commandButton id="btn" value="Modifier Contrat" action="#{OfferController.updateOffer()}" class="btn btn-warning btn-sm"/> 
+                                                                </td>
                                                         </tr>
                                                     </table>
                                                 </h:form>
@@ -107,6 +114,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                </div>
                 </div>
             <!-- Jquery JS-->
 

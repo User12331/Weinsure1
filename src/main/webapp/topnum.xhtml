@@ -96,10 +96,11 @@
                                                                 </h:inputText>
                                                             </td>
                                                         </tr>
-                                  
-                                                        <tr>
+                                  <tr><td><h:outputText value="Subscribe to Email Notifications: " /></td>  
+<td><h:selectBooleanCheckbox value="#{OfferController.auto}" onLabel="" offLabel="" onIcon="ui-icon-check" offIcon="ui-icon-close" /></td>
+                                                  </tr>     <tr>
                                                             <td colspan="2">
-                                                                <h:commandButton id="btn" value="Ajouter Contrat" action="#{OfferController.addoffer2()}" class="btn btn-primary btn-sm"/> 
+                                                                <h:commandButton id="btn" value="Ajouter Contrat" action="#{OfferController.addoffer2()}" class="btn btn-success btn-sm"/> 
                                                                 </td>
                                                         </tr>
                                                     </table>

@@ -432,22 +432,29 @@ OfferRepository.deleteById(id);
 	public String simulateur(Long d, int m) {
 		double p = d*1.01;
 		double ppm = p/m;
-		return "à payer: "+p+"DT\n à payer par mois :"+ppm+" DT";
+		return p+" DT";
+	}
+	
+	@Override
+	public String simulateur2(Long d, int m) {
+		double p = d*1.01;
+		double ppm = p/m;
+		return ppm+" DT";
 	}
 	
 	@Override
 	public String cptendettement(double s, Long ppm) {
 		double cpt = s*0.4 - ppm;
 		if(cpt>0)
-		{return "capacité d'endettement : "+cpt+" DT";}
+		{return cpt+" DT";}
 		else 
-		{return "capacité d'endettement dépassée";}
+		{return "dépassée";}
 	}	
 	
 	@Override
 	public String annuiteconstante(double montant, float I, int duree) {
 		double AC = montant * I / (1- Math.pow(1+I,-duree));
-		return "valeur de l'annuité constante : "+AC+" DT";
+		return AC+" DT";
 	}
 	
 }

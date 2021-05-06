@@ -60,5 +60,6 @@ public interface IOfferService {
 	int[] Top4();
 	List<String> fidele1();
 	float[] fidele2();
+	String simulateur2(Long d, int m);
 	
 }
